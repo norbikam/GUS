@@ -33,10 +33,10 @@ export default function KatalogPage() {
         
       {products.map((product) => (
         <Link key={product.title} href={`/katalog/${product.slug}`}>
-          <div className="border rounded overflow-hidden shadow hover:shadow-lg transition items-center justify-center flex flex-col text-center">
+          <div className="rounded overflow-hidden shadow hover:shadow-lg transition items-center justify-center flex flex-col text-center">
             <Image src={product.image} alt={product.title} height={400} width={300}  />
                 <div className="py-4">
-                <h2 className="text-xl font-bold border-t">{product.title}</h2>
+                <h2 className="text-xl font-bold ">{product.title}</h2>
                 <p className="text-gray-600 border-b">{product.price}</p>  
             </div>
           </div>

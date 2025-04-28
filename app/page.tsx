@@ -39,10 +39,10 @@ export default function Home() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-10 pt-0 w-full">
           {products.slice(4).map((product) => (
             <Link key={product.title} href={`/katalog/${product.slug}`}>
-              <div className="border overflow-hidden shadow hover:shadow-lg transition items-center justify-center flex flex-col text-center">
+              <div className="overflow-hidden shadow hover:shadow-lg transition items-center justify-center flex flex-col text-center">
                 <Image src={product.image} alt={product.title} height={400} width={300}  />
                 <div className="py-4">
-                  <h2 className="text-xl font-bold border-t pt-1">{product.title}</h2>
+                  <h2 className="text-xl font-bold pt-1">{product.title}</h2>
                   <p className="text-gray-600 border-b">{product.price}</p>  
                 </div>
               </div>
@@ -72,13 +72,13 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-6 p-10 pt-0 w-full">
-          <div className="p-4 flex flex-col justify-center items-center"><h1 className="text-3xl md:text-5xl pb-6">Odkryj najnowsze urządzenia</h1><p>U nas, zawsze dostaniesz to, czego potrzebujesz</p></div>
+          <div className="p-4 flex flex-col justify-center items-center"><h1 className="text-lg md:text-5xl pb-6">Odkryj najnowsze urządzenia</h1><p>U nas, zawsze dostaniesz to, czego potrzebujesz</p></div>
           {products.slice(4).map((product) => (
             <Link key={product.title} href={`/katalog/${product.slug}`}>
-              <div className="border overflow-hidden shadow hover:shadow-lg transition items-center justify-center flex flex-col text-center md:w-[30vw] lg:w-full">
+              <div className="overflow-hidden shadow hover:shadow-lg transition items-center justify-center flex flex-col text-center md:w-[30vw] lg:w-full">
                 <Image src={product.image} alt={product.title} height={400} width={300}  />
                 <div className="py-4">
-                  <h2 className="text-xl font-bold border-t">{product.title}</h2>
+                  <h2 className="text-xl font-bold">{product.title}</h2>
                   <p className="text-gray-600 border-b">{product.price}</p>  
                 </div>
               </div>
