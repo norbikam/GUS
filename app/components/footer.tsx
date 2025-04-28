@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 export default function Footer() {
     return (
@@ -13,16 +14,16 @@ export default function Footer() {
         </ul>
         <ul className="pt-10 md:pt-0">
             <li className="pb-4 text-xl">Menu</li>
-            <li className="pb-2"><a href="/katalog">Sklep</a></li>
-            <li className="pb-2"><a href="/kontakt">Kontakt</a></li>
-            <li><a href="/onas">O nas</a></li>
+            <li className="pb-2"><Link href="/katalog">Sklep</Link></li>
+            <li className="pb-2"><Link href="/kontakt">Kontakt</Link></li>
+            <li><Link href="/onas">O nas</Link></li>
         </ul>
         <ul className="pt-10 md:pt-0">
             <li className="pb-4 text-xl">Sklep</li>
-            <li className="pb-2"><a href="/kontakt">Morpheus - 8</a></li>
-            <li className="pb-2"><a href="/onas">Frax Ultra Laser Frakcyjny</a></li>
-            <li className="pb-2"><a href="/kontakt">HiFUSONIX + Liposonix</a></li>
-            <li><a href="/kontakt">VENOM</a></li>
+            <li className="pb-2"><Link href="/kontakt">Morpheus - 8</Link></li>
+            <li className="pb-2"><Link href="/onas">Frax Ultra Laser Frakcyjny</Link></li>
+            <li className="pb-2"><Link href="/kontakt">HiFUSONIX + Liposonix</Link></li>
+            <li><Link href="/kontakt">VENOM</Link></li>
         </ul>
     </footer>
     );
