@@ -21,14 +21,14 @@ export default function Home() {
 
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         
-        <div className="grid md:grid-cols-2 sm:grid-cols-1 w-full md:px-10 sm:p-6 justify-center items-center font-light bg-gray-200">
+        <div className="grid md:grid-cols-2 sm:grid-cols-1 w-full md:px-10 px-8 justify-center items-center font-light bg-gray-200">
           <div className="grid grid-cols-2 w-full gap-4 bg-gray-200 text-black rounded text-center">
             <div className="p-10">1</div>
             <div className="p-10">2</div>
             <div className="p-10">3</div>
             <div className="p-10">4</div>
           </div>
-          <div className="w-full grid-col-span-2 bg-gray-200 text-black h-full justify-center flex flex-col gap-4 md:p-10 sm:p-6">
+          <div className="w-full grid-col-span-2 bg-gray-200 text-black h-full justify-center flex flex-col gap-4 md:p-10 p-6">
               <h1 className="text-4xl font-light">Najlepsza jakość w najlepszej cenie</h1>
               <p className="text-2xl">Sprawdź nasze polecane urządzenia</p>
               <Button onPress={scrollToNext} className="bg-yellow-500 md:w-1/3 sm:w-full text-xl">Polecane</Button>
