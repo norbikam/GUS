@@ -22,7 +22,7 @@ export default function HeroSection() {
         muted
         loop
       >
-        <source src="/videos/bgcolorsmoke.mp4" type="video/mp4" />
+        <source src="/videos/bgsmokecoloredcompressed.mp4" type="video/mp4" />
         Twoja przeglądarka nie wspiera odtwarzania wideo.
       </video>
 
