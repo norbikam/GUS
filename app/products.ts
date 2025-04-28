@@ -247,12 +247,5 @@ Frax Ultra to doskonała propozycja dla profesjonalistów, którzy szukają nowo
       price: "7500 zł",
       image: "/products/venom.png",
     },
-    {
-      title: "Frax Ultra Laser Frakcyjny",
-      slug: "FraxUltra",
-      description: ``,
-      price: "7500 zł",
-      image: "/products/niewiem.png",
-    },
   ];
   

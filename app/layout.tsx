@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/navbar";
 
 import { ReactLenis } from 'lenis/react'
+import Footer from "./components/footer";
 
 const jost = Jost({
   variable: "--font-jost",
@@ -28,6 +29,7 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
+        <Footer />
       </body>
       </ReactLenis>
     </html>

@@ -2,52 +2,29 @@ import Image from "next/image";
 
 export default function Footer() {
     return (
-<footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4 py-60"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <footer className="grid grid-cols-1 md:grid-cols-3 items-center justify-center py-10 bg-gray-800/20 px-10 md:px-100 text-left md:text-center">
+        <ul>
+            <li>Robert Morawski</li>
+            <li>ul. Perłowa 13a</li>
+            <li>76-270 Ustka</li>
+            <li></li>
+            <li>Czynne: pn-pt 10:00-20:00</li>
+            <li>tel. +48 510 255 279</li>
+            <li>email: glowupskinpl@gmail.com</li>
+        </ul>
+        <ul className="pt-10 md:pt-0">
+            <li className="pb-4 text-xl">Menu</li>
+            <li className="pb-2"><a href="/katalog">Sklep</a></li>
+            <li className="pb-2"><a href="/kontakt">Kontakt</a></li>
+            <li><a href="/onas">O nas</a></li>
+        </ul>
+        <ul className="pt-10 md:pt-0">
+            <li className="pb-4 text-xl">Sklep</li>
+            <li className="pb-2"><a href="/kontakt">Morpheus - 8</a></li>
+            <li className="pb-2"><a href="/onas">Frax Ultra Laser Frakcyjny</a></li>
+            <li className="pb-2"><a href="/kontakt">HiFUSONIX + Liposonix</a></li>
+            <li><a href="/kontakt">VENOM</a></li>
+        </ul>
+    </footer>
     );
 }
