@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import HeroSection from "./components/mainVidBg";
-import {Button, ButtonGroup} from "@heroui/button";
+import {Button} from "@heroui/button";
 import Footer from "./components/footer";
 import {useRef} from "react";
 
