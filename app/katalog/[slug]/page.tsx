@@ -1,4 +1,4 @@
-import { products } from "@/app/products";  // <-- Corrected import
+import { products } from "@/app/products";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 
@@ -6,7 +6,7 @@ interface ProductPageProps {
   params: { slug: string };
 }
 
-export default function ProductPage({ params }: ProductPageProps) {
+export default async function ProductPage({ params }: ProductPageProps) {
   const product = products.find((p) => p.slug === params.slug);
 
   if (!product) return notFound();
