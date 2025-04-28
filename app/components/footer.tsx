@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default function Footer() {
     return (
-    <footer className="grid grid-cols-1 md:grid-cols-3 items-center justify-center py-10 bg-gray-800/20 px-10 md:px-100 text-left md:text-center">
-        <ul>
+    <footer className="grid grid-cols-1 md:grid-cols-3 items-center justify-center py-10 bg-gray-800/20 px-10 text-left md:text-center">
+        <ul className="md:text-left md:pl-10">
             <li>Robert Morawski</li>
             <li>ul. Perłowa 13a</li>
             <li>76-270 Ustka</li>
@@ -18,7 +18,7 @@ export default function Footer() {
             <li className="pb-2"><Link href="/kontakt">Kontakt</Link></li>
             <li><Link href="/onas">O nas</Link></li>
         </ul>
-        <ul className="pt-10 md:pt-0">
+        <ul className="pt-10 md:pt-0 md:text-right md:pr-10">
             <li className="pb-4 text-xl">Sklep</li>
             <li className="pb-2"><Link href="/kontakt">Morpheus - 8</Link></li>
             <li className="pb-2"><Link href="/onas">Frax Ultra Laser Frakcyjny</Link></li>

@@ -29,22 +29,22 @@ export default function Navbar() {
     <header className="navbar">
       <motion.nav
         className={`fixed top-0 left-0 w-full z-50 transition-colors duration-500 ${
-          scrolled ? "bg-white shadow-md" : "bg-transparent"
+          scrolled ? "bg-gray-50/98 shadow-md" : "bg-transparent"
         }`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
-        <div className="max-w-[80vw] mx-auto px-6 md:px-12 py-4 grid grid-cols-3 items-center">
+        <div className="lg:max-w-[90vw] md:max-w-full mx-auto px-6 py-4 grid grid-cols-3 items-center">
           {/* Left placeholder / links */}
           <div className="flex items-center space-x-8">
-            <div className="hidden md:flex">
+            <div className="hidden lg:flex gap-4 lg:text-nowrap md:grid md:grid-cols-2">
               {navLinks.map(({ href, label }) => (
                 <Link
                   key={href}
                   href={href}
                   className={`transition-colors duration-300 ${
                     scrolled ? "text-black hover:text-gray-700" : "text-white hover:text-gray-300"
-                  } mx-4`}
+                  } `}
                 >
                   {label}
                 </Link>
