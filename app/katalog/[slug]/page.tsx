@@ -2,14 +2,10 @@ import { products } from "../../products";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 
-type Props = {
-  params: { slug: string };
-};
-
-export default function ProductPage({ params }: Props) {
-  const product = products.find((p) => p.slug === params.slug);
-
-  if (!product) return notFound();
+export default function ProductPage({ params }: { params: { slug: string } }) {
+    const product = products.find((p) => p.slug === params.slug);
+  
+    if (!product) return notFound();
 
   return (
     <div className="p-10 flex justify-center items-center gap-10">
