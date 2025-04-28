@@ -16,6 +16,32 @@ export default async function ProductPage({ params }: Props) {
   }
 
   return (
+    <div>
+        <section className="relative w-screen h-[30vh] overflow-hidden mainvideobg">
+    {/* Background Video */}
+    <video
+      className="absolute inset-0 w-full h-full object-cover"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+    >
+      <source src="/videos/bgsmokecoloredcompressed.mp4" type="video/mp4" />
+      Twoja przeglądarka nie wspiera odtwarzania wideo.
+    </video>
+
+    {/* Overlay to darken video for readability */}
+    <div className="absolute inset-0 bg-black/50"/>
+
+    {/* Centered Text */}
+    <div className="relative z-10 flex flex-col justify-end h-full px-6 text-center pb-10">
+      <h1 className="text-4xl md:text-6xl text-white uppercase">
+        {product.title}
+      </h1>
+    </div>
+  </section>
+    
     <div className="p-10 pt-20 gap-10 grid grid-cols-1 md:grid-cols-2">
       <Image src={product.image} alt={product.title} width={800} height={500} />
       <div>
@@ -31,6 +57,7 @@ export default async function ProductPage({ params }: Props) {
           Zadzwoń i zamów
         </a>
       </div>
+    </div>
     </div>
   );
 }
