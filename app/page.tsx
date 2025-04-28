@@ -1,23 +1,37 @@
+"use client";
+
 import Image from "next/image";
 import HeroSection from "./components/mainVidBg";
-
+import {Button, ButtonGroup} from "@heroui/button";
+import Footer from "./components/footer";
+import {useRef} from "react";
 
 export default function Home() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollToNext = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollBy({ top: window.innerHeight-60, behavior: "smooth" });
+    }
+  }
   return (
     <div className="">
       <HeroSection/>
 
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         
-        <div className="grid md:grid-cols-2 sm:grid-cols-1 w-full gap-4 text-center px-10 bg-white/50 justify-center items-center">
-          <div className="grid grid-cols-2 w-full gap-4 bg-gray-200 text-black rounded">
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
+        <div className="grid md:grid-cols-2 sm:grid-cols-1 w-full px-10 justify-center items-center font-light bg-gray-200">
+          <div className="grid grid-cols-2 w-full gap-4 bg-gray-200 text-black rounded text-center">
+            <div className="p-10">1</div>
+            <div className="p-10">2</div>
+            <div className="p-10">3</div>
+            <div className="p-10">4</div>
           </div>
-          <div className="w-full grid-col-span-2 bg-gray-200 text-black rounded">
-            <h1>Right</h1>
+          <div className="w-full grid-col-span-2 bg-gray-200 text-black h-full justify-center flex flex-col gap-4 p-10">
+              <h1 className="text-4xl font-light">Najlepsza jakość w najlepszej cenie</h1>
+              <p className="text-2xl">Sprawdź nasze polecane urządzenia</p>
+              <Button onPress={scrollToNext} className="bg-yellow-500 w-1/3 text-xl">Polecane</Button>
           </div>
         </div>
 
@@ -68,53 +82,7 @@ export default function Home() {
           </a>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4 py-60"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      <Footer />
     </div>
   );
 }

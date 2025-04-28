@@ -9,12 +9,12 @@ export default function HeroSection() {
     if (next) {
       next.scrollIntoView({ behavior: "smooth" });
     } else {
-      window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
+      window.scrollBy({ top: window.innerHeight-60, behavior: "smooth" });
     }
   };
 
   return (
-    <section className="relative w-screen h-screen overflow-hidden">
+    <section className="relative w-screen h-screen overflow-hidden mainvideobg">
       {/* Background Video */}
       <video
         className="absolute inset-0 w-full h-full object-cover"

@@ -1,17 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Jost} from "next/font/google";
+import {Jost} from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { ReactLenis } from 'lenis/react'
 
 const jost = Jost({
   variable: "--font-jost",
@@ -30,12 +22,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl">
+      <ReactLenis root>
       <body
         className={`${jost.variable} ${jost.variable} antialiased overflow-x-hidden`}
       >
         <Navbar />
         {children}
       </body>
+      </ReactLenis>
     </html>
   );
 }
