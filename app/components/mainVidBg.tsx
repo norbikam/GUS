@@ -21,6 +21,8 @@ export default function HeroSection() {
         autoPlay
         muted
         loop
+        playsInline
+        preload="auto"
       >
         <source src="/videos/bgsmokecoloredcompressed.mp4" type="video/mp4" />
         Twoja przeglądarka nie wspiera odtwarzania wideo.
