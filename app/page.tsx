@@ -72,7 +72,7 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-6 p-10 pt-0 w-full">
-          <div className="p-4 flex flex-col justify-center items-center"><h1 className="text-5xl pb-6">Odkryj najnowsze urządzenia</h1><p>U nas, zawsze dostaniesz to, czego potrzebujesz</p></div>
+          <div className="p-4 flex flex-col justify-center items-center"><h1 className="text-3xl md:text-5xl pb-6">Odkryj najnowsze urządzenia</h1><p>U nas, zawsze dostaniesz to, czego potrzebujesz</p></div>
           {products.slice(4).map((product) => (
             <Link key={product.title} href={`/katalog/${product.slug}`}>
               <div className="border overflow-hidden shadow hover:shadow-lg transition items-center justify-center flex flex-col text-center md:w-[30vw] lg:w-full">
