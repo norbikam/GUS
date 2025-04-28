@@ -42,7 +42,7 @@ export default function HeroSection() {
       </div>
 
       {/* Animated Scroll Button */}
-      <div className="absolute bottom-16 w-full flex justify-center z-10">
+      <div className="absolute bottom-32 w-full flex justify-center z-10">
         <motion.button
           type="button"
           onClick={scrollToNext}
