@@ -24,3 +24,9 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.navbar{
+  font-family: jost, sans-serif;
+  font-weight: 200;
+  font-size: large;
+}

@@ -17,16 +17,16 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { href: "/", label: "Strona Główna" },
-    { href: "/sklep", label: "Sklep" },
-    { href: "/onas", label: "O nas" },
-    { href: "/kontakt", label: "Kontakt" },
+    { href: "/", label: "STRONA GŁÓWNA" },
+    { href: "/sklep", label: "SKLEP" },
+    { href: "/onas", label: "O NAS" },
+    { href: "/kontakt", label: "KONTAKT" },
   ];
 
   const phoneNumber = "+48 510 255 279";
 
   return (
-    <header>
+    <header className="navbar">
       <motion.nav
         className={`fixed top-0 left-0 w-full z-50 transition-colors duration-500 ${
           scrolled ? "bg-white shadow-md" : "bg-transparent"
@@ -36,7 +36,7 @@ export default function Navbar() {
       >
         <div className="max-w-[80vw] mx-auto px-6 md:px-12 py-4 grid grid-cols-3 items-center">
           {/* Left placeholder / links */}
-          <div className="col-span-1 flex items-center space-x-8">
+          <div className="flex items-center space-x-8">
             <div className="hidden md:flex">
               {navLinks.map(({ href, label }) => (
                 <Link
@@ -53,10 +53,10 @@ export default function Navbar() {
           </div>
 
           {/* Center Logo */}
-          <div className="col-span-1 flex justify-center">
+          <div className="flex justify-center">
             <Link
               href="/"
-              className={`font-bold text-3xl transition-colors duration-300 ${
+              className={`font-semibold text-3xl transition-colors duration-300 ${
                 scrolled ? "text-yellow-500" : "text-white"
               }`}
             >
@@ -65,11 +65,11 @@ export default function Navbar() {
           </div>
 
           {/* Right Section: phone (desktop) + hamburger (mobile) */}
-          <div className="col-span-1 flex justify-end items-center space-x-4">
+          <div className="flex justify-end items-center space-x-4">
             {/* Phone number on desktop */}
             <a
               href={`tel:${phoneNumber.replace(/\s/g, "")}`}
-              className={`hidden md:block text-xl font-extralight transition-colors duration-300 ${
+              className={`hidden md:block transition-colors duration-300 ${
                 scrolled ? "text-black hover:text-gray-700" : "text-white hover:text-gray-300"
               }`}
             >
