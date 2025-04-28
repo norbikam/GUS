@@ -1,6 +1,7 @@
 import { products } from "@/app/products";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import ReactMarkdown from "react-markdown";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -15,11 +16,12 @@ export default async function ProductPage({ params }: Props) {
   }
 
   return (
-    <div className="p-10 flex justify-center items-center gap-10">
+    <div className="p-10 pt-20 gap-10 grid grid-cols-1 md:grid-cols-2">
       <Image src={product.image} alt={product.title} width={800} height={500} />
       <div>
         <h1 className="text-3xl font-bold mt-6">{product.title}</h1>
-        <p className="text-gray-700 mt-4">{product.description}</p>
+        <br/>
+        <ReactMarkdown>{product.description}</ReactMarkdown>
         <p className="text-2xl text-yellow-600 mt-6">{product.price}</p>
 
         <a
