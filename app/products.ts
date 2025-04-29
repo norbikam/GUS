@@ -719,7 +719,7 @@ Tryby pracy: Pojedynczy / szybki impuls, automatyczne chłodzenie
 
 📞 Dołącz do grona profesjonalistów i zapewnij swoim klientom bezbolesną depilację na najwyższym poziomie – wybierz EternaSilk 808nm!`,
       price: "14 900 zł",
-      image: "/products/eternasilk.png",
+      image: "/products/EternaSilk.png",
     },
   ];
   
