@@ -52,7 +52,7 @@ export default async function ProductPage({ params }: Props) {
         <p className="text-2xl text-yellow-600 mt-6">{product.price}</p>
 
         <a
-          href="tel:+48123456789"
+          href="tel:+48510255279"
           className="mt-10 inline-block bg-yellow-500 text-gray-800 px-6 py-3 rounded-lg hover:bg-yellow-600 transition"
         >
           Zadzwoń i zamów

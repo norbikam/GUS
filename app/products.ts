@@ -56,7 +56,7 @@ Morpheus 8 to idealny wybór dla profesjonalistów, którzy szukają najnowocze�
 Dzięki temu urządzeniu Twoi pacjenci mogą cieszyć się gładką, jędrną i odmłodzoną skórą już po kilku zabiegach.
     `,
     price: "22 900zł",
-    image: "/products/morpheus.png",
+    image: "/products/morpheus.webp",
     },
     {
       title: "Frax Ultra Laser Frakcyjny Hybrydowy Er.-YAG / Co2",
@@ -203,7 +203,7 @@ Wybór urządzenia zależy od indywidualnych potrzeb, budżetu oraz oczekiwanych
 Frax Ultra to doskonała propozycja dla profesjonalistów, którzy szukają nowoczesnych, skutecznych i bezpiecznych rozwiązań w pielęgnacji skóry.
       `,
       price: "39 000zł",
-      image: "/products/FraxUltra.png",
+      image: "/products/FraxUltra.webp",
     },
     {
       title: "VENOM – Laser hybrydowy 2 w 1 – Diodowy + Nd:Yag",
@@ -314,7 +314,7 @@ Urządzenie VENOM dostępne jest w dwóch wersjach kolorystycznych – dopasowan
 
 VENOM to kompleksowe rozwiązanie dla specjalistów, którzy oczekują niezawodności, skuteczności i nowoczesnej technologii w jednym kompaktowym urządzeniu.`,
       price: "39 000 zł",
-      image: "/products/venom.png",
+      image: "/products/venom.webp",
     },
     {
       title: "ANGELO Laser CO2",
@@ -393,7 +393,7 @@ Pełna zgodność z normami europejskimi i medycznymi
 🌸 Odzyskaj pewność siebie i komfort – zaufaj sprawdzonej technologii!
 📞 Umów się na konsultację już dziś i poznaj możliwości zabiegu z ANGELO Laser CO2.`,
       price: "34 900 zł",
-      image: "/products/Angelo.png",
+      image: "/products/Angelo.webp",
     },
     {
       title: "HiFUSONIX + Liposonix (niechirurgiczny lifting + spalanie tłuszczu)",
@@ -489,7 +489,7 @@ Widoczne efekty już po pierwszej sesji
 
 📞 Skontaktuj się z nami i dowiedz się, jak wprowadzić HiFUSONIX + Liposonix do swojej oferty!`,
       price: "19 900 zł",
-      image: "/products/hifu.png",
+      image: "/products/hifu.webp",
     },
     {
       title: "Hot and Cold Plasma 6W1",
@@ -569,7 +569,7 @@ Gwarancja: 12 miesięcy na urządzenie, 3 miesiące na części
 
 `,
       price: "29 900 zł",
-      image: "/products/hotandcoldplasma.png",
+      image: "/products/hotandcoldplasma.webp",
     },
     {
       title: "Laser Picosekundowy Aura XPL ULTIMATE 1200MJ",
@@ -651,7 +651,7 @@ Dodatkowo: możliwość pracy bez znieczulenia, szybka regeneracja skóry
 ✔ Kompaktowa, nowoczesna konstrukcja
 ✔ Możliwość zakupu w systemie ratalnym 0% – bez banku, bez prowizji!`,
       price: "32 900 zł",
-      image: "/products/PicoLaser.png",
+      image: "/products/PicoLaser.webp",
     },
     {
       title: "EternaSilk Laser 808nm do usuwania owłosienia -bezbolesny",
@@ -719,7 +719,7 @@ Tryby pracy: Pojedynczy / szybki impuls, automatyczne chłodzenie
 
 📞 Dołącz do grona profesjonalistów i zapewnij swoim klientom bezbolesną depilację na najwyższym poziomie – wybierz EternaSilk 808nm!`,
       price: "14 900 zł",
-      image: "/products/EternaSilk.png",
+      image: "/products/EternaSilk.webp",
     },
   ];
   
