@@ -82,7 +82,7 @@ export default function Home() {
 
         <div id="produkty" className="grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-6 p-10 pt-0 w-full">
           <div className="p-4 flex flex-col justify-center items-center"><h1 className="text-lg md:text-5xl pb-6">Odkryj najnowsze urządzenia</h1><p>U nas, zawsze dostaniesz to, czego potrzebujesz</p></div>
-          {products.map((product) => (
+          {products.slice(9).map((product) => (
             <Link key={product.title} href={`/katalog/${product.slug}`}>
               <div className="overflow-hidden shadow hover:shadow-lg transition items-center justify-center flex flex-col text-center md:w-[30vw] lg:w-full">
                 <Image src={product.image} alt={product.title} height={400} width={300}  />
