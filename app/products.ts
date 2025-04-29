@@ -203,7 +203,7 @@ Wybór urządzenia zależy od indywidualnych potrzeb, budżetu oraz oczekiwanych
 Frax Ultra to doskonała propozycja dla profesjonalistów, którzy szukają nowoczesnych, skutecznych i bezpiecznych rozwiązań w pielęgnacji skóry.
       `,
       price: "39 000zł",
-      image: "/products/fraxultra.png",
+      image: "/products/FraxUltra.png",
     },
     {
       title: "VENOM – Laser hybrydowy 2 w 1 – Diodowy + Nd:Yag",
