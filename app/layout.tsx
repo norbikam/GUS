@@ -5,6 +5,7 @@ import Navbar from "./components/navbar";
 
 import { ReactLenis } from 'lenis/react'
 import Footer from "./components/footer";
+import { Button } from "@heroui/button";
 
 const jost = Jost({
   variable: "--font-jost",

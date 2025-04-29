@@ -13,12 +13,21 @@ export default function Home() {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     } else {
-      window.scrollBy({ top: window.innerHeight-60, behavior: "smooth" });
+      document.getElementById('produkty')?.scrollIntoView({ behavior: "smooth" });
     }
   }
+
+  const ScrollTop = () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
   return (
     <div className="">
       <HeroSection/>
+
+      <Button onPress={ScrollTop} className="text-3xl fixed bottom-10 right-5 w-20 h-20 z-[0] rounded-full bg-yellow-500/70 ">↑</Button>
 
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         
@@ -71,9 +80,9 @@ export default function Home() {
               </div>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-6 p-10 pt-0 w-full">
+        <div id="produkty" className="grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-6 p-10 pt-0 w-full">
           <div className="p-4 flex flex-col justify-center items-center"><h1 className="text-lg md:text-5xl pb-6">Odkryj najnowsze urządzenia</h1><p>U nas, zawsze dostaniesz to, czego potrzebujesz</p></div>
-          {products.slice(4).map((product) => (
+          {products.map((product) => (
             <Link key={product.title} href={`/katalog/${product.slug}`}>
               <div className="overflow-hidden shadow hover:shadow-lg transition items-center justify-center flex flex-col text-center md:w-[30vw] lg:w-full">
                 <Image src={product.image} alt={product.title} height={400} width={300}  />

@@ -36,7 +36,7 @@ export default async function ProductPage({ params }: Props) {
 
     {/* Centered Text */}
     <div className="relative z-10 flex flex-col justify-end h-full px-6 text-center pb-10">
-      <h1 className="text-4xl md:text-6xl text-white uppercase">
+      <h1 className="text-[3vw] text-white uppercase">
         {product.title}
       </h1>
     </div>
@@ -48,6 +48,7 @@ export default async function ProductPage({ params }: Props) {
         <h1 className="text-3xl font-bold mt-6">{product.title}</h1>
         <br/>
         <ReactMarkdown>{product.description}</ReactMarkdown>
+        <p>Możliwość płatności ratalnej do 12 rat 0%</p>
         <p className="text-2xl text-yellow-600 mt-6">{product.price}</p>
 
         <a
