@@ -6,6 +6,7 @@ import {Button} from "@heroui/button";
 import {useRef} from "react";
 import { products } from "@/app/products";
 import Link from "next/link";
+import { ProductsDisplay } from "./components/productsdisplay";
 
 export default function Home() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -45,19 +46,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-10 pt-0 w-full">
-          {products.slice(4).map((product) => (
-            <Link key={product.title} href={`/katalog/${product.slug}`}>
-              <div className="overflow-hidden shadow hover:shadow-lg transition items-center justify-center flex flex-col text-center">
-                <Image src={product.image} alt={product.title} height={400} width={300}  />
-                <div className="py-4">
-                  <h2 className="text-xl font-bold pt-1">{product.title}</h2>
-                  <p className="text-gray-600 border-b">{product.price}</p>  
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <ProductsDisplay amount={4}/>
 
         <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-center font-light text-center">
             <div className="border-l text-left p-10 mx-10">
@@ -82,17 +71,9 @@ export default function Home() {
 
         <div id="produkty" className="grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-6 p-10 pt-0 w-full">
           <div className="p-4 flex flex-col justify-center items-center"><h1 className="text-lg md:text-5xl pb-6">Odkryj najnowsze urządzenia</h1><p>U nas, zawsze dostaniesz to, czego potrzebujesz</p></div>
-          {products.slice(9).map((product) => (
-            <Link key={product.title} href={`/katalog/${product.slug}`}>
-              <div className="overflow-hidden shadow hover:shadow-lg transition items-center justify-center flex flex-col text-center md:w-[30vw] lg:w-full">
-                <Image src={product.image} alt={product.title} height={400} width={300}  />
-                <div className="py-4">
-                  <h2 className="text-xl font-bold">{product.title}</h2>
-                  <p className="text-gray-600 border-b">{product.price}</p>  
-                </div>
-              </div>
-            </Link>
-          ))}
+          <div className="col-span-2 md:col-span-3 lg:col-span-4 flex flex-col items-center justify-center text-center">
+          <ProductsDisplay amount={4}/>
+          </div>
         </div>
 
         

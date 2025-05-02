@@ -59,7 +59,7 @@ export function InstagramColor() {
 export function WhatsApp() {
     return (
       <Link
-              href="https://wa.me/48696273477"
+              href="https://wa.me/48510255279"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-green-600">
@@ -71,7 +71,7 @@ export function WhatsApp() {
   export function WhatsAppColor() {
     return (
       <Link
-              href="https://wa.me/48696273477"
+              href="https://wa.me/48510255279"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-green-600 text-green-400">
