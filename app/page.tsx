@@ -1,11 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import HeroSection from "./components/mainVidBg";
 import {Button} from "@heroui/button";
 import {useRef} from "react";
-import { products } from "@/app/products";
-import Link from "next/link";
 import { ProductsDisplay } from "./components/productsdisplay";
 
 export default function Home() {
