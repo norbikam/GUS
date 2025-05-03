@@ -46,14 +46,6 @@ Dzięki temu urządzeniu możesz cieszyć się nowoczesnymi, minimalnie inwazyjn
 
 - **Minimalny Czas Rekonwalescencji:**  
   Dzięki precyzyjnemu działaniu i minimalnym uszkodzeniom skóry, czas rekonwalescencji po zabiegu z użyciem Morpheus 8 jest znacznie krótszy niż w przypadku innych urządzeń.
-&nbsp;  
-&nbsp;  
----
-&nbsp;  
-### Podsumowanie
-
-Morpheus 8 to idealny wybór dla profesjonalistów, którzy szukają najnowocześniejszych rozwiązań w pielęgnacji skóry, zapewniających maksymalną skuteczność i bezpieczeństwo.  
-Dzięki temu urządzeniu Twoi pacjenci mogą cieszyć się gładką, jędrną i odmłodzoną skórą już po kilku zabiegach.
     `,
     price: "22 900zł",
     image: "/products/morpheus.webp",
@@ -165,14 +157,6 @@ Technologia hybrydowa:
 Długość fali:
 Zakres aż do 1060 nm dla zwiększonej uniwersalności.
 
-Cena:
-Około 39 000 zł.
-
- 
-
-Fotona 4D
- 
-
 Kompleksowe odmładzanie:
 Cztery tryby zabiegowe: EndoLifting®, FRAC3®, PIANO® i SupErficial™.
 
@@ -187,20 +171,6 @@ Technologie laserowe:
 Er:YAG (2940 nm): precyzyjne i mniej inwazyjne działanie.
 
 Nd:YAG: głębsze działanie termiczne.
-
-Cena:
-Od 100 000 zł wzwyż (brak oficjalnej ceny na stronie producenta).
-
- 
- 
-
-Podsumowanie
- 
-
-Frax Ultra stanowi ekonomiczną alternatywę dla urządzeń takich jak Fotona 4D, oferując zbliżone efekty zabiegowe przy znacznie niższym koszcie zakupu.
-Wybór urządzenia zależy od indywidualnych potrzeb, budżetu oraz oczekiwanych rezultatów.
-
-Frax Ultra to doskonała propozycja dla profesjonalistów, którzy szukają nowoczesnych, skutecznych i bezpiecznych rozwiązań w pielęgnacji skóry.
       `,
       price: "39 000zł",
       image: "/products/FraxUltra.webp",
