@@ -28,14 +28,14 @@ export default function KatalogPage() {
     <div className="flex flex-col md:grid grid-cols-2 gap-10 p-10 pt-20">
         <div className="flex flex-col items-center justify-center text-center col-span-2">
             <p className="mt-4 text-lg md:text-2xl font-light md:px-20">
-            Jesteśmy firmą zajmującą się sprzedażą najwyższej klasy urządzeń dla salonów kosmetycznych. Nasza oferta obejmuje szeroki asortyment sprzętu, który pomoże Ci zadbać o najwyższy poziom usług dla swoich klientów.
+            Jesteśmy firmą zajmującą się sprzedażą najwyższej klasy urządzeń dla salonów medycyny estestycznej. Nasza oferta obejmuje szeroki asortyment sprzętu, który pomoże Ci zadbać o najwyższy poziom usług dla swoich klientów.
             </p>
         </div>
         <div className="flex flex-col items-center text-center md:text-left">
             <h1 className="text-3xl mt-6">Nasza misja</h1>
             <p className="mt-4 text-lg md:text-2xl font-light">
-            Naszą misją jest dostarczanie innowacyjnych rozwiązań, które ułatwiają pracę w salonach kosmetycznych. Wierzymy, że odpowiedni sprzęt może znacząco poprawić jakość usług i zadowolenie klientów. 
-            Dlatego nieustannie poszukujemy nowych technologii i rozwiązań, które mogą wspierać rozwój branży kosmetycznej. Naszym celem jest budowanie długotrwałych relacji z klientami, opartych na zaufaniu i profesjonalizmie.
+            Naszą misją jest dostarczanie innowacyjnych rozwiązań, które ułatwiają pracę w salonach medycyny estetycznej. Wierzymy, że odpowiedni sprzęt może znacząco poprawić jakość usług i zadowolenie klientów. 
+            Dlatego nieustannie poszukujemy nowych technologii i rozwiązań, które mogą wspierać rozwój branży kosmetologicznej. Naszym celem jest budowanie długotrwałych relacji z klientami, opartych na zaufaniu i profesjonalizmie.
             </p>
         </div>
         <div className="flex flex-col items-center  text-center">
