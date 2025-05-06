@@ -1,4 +1,38 @@
+"use client";
+
+import { useState } from "react";
+
 export default function KatalogPage() {
+  const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<boolean>(false);
+
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+
+    formData.append("access_key", "8e25ac27-84df-4f70-9120-5b852a0e458a");
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: json
+    }).then((res) => res.json());
+
+    if (res.success) {
+      setMessage("Wiadomość została wysłana!");
+      setError(false);
+      (event.target as HTMLFormElement).reset();
+    } else {
+      setMessage("Wystąpił błąd. Spróbuj ponownie.");
+      setError(true);
+    }
+  };
   return (
     <div>
     <section className="relative w-screen h-[30vh] overflow-hidden mainvideobg">
@@ -63,17 +97,27 @@ export default function KatalogPage() {
             </a>
           </div>
           <div className="flex flex-col items-center justify-center text-center col-span-2">
-            <form className="md:w-full md:px-20">
-              <h1 className="text-3xl mt-6">Formularz kontaktowy</h1>
-              <div className="flex flex-col md:grid grid-cols-2 gap-4 mt-4 w-full">
-                <input type="text" placeholder="Imię" className="border p-2 rounded" required />
-                <input type="text" placeholder="Nazwisko" className="border p-2 rounded" required />
-                <input type="email" placeholder="E-mail" className="border p-2 rounded" required />
-                <input type="tel" placeholder="Telefon" className="border p-2 rounded" required />
-              </div>
-              <textarea placeholder="Wiadomość" className="border p-2 rounded mt-4 w-full h-32 resize-none" required></textarea>
-              <button type="submit" className="mt-4 bg-yellow-500 text-gray-800 px-6 py-3 rounded-lg hover:bg-yellow-600 transition w-full">Wyślij</button>
-            </form>
+          <form className="md:w-full md:px-20" onSubmit={onSubmit}>
+      <h1 className="text-3xl mt-6">Formularz kontaktowy</h1>
+      <div className="flex flex-col md:grid grid-cols-2 gap-4 mt-4 w-full">
+        <input name="first_name" type="text" placeholder="Imię" className="border p-2 rounded" required />
+        <input name="last_name" type="text" placeholder="Nazwisko" className="border p-2 rounded" required />
+        <input name="email" type="email" placeholder="E-mail" className="border p-2 rounded" required />
+        <input name="phone" type="tel" placeholder="Telefon" className="border p-2 rounded" required />
+      </div>
+      <textarea name="message" placeholder="Wiadomość" className="border p-2 rounded mt-4 w-full h-32 resize-none" required></textarea>
+      <button type="submit" className="mt-4 bg-yellow-500 text-gray-800 px-6 py-3 rounded-lg hover:bg-yellow-600 transition w-full">Wyślij</button>
+
+      {message && (
+        <div
+          className={`mt-4 p-4 rounded-lg text-center transition ${
+            error ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"
+          }`}
+        >
+          {message}
+        </div>
+      )}
+    </form>
           </div>
     </div>
     </div>
