@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
 import Link from "next/link";
 import { FacebookColor, InstagramColor, WhatsAppColor } from "./Social";
+import Image from "next/image";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -60,7 +61,7 @@ export default function Navbar() {
                 scrolled ? "text-yellow-500" : "text-white"
               }`}
             >
-              GUS
+              <Image width={50} height={50} src={`/images/guslogo.png`} alt="GUS"></Image>
             </Link>
           </div>
 

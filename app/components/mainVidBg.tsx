@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function HeroSection() {
   // Smooth scroll to next section or by one viewport height
@@ -30,9 +31,11 @@ export default function HeroSection() {
 
       {/* Overlay to darken video for readability */}
       <div className="absolute inset-0 bg-black/50"/>
+      
 
       {/* Centered Text */}
       <div className="relative z-10 flex flex-col justify-center items-center h-full px-6 text-center">
+      <Image width={1000} height={1000} alt="GUS" src={`/images/guslogo.png`} className="object-cover absolute z-[-5] blur "></Image>
         <h1 className="text-4xl md:text-6xl font-bold text-white">
           Witaj na naszej stronie
         </h1>
