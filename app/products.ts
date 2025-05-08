@@ -47,7 +47,7 @@ Dzięki temu urządzeniu możesz cieszyć się nowoczesnymi, minimalnie inwazyjn
 - **Minimalny Czas Rekonwalescencji:**  
   Dzięki precyzyjnemu działaniu i minimalnym uszkodzeniom skóry, czas rekonwalescencji po zabiegu z użyciem Morpheus 8 jest znacznie krótszy niż w przypadku innych urządzeń.
     `,
-    price: "22 900zł",
+    price: "9 900zł",
     image: "/products/morpheus.webp",
     },
     {
