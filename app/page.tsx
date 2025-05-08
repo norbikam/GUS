@@ -45,10 +45,11 @@ export default function Home() {
               <Button onPress={scrollToNext} className="bg-yellow-500 md:w-1/3 sm:w-full text-xl">Polecane</Button>
           </div>
         </div>
+        <div className="bg-[url(/images/starsbgalpha.png)] bg-cover">
+          <ProductsDisplay amount={4}/>
+        </div>
 
-        <ProductsDisplay amount={4}/>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-center font-light text-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-center font-light text-center ">
             <div className="border-l text-left p-10 mx-10">
               <h1 className="text-7xl pb-2">Lasery</h1>
               <p>Odkryj naszą zaawansowaną linię laserów, która wykorzystują najnowsze technologie, by zapewnić Twoim klientom naturalny efekt odmłodzenia i długotrwałe rezultaty.</p>
@@ -69,7 +70,7 @@ export default function Home() {
               </div>
         </div>
 
-        <div id="produkty" className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-3 gap-6 p-10 pt-0 w-full">
+        <div id="produkty" className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-3 gap-6 p-10 pt-0 w-full bg-[url(/images/starsbgalpha.png)] bg-cover">
           <div className="p-4 flex flex-col justify-center items-center">
             <h1 className="text-lg md:text-5xl pb-6">Odkryj najnowsze urządzenia</h1><p>U nas, zawsze dostaniesz to, czego potrzebujesz</p>
           </div>
