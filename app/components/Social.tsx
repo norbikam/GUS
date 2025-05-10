@@ -7,7 +7,7 @@ import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 export function Facebook() {
   return (
     <Link
-      href="https://www.facebook.com/profile.php?id=100051111260227&mibextid=wwXIfr&rdid=vZfqH4cPYbiOzgqR"
+      href="https://www.facebook.com/GlowUpSkinPolska/"
       target="_blank"
       rel="noopener noreferrer"
       className="hover:text-blue-600"
@@ -20,7 +20,7 @@ export function Facebook() {
 export function FacebookColor() {
   return (
     <Link
-      href="https://www.facebook.com/profile.php?id=100051111260227&mibextid=wwXIfr&rdid=vZfqH4cPYbiOzgqR"
+      href="https://www.facebook.com/GlowUpSkinPolska/"
       target="_blank"
       rel="noopener noreferrer"
       className="hover:text-blue-600 text-blue-400"
@@ -33,7 +33,7 @@ export function FacebookColor() {
 export function Instagram() {
     return (
       <Link
-                href="https://www.instagram.com"
+                href="https://www.instagram.com/glowupskinpl"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-pink-600"
@@ -46,7 +46,7 @@ export function Instagram() {
 export function InstagramColor() {
   return (
     <Link
-              href="https://www.instagram.com"
+              href="https://www.instagram.com/glowupskinpl"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-pink-600 text-pink-400"
