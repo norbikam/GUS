@@ -691,5 +691,70 @@ Tryby pracy: Pojedynczy / szybki impuls, automatyczne chłodzenie
       price: "14 900 zł",
       image: "/products/EternaSilk.webp",
     },
+    {
+      title: "Velure 1927nm - Laser Tulowy",
+      slug: "Velure",
+      description: `# Velure™ 1927 – Profesjonalny laser tulowy do odmładzania i regeneracji skóry
+
+**Velure™ 1927** to zaawansowany **laser tulowy o długości fali 1927 nm**, zaprojektowany do nieinwazyjnych i mikroablacyjnych zabiegów estetycznych. Dzięki wyjątkowej precyzji działania na warstwy skóry zapewnia doskonałe efekty odmłodzenia, wygładzenia i poprawy kolorytu – przy minimalnym czasie rekonwalescencji.
+
+---
+
+## 🎯 Zastosowanie
+
+- ✅ Usuwanie przebarwień i zmian pigmentacyjnych (melazma, plamy słoneczne)
+- ✅ Redukcja drobnych zmarszczek i linii
+- ✅ Leczenie blizn potrądzikowych i trądziku
+- ✅ Ujędrnianie i lifting skóry
+- ✅ Zwężanie porów i poprawa tekstury
+- ✅ Odświeżenie i rozjaśnienie cery
+
+---
+
+## 🌟 Dlaczego laser tulowy?
+
+Laser tulowy działa selektywnie na cząsteczki wody w skórze, co pozwala na:
+
+- bezpieczne oddziaływanie na naskórek i skórę właściwą
+- stymulację regeneracji komórkowej
+- zwiększoną produkcję kolagenu
+- widoczne odmłodzenie już po pierwszym zabiegu
+
+---
+
+## ⚙️ Najważniejsze cechy Velure™ 1927
+
+- **Długość fali:** 1927 nm – idealna do terapii depigmentacyjnych i odmładzających
+- **Tryby pracy:** Nieinwazyjny, Frakcyjny, Ślizgowy
+- **Wielopoziomowe działanie:** Na warstwy powierzchniowe, środkowe i głębokie skóry
+- **Ekran dotykowy:** 10,4” – intuicyjny interfejs użytkownika
+- **System chłodzenia:** Chłodzenie powietrzem – komfort i bezpieczeństwo
+- **Kompaktowa budowa:** Przenośny i idealny do gabinetów estetycznych
+
+---
+
+## 🧪 Parametry techniczne
+
+- **Moc wyjściowa:** do 12W
+- **Energia impulsu:** 1–300 mJ (regulowana)
+- **Szerokość impulsu:** 0,1–20 ms
+- **Kształty skanowania:** kwadrat, koło, trójkąt, sześciokąt, własny
+- **Rozstaw punktów:** 0,1–2,0 mm
+- **Zasilanie:** AC 220V ±10%, 50Hz
+- **Waga netto:** 13 kg
+
+---
+
+## ✅ Podsumowanie
+
+Velure™ 1927 to **laser tulowy nowej generacji**, który łączy bezpieczeństwo, skuteczność i nowoczesną technologię w jednym kompaktowym urządzeniu. Idealny wybór dla profesjonalnych gabinetów medycyny estetycznej i kosmetologii.
+
+**Zainwestuj w jakość – wybierz Velure™ 1927 i oferuj swoim klientom zabiegi, które naprawdę działają.**
+
+
+`,
+      price: "49 900 zł",
+      image: "/products/velure.webp",
+    },
   ];
   

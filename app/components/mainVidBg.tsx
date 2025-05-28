@@ -25,7 +25,7 @@ export default function HeroSection() {
         playsInline
         preload="auto"
       >
-        <source src="/videos/bgsmokecoloredcompressed.mp4" type="video/mp4" />
+        <source src="/videos/morpheus.mp4" type="video/mp4" />
         Twoja przeglądarka nie wspiera odtwarzania wideo.
       </video>
 
