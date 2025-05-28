@@ -756,5 +756,34 @@ Velure™ 1927 to **laser tulowy nowej generacji**, który łączy bezpieczeńst
       price: "49 900 zł",
       image: "/products/velure.webp",
     },
+        {
+      title: "DermaPen 4.0",
+      slug: "Dermapen",
+      description: `## Dermapen 4 – używany, w pełni sprawny, komplet, gwarancja
+
+Urządzenie **Dermapen 4**, używane przez zaledwie **1 miesiąc**, w pełni sprawne technicznie i gotowe do pracy.  
+Urządzenie sprzedawane jest **bez oryginalnego pudełka**, jednak w zestawie znajduje się wszystko, co niezbędne do natychmiastowego rozpoczęcia pracy.
+
+### W zestawie:
+- Dermapen 4 (oryginalny)  
+- Zasilacz sieciowy  
+- Ładowarka  
+- 3 akumulatory  
+- 2 kartridże 16-igłowe  
+- Instrukcja obsługi w wersji elektronicznej (na życzenie)
+
+### Dodatkowe informacje:
+- Urządzenie objęte **roczną gwarancją**  
+- **Brak uszkodzeń mechanicznych**  
+- **Bezpiecznie zapakowane do transportu**
+
+To doskonała okazja dla **gabinetów kosmetologicznych**, które chcą rozpocząć lub rozbudować ofertę zabiegów mikronakłuwania za pomocą sprawdzonego, nowoczesnego urządzenia klasy premium.
+
+
+
+`,
+      price: "3 500 zł",
+      image: "/products/dermapen.webp",
+    },
   ];
   
