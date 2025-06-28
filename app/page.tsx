@@ -1,16 +1,33 @@
 "use client";
 
+import React, { useRef, useState, useEffect } from "react";
 import HeroSection from "./components/mainVidBg";
-import {Button} from "@heroui/button";
-import {useRef} from "react";
-import { ProductsDisplay } from "./components/productsdisplay";
-import { products } from "./products";
 import Link from "next/link";
 import Image from "next/image";
+import { Product } from './types/product';
 
-export default function Home() {
+export default function Home(): React.ReactElement {
+  const [products, setProducts] = useState<Product[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const scrollToNext = () => {
+
+  // Pobierz produkty z bazy danych
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        if (response.ok) {
+          const data: Product[] = await response.json();
+          setProducts(data);
+        }
+      } catch (error) {
+        console.error('Błąd podczas pobierania produktów:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const scrollToNext = (): void => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     } else {
@@ -18,7 +35,7 @@ export default function Home() {
     }
   }
 
-  const ScrollTop = () => {
+  const scrollTop = (): void => {
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -28,7 +45,12 @@ export default function Home() {
     <div className="">
       <HeroSection/>
 
-      <Button onPress={ScrollTop} className="text-3xl fixed bottom-10 right-8 w-12 h-15 z-[0] rounded-full bg-yellow-500/70 ">↑</Button>
+      <button 
+        onClick={scrollTop}
+        className="text-3xl fixed bottom-10 right-8 w-12 h-15 z-[0] rounded-full bg-yellow-500/70"
+      >
+        ↑
+      </button>
 
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         
@@ -42,13 +64,46 @@ export default function Home() {
           <div className="w-full bg-gray-200 text-black h-full justify-center flex flex-col gap-4 md:p-10 p-6">
               <h1 className="text-4xl font-light">Najlepsza jakość w najlepszej cenie</h1>
               <p className="text-2xl">Sprawdź nasze polecane urządzenia</p>
-              <Button onPress={scrollToNext} className="bg-yellow-500 md:w-1/3 sm:w-full text-xl">Polecane</Button>
+              <button 
+                onClick={scrollToNext} 
+                className="bg-yellow-500 md:w-1/3 sm:w-full text-xl py-3 px-6 rounded"
+              >
+                Polecane
+              </button>
           </div>
         </div>
+
+        {/* Sekcja polecanych produktów */}
         <div className="bg-[url(/images/starsbgalpha.png)] bg-cover">
-          <ProductsDisplay amount={4}/>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-10">
+            {products.filter(p => p.featured).slice(0, 4).map((product) => (
+              <Link key={product.id} href={`/katalog/${product.slug}`}>
+                <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105 flex flex-col h-full">
+                  <div className="relative h-64">
+                    <Image
+                      src={product.image}
+                      alt={product.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                    <div className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 text-xs rounded">
+                      Polecane
+                    </div>
+                  </div>
+                  <div className="p-4 flex flex-col justify-between flex-grow">
+                    <h2 className="text-lg font-bold mb-2">{product.title}</h2>
+                    <p className="text-xl font-semibold text-blue-600 border-t pt-2">
+                      {product.price}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
 
+        {/* Reszta oryginalnej strony... */}
         <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-center font-light text-center ">
             <div className="border-l text-left p-10 mx-10">
               <h1 className="text-7xl pb-2">Lasery</h1>
@@ -70,12 +125,13 @@ export default function Home() {
               </div>
         </div>
 
-        <div id="produkty" className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-3 gap-6 p-10 pt-0 w-full bg-[url(/images/starsbgalpha.png)] bg-cover">
+        <div ref={scrollRef} id="produkty" className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-3 gap-6 p-10 pt-0 w-full bg-[url(/images/starsbgalpha.png)] bg-cover">
           <div className="p-4 flex flex-col justify-center items-center">
-            <h1 className="text-lg md:text-5xl pb-6">Odkryj najnowsze urządzenia</h1><p>U nas, zawsze dostaniesz to, czego potrzebujesz</p>
+            <h1 className="text-lg md:text-5xl pb-6">Odkryj najnowsze urządzenia</h1>
+            <p>U nas, zawsze dostaniesz to, czego potrzebujesz</p>
           </div>
           {products.slice(1, 6).map((product) => (
-            <Link key={product.title} href={`/katalog/${product.slug}`}>
+            <Link key={product.id} href={`/katalog/${product.slug}`}>
               <div className="overflow-hidden transition flex flex-col text-center h-full">
                 <Image
                   src={product.image}

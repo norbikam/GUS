@@ -1,5 +1,6 @@
 {
   "name": "gus",
+  "type": "module",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,11 +11,13 @@
   },
   "dependencies": {
     "@heroui/button": "^2.2.17",
+    "@prisma/client": "^6.10.1",
     "framer-motion": "^12.9.2",
     "lenis": "^1.3.1",
     "next": "15.3.1",
     "next-video": "^2.2.0",
     "next-videos": "^1.4.1",
+    "prisma": "^6.10.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
@@ -32,5 +35,27 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  "packageManager": "pnpm@10.5.1+sha512.c424c076bd25c1a5b188c37bb1ca56cc1e136fbf530d98bcb3289982a08fd25527b8c9c4ec113be5e3393c39af04521dd647bcf1d0801eaf8ac6a7b14da313af"
+  "packageManager": "pnpm@10.5.1+sha512.c424c076bd25c1a5b188c37bb1ca56cc1e136fbf530d98bcb3289982a08fd25527b8c9c4ec113be5e3393c39af04521dd647bcf1d0801eaf8ac6a7b14da313af",
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@heroui/shared-utils",
+      "@prisma/client",
+      "@prisma/engines",
+      "@tailwindcss/oxide",
+      "core-js",
+      "prisma",
+      "sharp",
+      "unrs-resolver"
+    ],
+    "onlyBuiltDependencies": [
+      "@heroui/shared-utils",
+      "@prisma/client",
+      "@prisma/engines",
+      "@tailwindcss/oxide",
+      "core-js",
+      "prisma",
+      "sharp",
+      "unrs-resolver"
+    ]
+  }
 }
