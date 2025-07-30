@@ -155,7 +155,7 @@ const searchProducts = async (): Promise<void> => {
         </div>
       )}
 
-      {/* Aktywne filtry */}
+      {/* Aktywne filtry
       {(searchTerm || category !== 'all') && !loading && (
         <div className="flex flex-wrap gap-2 items-center">
           <span className="text-sm text-gray-600">Aktywne filtry:</span>
@@ -182,7 +182,7 @@ const searchProducts = async (): Promise<void> => {
             </span>
           )}
         </div>
-      )}
+      )} */}
     </div>
   );
 };
