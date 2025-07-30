@@ -785,5 +785,144 @@ To doskonała okazja dla **gabinetów kosmetologicznych**, które chcą rozpocz�
       price: "3 500 zł",
       image: "/products/dermapen.webp",
     },
+{
+  id: "lumiglam-1927nm",
+  title: "LUMIGLAM 1927nm – Laser frakcyjny Thulium",
+  slug: "lumiglam-1927",
+  description: `
+# **LUMIGLAM 1927 nm – Laser frakcyjny Thulium**
+
+Zaawansowany laser frakcyjny o długości fali **1927 nm**, zaprojektowany z myślą o gabinetach medycyny estetycznej, dermatologii i ginekologii. LUMIGLAM to wszechstronne rozwiązanie do poprawy kondycji skóry z minimalnym czasem rekonwalescencji.
+
+---
+
+## 🌟 Kluczowe korzyści
+
+- **Skuteczne usuwanie przebarwień** – działa na melasmę, plamy pigmentacyjne, nierówności kolorytu skóry  
+- **Poprawa struktury skóry** – zmniejszenie porów, wygładzenie drobnych zmarszczek  
+- **Redukcja blizn potrądzikowych** – wyrównanie tekstury skóry  
+- **Odmładzanie skórne** – stymulacja produkcji kolagenu przez frakcyjne resurfacing  
+- **Minimalny downtime** – technologia nie- i sub-ablacyjna zapewnia szybki powrót do codziennych aktywności
+
+---
+
+## 🧪 Technologia i działanie
+
+LUMIGLAM wykorzystuje laser Thulium o długości fali 1927 nm, która celuje precyzyjnie w warstwę podstawową naskórka docelowo prot melanocytów. Technologia umożliwia kontrolowaną ablację dolnych warstw naskórka i koagulację górnej skóry właściwej, przy zachowaniu warstwy rogowej.
+
+---
+
+## 🎯 Obszary zastosowania
+
+- **Dermatologia estetyczna**: twarz, czoło, podbródek – przebarwienia, zmarszczki, rozszerzone pory, blizny po trądziku  
+- **Trychologia**: leczenie utraty włosów i łysienia  
+- **Ginekologia estetyczna**: regeneracja tkanek intymnych, wybielanie okolic, leczenie nietrzymania moczu wysiłkowego, relaksacji pochwy, blizn krocza
+
+---
+
+## ⚙️ Funkcje i wyposażenie
+
+- Regulowana intensywność energii i czas trwania impulsu  
+- **5 wymiennych głowic** dostosowanych do różnych obszarów zabiegowych: 6×6 mm, 12×12 mm, 20×20 mm, 15×3 mm, 15×8 mm  
+- **Dedykowana głowica ginekologiczna** (opcjonalna)  
+- Wbudowana komora dezynfekcyjna  
+- **Ekran dotykowy 13,3″ z systemem Android**  
+- Duża średnica skanu (do 20×20 mm) skraca czas zabiegowy
+
+---
+
+## 📊 Specyfikacja techniczna
+
+| Parametr                    | Wartość                                  |
+|----------------------------|-------------------------------------------|
+| Długość fali               | 1927 nm (Thulium)                         |
+| Moc wyjściowa              | 15 W lub 30 W (opcjonalnie)               |
+| Czas impulsu               | 0,1–10 ms                                 |
+| Energia punktowa           | 0,2–150 mJ (1 – 15 W × 0,2–10 ms)         |
+| Głowice                    | Frakcyjne: 6×6, 12×12, 20×20 mm; rolkowe; ginekologiczna |
+| Moc całkowita              | 600 W                                     |
+| Wymiary (W × S × Wys)      | 500 × 400 × 1000 mm                       |
+| Waga                       | 35 kg                                     |
+| Zasilanie                  | 110 V / 220 V                             |
+
+---
+
+## 🎯 Dlaczego warto wprowadzić LUMIGLAM do swojej oferty?
+
+- ✔ Skierowany do specjalistów: medycyna, dermatologia, ginekologia estetyczna  
+- ✔ Szeroki zakres wskazań i wysoka skuteczność kliniczna  
+- ✔ Zminimalizowany czas rekonwalescencji, maksymalna wygoda pacjenta  
+- ✔ Profesjonalna konstrukcja i intuicyjny panel sterowania  
+- ✔ Wysoka estetyka i funkcjonalność
+`,
+price: "119 000 zł",
+      image: "/products/lumiglam.webp",
+},
+{
+  title: "LUMIGLAM PRO 1927/1550nm – Zaawansowany laser frakcyjny o podwójnej długości fali",
+  slug: "lumiglam-pro-1927-1550nm",
+  price: "139 000 zł",
+  image: "/products/lumiglam.webp",
+  description: `
+# **LUMIGLAM PRO 1927/1550 nm – Laser frakcyjny o podwójnej długości fali**
+
+LUMIGLAM PRO to zaawansowany laser frakcyjny, który łączy **dwie długości fali: 1927 nm i 1550 nm**, umożliwiając precyzyjne dostosowanie terapii do indywidualnych potrzeb pacjenta. Dzięki temu możliwe jest jednoczesne działanie w warstwach powierzchownych i głębszych skóry, co przekłada się na wysoką skuteczność zabiegową i minimalny czas rekonwalescencji.
+
+---
+
+## 🌟 Kluczowe zalety
+
+- **Podwójna długość fali (1927 nm + 1550 nm)** – większa elastyczność w doborze parametrów zabiegowych  
+- **Kompleksowe zastosowanie** – przebarwienia, melasma, rozszerzone pory, blizny potrądzikowe, zmarszczki, nierówny koloryt skóry  
+- **Szybka regeneracja skóry** – minimalny downtime dzięki technologii frakcyjnej  
+- **Wszechstronność** – idealny dla dermatologii estetycznej, medycyny anti-aging, ginekologii estetycznej oraz trychologii
+
+---
+
+## 🎯 Wskazania
+
+- Usuwanie przebarwień i melasmy  
+- Odmładzanie i poprawa struktury skóry  
+- Redukcja zmarszczek i rozszerzonych porów  
+- Leczenie blizn (potrądzikowych, chirurgicznych)  
+- Zabiegi w ginekologii estetycznej (regeneracja tkanek, wybielanie okolic intymnych)
+
+---
+
+## ⚙️ Wyposażenie i funkcje
+
+- **Podwójny system emisji**: 1927 nm (warstwy powierzchowne) i 1550 nm (głębsze struktury skóry)  
+- **5 wymiennych głowic frakcyjnych** – dostosowanych do różnych obszarów  
+- **Intuicyjny panel dotykowy** z systemem Android  
+- **Dedykowane głowice ginekologiczne** (opcjonalne)  
+- **Wbudowana komora dezynfekcyjna**  
+- Ergonomiczna konstrukcja ułatwiająca pracę
+
+---
+
+## 📊 Specyfikacja techniczna
+
+| Parametr                | Wartość                  |
+|-------------------------|---------------------------|
+| Długości fali           | 1927 nm + 1550 nm         |
+| Moc wyjściowa           | 15 W / 30 W               |
+| Czas impulsu            | 0,1–10 ms                 |
+| Energia punktowa        | 0,2–150 mJ                |
+| Liczba głowic           | 5 + opcjonalna ginekologiczna |
+| Wymiary (W × S × Wys)   | 500 × 400 × 1000 mm       |
+| Waga                    | 35 kg                     |
+| Zasilanie               | 110 V / 220 V             |
+
+---
+
+## Dlaczego warto wybrać LUMIGLAM PRO?
+
+- **Pełen zakres zabiegów frakcyjnych** – od delikatnego resurfacingu po głęboką regenerację  
+- **Szybsze gojenie i większy komfort pacjenta**  
+- **Możliwość personalizacji parametrów** do potrzeb każdego klienta  
+- **Wysoka trwałość i ergonomiczny design**
+
+`
+},
   ];
   
