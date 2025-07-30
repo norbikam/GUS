@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from 'remark-gfm';
-import remarkBreaks from 'remark-breaks';
 import { ProductsDisplay } from "@/app/components/productsdisplay";
 import { prisma } from '@/lib/prisma';
 
@@ -112,7 +110,7 @@ export default async function ProductPage({ params }: Props) {
         </div>
         <div className="col-2">
           {/* Wyświetl opis jako Markdown */}
-          <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>{product.description || ''}</ReactMarkdown> 
+          <ReactMarkdown>{product.description || ''}</ReactMarkdown> 
           
           <div className="mt-8 flex flex-col sm:flex-row gap-4">
             <a
