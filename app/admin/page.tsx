@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Product } from '@/app/types/product';
 
 export default function AdminPage(): React.ReactElement {
@@ -11,6 +11,10 @@ export default function AdminPage(): React.ReactElement {
   const [loading, setLoading] = useState<boolean>(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -56,6 +60,30 @@ export default function AdminPage(): React.ReactElement {
     setIsAuthenticated(false);
     localStorage.removeItem('admin_authenticated');
     setPassword('');
+  };
+
+  // Obsługa zdjęcia
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      
+      // Utwórz podgląd zdjęcia
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  
+  // Usunięcie aktualnie wybranego zdjęcia
+  const handleRemoveImage = (): void => {
+    setImageFile(null);
+    setImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   // Jeśli nie zalogowany, pokaż formularz logowania
@@ -109,7 +137,7 @@ export default function AdminPage(): React.ReactElement {
     );
   }
 
-  // Reszta kodu admina (bez zmian) - fetchProducts, handleSubmit, itp.
+  // Reszta kodu admina - fetchProducts, handleSubmit, itp.
   const fetchProducts = async (): Promise<void> => {
     try {
       const response = await fetch('/api/products');
@@ -128,10 +156,33 @@ export default function AdminPage(): React.ReactElement {
       const method = editingProduct ? 'PUT' : 'POST';
       const url = editingProduct ? `/api/products/${editingProduct.id}` : '/api/products';
       
+      // Przygotuj formData dla multipart/form-data (obsługa plików)
+      const formDataToSend = new FormData();
+      
+      // Dodaj wszystkie pola tekstowe
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key !== 'image') { // Pomijamy pole image, będzie dodane jako plik
+          formDataToSend.append(key, String(value));
+        }
+      });
+      
+      // Dodaj plik obrazu jeśli został wybrany
+      if (imageFile) {
+        formDataToSend.append('image', imageFile);
+      } else if (formData.image) {
+        // Jeśli istnieje URL obrazu, ale nie wybrano nowego pliku, przekaż URL
+        formDataToSend.append('imageUrl', formData.image);
+      }
+      
+      // Dodaj id jeśli edytujemy istniejący produkt
+      if (editingProduct) {
+        formDataToSend.append('id', editingProduct.id);
+      }
+
       const response = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        // Nie ustawiamy Content-Type, będzie automatycznie ustawiony jako multipart/form-data
+        body: formDataToSend
       });
 
       if (response.ok) {
@@ -179,6 +230,13 @@ export default function AdminPage(): React.ReactElement {
         tags: product.tags || '',
         featured: product.featured
       });
+      
+      // Ustaw podgląd obrazu jeśli produkt ma obraz
+      if (product.image) {
+        setImagePreview(product.image);
+      } else {
+        setImagePreview(null);
+      }
     } else {
       setEditingProduct(null);
       setFormData({
@@ -190,13 +248,17 @@ export default function AdminPage(): React.ReactElement {
         tags: '',
         featured: false
       });
+      setImagePreview(null);
     }
+    setImageFile(null);
     setIsModalOpen(true);
   };
 
   const closeModal = (): void => {
     setIsModalOpen(false);
     setEditingProduct(null);
+    setImageFile(null);
+    setImagePreview(null);
   };
 
   // Główny interfejs admin (zalogowany użytkownik)
@@ -228,7 +290,7 @@ export default function AdminPage(): React.ReactElement {
         </div>
       </div>
 
-      {/* Reszta interfejsu admin (tabela produktów, modal, itp.) - DOKŁADNIE jak wcześniej */}
+      {/* Reszta interfejsu admin (tabela produktów, modal, itp.) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -281,9 +343,12 @@ export default function AdminPage(): React.ReactElement {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <img
-                          src={product.image}
+                          src={product.image || '/placeholder-image.png'}
                           alt={product.title}
                           className="w-12 h-12 object-cover rounded-lg mr-4"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = '/placeholder-image.png';
+                          }}
                         />
                         <div>
                           <div className="text-sm font-medium text-gray-900 max-w-xs truncate">
@@ -341,7 +406,7 @@ export default function AdminPage(): React.ReactElement {
         </div>
       </div>
 
-      {/* Modal - dokładnie jak wcześniej */}
+      {/* Modal z dodanym komponentem do przesyłania zdjęć */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -409,17 +474,62 @@ export default function AdminPage(): React.ReactElement {
                 </div>
               </div>
 
+              {/* Nowy komponent do przesyłania zdjęć */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  URL obrazka
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Zdjęcie produktu
                 </label>
-                <input
-                  type="text"
-                  value={formData.image}
-                  onChange={(e) => setFormData({...formData, image: e.target.value})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
-                  placeholder="/products/nazwa-produktu.webp"
-                />
+                <div className="space-y-2">
+                  {/* Podgląd zdjęcia */}
+                  {imagePreview && (
+                    <div className="relative w-40 h-40 mb-2">
+                      <img 
+                        src={imagePreview} 
+                        alt="Podgląd" 
+                        className="w-full h-full object-cover rounded-lg border border-gray-300" 
+                      />
+                      <button 
+                        type="button"
+                        onClick={handleRemoveImage}
+                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center"
+                        title="Usuń zdjęcie"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  )}
+                  
+                  {/* Input do wyboru plików */}
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleImageChange}
+                    accept="image/*"
+                    className="block w-full text-sm text-gray-500
+                      file:mr-4 file:py-2 file:px-4
+                      file:rounded-md file:border-0
+                      file:text-sm file:font-semibold
+                      file:bg-blue-50 file:text-blue-700
+                      hover:file:bg-blue-100"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Wybierz zdjęcie w formacie JPG, PNG lub WebP (maks. 5MB)
+                  </p>
+                </div>
+
+                {/* Pozostawiam opcję wpisania URL obrazka, jeśli ktoś wolałby to */}
+                <div className="mt-3">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    lub podaj URL obrazka
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.image}
+                    onChange={(e) => setFormData({...formData, image: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
+                    placeholder="/products/nazwa-produktu.webp"
+                  />
+                </div>
               </div>
 
               <div>
