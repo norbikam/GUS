@@ -73,7 +73,24 @@ export default function Home(): React.ReactElement {
           </div>
         </div>
 
-        {/* Sekcja polecanych produktów */}
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-center font-light text-center">
+          <div className="flex justify-center items-center">
+              <Image width={400} height={400} alt="GUS" src={`/products/lumiglam.webp`}></Image>
+              <Image width={400} height={400} alt="GUS" src={`/products/lumiglam.webp`} className="absolute bg-cover blur-2xl"></Image>
+              </div>
+            <div className="border-l text-left p-10 mx-10">
+              <h1 className="text-7xl pb-2">LumiGlam Pro 1550+1927nm</h1>
+              <p>Odkryj LumiGlam Pro i wnieś swoją pracę na nowy poziom</p>
+              
+              <a href="/katalog/lumiglam-pro-19271550nm-zaawansowany-laser-frakcyjny-o-podwjnej-dugoci-fali"><button  
+                className="bg-yellow-500 md:w-1/3 sm:w-full text-xl py-3 px-6 rounded mt-4"
+              >
+                Sprawdź teraz
+              </button></a>
+            </div>
+        </div>
+
+        {/* Sekcja polecanych produktów
         <div className="bg-[url(/images/starsbgalpha.png)] bg-cover">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-10">
             {products.filter(p => p.featured).slice(0, 4).map((product) => (
@@ -101,7 +118,7 @@ export default function Home(): React.ReactElement {
               </Link>
             ))}
           </div>
-        </div>
+        </div> */}
 
         {/* Reszta oryginalnej strony... */}
         <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-center font-light text-center ">

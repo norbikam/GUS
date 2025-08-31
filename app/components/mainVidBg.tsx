@@ -32,16 +32,21 @@ export default function HeroSection() {
       {/* Overlay to darken video for readability */}
       <div className="absolute inset-0 bg-black/50"/>
       
+      
 
       {/* Centered Text */}
+      
       <div className="relative z-10 flex flex-col justify-center items-center h-full px-6 text-center">
+        
       <Image width={1000} height={1000} alt="GUS" src={`/images/guslogo.png`} className="object-cover absolute z-[-5] blur "></Image>
+      
         <h1 className="text-4xl md:text-6xl font-bold text-white">
           Witaj na naszej stronie
         </h1>
         <p className="mt-4 text-lg md:text-2xl text-gray-200">
           Odkryj, jak możemy Ci pomóc
         </p>
+        
       </div>
 
       {/* Animated Scroll Button */}
