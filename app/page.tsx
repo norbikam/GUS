@@ -82,11 +82,12 @@ export default function Home(): React.ReactElement {
               <h1 className="text-7xl pb-2">LumiGlam Pro 1550+1927nm</h1>
               <p>Odkryj LumiGlam Pro i wnieś swoją pracę na nowy poziom</p>
               
-              <a href="/katalog/lumiglam-pro-19271550nm-zaawansowany-laser-frakcyjny-o-podwjnej-dugoci-fali"><button  
+              
+              <Link href="/katalog/lumiglam-pro-19271550nm-zaawansowany-laser-frakcyjny-o-podwjnej-dugoci-fali"><button  
                 className="bg-yellow-500 md:w-1/3 sm:w-full text-xl py-3 px-6 rounded mt-4"
               >
                 Sprawdź teraz
-              </button></a>
+              </button></Link>
             </div>
         </div>
 
