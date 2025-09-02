@@ -28,7 +28,7 @@ export default function HeroSection() {
         <source src="/videos/lumiglam_bg.mp4" type="video/mp4" />
         Twoja przeglądarka nie wspiera odtwarzania wideo.
       </video>
-
+      
       {/* Overlay to darken video for readability */}
       <div className="absolute inset-0 bg-black/50"/>
       
