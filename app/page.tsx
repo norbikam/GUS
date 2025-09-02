@@ -56,7 +56,7 @@ export default function Home(): React.ReactElement {
         
         <div className="grid grid-cols-1 md:grid-cols-2 w-full md:px-10 px-8 justify-center items-center font-light bg-gray-200">
           <div className="grid grid-cols-2 w-full gap-4 bg-gray-200 text-black rounded text-center sm:aspect-square md:aspect-auto">
-            <div className="py-10"><h2 className="text-3xl">12 RAT</h2><p>bez żadnej prowizji</p></div>
+            <div className="py-10"><h2 className="text-3xl">LEASING</h2><p>Wszystkie produkty w dogodnych ratach</p></div>
             <div className="py-10"><h2 className="text-3xl">SZKOLENIE</h2><p>wliczone w cenę</p></div>
             <div className="py-10"><h2 className="text-3xl">15 LAT</h2><p>w branży beauty</p></div>
             <div className="py-10"><h2 className="text-3xl">ROK</h2><p>gwarancji na wszystkie urządzenia</p></div>
@@ -79,7 +79,7 @@ export default function Home(): React.ReactElement {
               <Image width={400} height={400} alt="GUS" src={`/products/lumiglam.webp`} className="absolute bg-cover blur-2xl"></Image>
               </div>
             <div className="border-l text-left p-10 mx-10">
-              <h1 className="text-7xl pb-2">LumiGlam Pro 1550+1927nm</h1>
+              <h1 className="text-4xl pb-2">LumiGlam Pro 1550+1927nm</h1>
               <p>Odkryj LumiGlam Pro i wnieś swoją pracę na nowy poziom</p>
               
               
