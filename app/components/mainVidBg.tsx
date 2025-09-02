@@ -25,7 +25,7 @@ export default function HeroSection() {
         playsInline
         preload="auto"
       >
-        <source src="/videos/lumiglam_bg.mp4" type="video/mp4" />
+        <source src="/videos/lumiglam_video.mp4" type="video/mp4" />
         Twoja przeglądarka nie wspiera odtwarzania wideo.
       </video>
       

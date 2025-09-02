@@ -136,7 +136,7 @@ export default function Home(): React.ReactElement {
                 playsInline
                 preload="auto"
                 >
-                  <source src="/videos/bgsmokecoloredcompressed.mp4" type="video/mp4" />
+                  <source src="/videos/lumiglam_video.mp4" type="video/mp4" />
                   Twoja przeglądarka nie wspiera odtwarzania wideo.
               </video>
               <video src="/videos/lasertreatment.mp4" autoPlay muted loop playsInline preload="auto"></video>
