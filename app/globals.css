@@ -34,3 +34,98 @@ body {
 .mainvideobg{
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Rich Editor Styles - POPRAWIONE KOLORY */
+[contenteditable="true"] {
+  outline: none;
+  color: #111827; /* Ciemny tekst */
+  background-color: #ffffff; /* Białe tło */
+}
+
+[contenteditable="true"]:empty:before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+/* Prose styles dla contentu - POPRAWIONE KOLORY */
+.prose {
+  color: #111827; /* Ciemny tekst dla całej prose */
+}
+
+.prose h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin: 1.5rem 0 1rem 0;
+  line-height: 1.2;
+  color: #1f2937; /* Ciemny tekst nagłówków */
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.75rem 0;
+  line-height: 1.3;
+  color: #1f2937;
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 1rem 0 0.5rem 0;
+  line-height: 1.4;
+  color: #1f2937;
+}
+
+.prose p {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+  color: #374151; /* Ciemny tekst paragrafów */
+}
+
+.prose ul, .prose ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+  color: #374151;
+}
+
+.prose li {
+  margin: 0.25rem 0;
+  line-height: 1.5;
+  color: #374151; /* Ciemny tekst list */
+}
+
+.prose strong {
+  font-weight: 600;
+  color: #111827; /* Bardzo ciemny dla pogrubienia */
+}
+
+.prose em {
+  font-style: italic;
+  color: #374151;
+}
+
+.prose hr {
+  margin: 2rem 0;
+  border: none;
+  border-top: 2px solid #d1d5db; /* Wyraźniejsza linia */
+}
+
+.prose blockquote {
+  border-left: 4px solid #3b82f6; /* Niebieska linia */
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: #4b5563; /* Ciemniejszy tekst cytatów */
+  background-color: #f8fafc; /* Jasne tło cytatów */
+}
+
+/* Dodatkowo - style dla edytora */
+.rich-editor-content {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+}
+
+.rich-editor-content * {
+  color: inherit !important;
+}

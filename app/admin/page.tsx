@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from '@/app/types/product';
 import Image from 'next/image';
+import RichEditor from '../components/RichEditor';
 
 export default function AdminPage(): React.ReactElement {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -430,12 +431,16 @@ export default function AdminPage(): React.ReactElement {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Opis
                 </label>
-                <textarea
-                  value={productData.description}
-                  onChange={(e) => setProductData({...productData, description: e.target.value})}
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
-                />
+                  <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Opis produktu
+                  </label>
+                  <RichEditor
+                    value={productData.description}
+                    onChange={(value) => setProductData({...productData, description: value})}
+                    placeholder="Wprowadź szczegółowy opis produktu. Możesz wkleić sformatowany tekst lub użyć przycisków formatowania."
+                  />
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
