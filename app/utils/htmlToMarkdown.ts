@@ -5,7 +5,7 @@ export const htmlToMarkdown = (html: string): string => {
   let markdown = html;
   
   // Usuń dodatkowe atrybuty z tagów
-  markdown = markdown.replace(/<([^>]+)([^>]*?)>/g, (match, tag, attrs) => {
+  markdown = markdown.replace(/<([^>]+)([^>]*?)>/g, (tag) => {
     const cleanTag = tag.split(' ')[0];
     return `<${cleanTag}>`;
   });
@@ -154,7 +154,7 @@ export const markdownToHtml = (markdown: string): string => {
   
   // Listy punktowane
   const lines = html.split('\n');
-  let result = [];
+  const result = [];
   let inUl = false;
   let inOl = false;
   let inBlockquote = false;

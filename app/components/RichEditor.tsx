@@ -40,7 +40,7 @@ const RichEditor: React.FC<RichEditorProps> = ({
         try {
           selection.removeAllRanges();
           selection.addRange(range);
-        } catch (e) {
+        } catch {
           // Ignoruj błędy przywracania kursora
         }
       }
