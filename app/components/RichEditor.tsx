@@ -59,6 +59,7 @@ const RichEditor: React.FC<RichEditorProps> = ({
               }
             }
           } catch (error) {
+            console.log(error);
             if (editorRef.current) {
               const range = document.createRange();
               range.selectNodeContents(editorRef.current);
