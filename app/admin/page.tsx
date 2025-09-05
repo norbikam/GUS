@@ -11,7 +11,9 @@ export default function AdminPage(): React.ReactElement {
   const [loading, setLoading] = useState<boolean>(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [formData, setFormData] = useState({
+  
+  // ✅ Zmieniona nazwa z formData na productData
+  const [productData, setProductData] = useState({
     title: '',
     description: '',
     price: '',
@@ -20,6 +22,10 @@ export default function AdminPage(): React.ReactElement {
     tags: '',
     featured: false
   });
+
+  // ✅ Dodane nowe state dla upload obrazków
+  const [uploadingImage, setUploadingImage] = useState<boolean>(false);
+  const [imagePreview, setImagePreview] = useState<string>('');
 
   // Sprawdź czy użytkownik jest już zalogowany (localStorage)
   useEffect(() => {
@@ -36,18 +42,33 @@ export default function AdminPage(): React.ReactElement {
     }
   }, [isAuthenticated]);
 
-  const handleLogin = (e: React.FormEvent): void => {
+  const handleLogin = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
+    setLoginError(''); // Wyczyść poprzednie błędy
     
-    // Ustaw swoje hasło tutaj
-    const correctPassword = '135Habibik!g'; // ZMIEŃ TO NA SWOJE HASŁO!
-    
-    if (password === correctPassword) {
-      setIsAuthenticated(true);
-      localStorage.setItem('admin_authenticated', 'true');
-      setLoginError('');
-    } else {
-      setLoginError('Nieprawidłowe hasło');
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify({ password })
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setIsAuthenticated(true);
+        localStorage.setItem('admin_authenticated', 'true');
+        setPassword('');
+        setLoginError('');
+      } else {
+        setLoginError(data.error || 'Nieprawidłowe hasło');
+        setPassword('');
+      }
+    } catch (error) {
+      console.error('Błąd podczas logowania:', error);
+      setLoginError('Błąd połączenia z serwerem');
       setPassword('');
     }
   };
@@ -109,7 +130,7 @@ export default function AdminPage(): React.ReactElement {
     );
   }
 
-  // Reszta kodu admina (bez zmian) - fetchProducts, handleSubmit, itp.
+  // Reszta kodu admina
   const fetchProducts = async (): Promise<void> => {
     try {
       const response = await fetch('/api/products');
@@ -120,6 +141,40 @@ export default function AdminPage(): React.ReactElement {
     }
   };
 
+  // ✅ Poprawiona funkcja handleImageUpload
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+
+    try {
+      const uploadFormData = new FormData(); // ✅ Zmieniona nazwa
+      uploadFormData.append('file', file);
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: uploadFormData, // ✅ Używamy nowej nazwy
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setProductData({...productData, image: data.url}); // ✅ Zmieniona nazwa
+        setImagePreview(data.url);
+        alert('Obrazek przesłany pomyślnie!');
+      } else {
+        alert(`Błąd: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Błąd uploadu:', error);
+      alert('Wystąpił błąd podczas przesyłania obrazka');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  // ✅ Poprawiona funkcja handleSubmit
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setLoading(true);
@@ -131,7 +186,7 @@ export default function AdminPage(): React.ReactElement {
       const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(productData) // ✅ Zmieniona nazwa
       });
 
       if (response.ok) {
@@ -167,10 +222,11 @@ export default function AdminPage(): React.ReactElement {
     }
   };
 
+  // ✅ Poprawiona funkcja openModal
   const openModal = (product?: Product): void => {
     if (product) {
       setEditingProduct(product);
-      setFormData({
+      setProductData({ // ✅ Zmieniona nazwa
         title: product.title,
         description: product.description || '',
         price: product.price,
@@ -179,9 +235,10 @@ export default function AdminPage(): React.ReactElement {
         tags: product.tags || '',
         featured: product.featured
       });
+      setImagePreview(product.image);
     } else {
       setEditingProduct(null);
-      setFormData({
+      setProductData({ // ✅ Zmieniona nazwa
         title: '',
         description: '',
         price: '',
@@ -190,6 +247,7 @@ export default function AdminPage(): React.ReactElement {
         tags: '',
         featured: false
       });
+      setImagePreview('');
     }
     setIsModalOpen(true);
   };
@@ -228,7 +286,6 @@ export default function AdminPage(): React.ReactElement {
         </div>
       </div>
 
-      {/* Reszta interfejsu admin (tabela produktów, modal, itp.) - DOKŁADNIE jak wcześniej */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -341,7 +398,7 @@ export default function AdminPage(): React.ReactElement {
         </div>
       </div>
 
-      {/* Modal - dokładnie jak wcześniej */}
+      {/* ✅ Poprawiony Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -358,8 +415,8 @@ export default function AdminPage(): React.ReactElement {
                 </label>
                 <input
                   type="text"
-                  value={formData.title}
-                  onChange={(e) => setFormData({...formData, title: e.target.value})}
+                  value={productData.title}
+                  onChange={(e) => setProductData({...productData, title: e.target.value})}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
                   required
                 />
@@ -370,8 +427,8 @@ export default function AdminPage(): React.ReactElement {
                   Opis
                 </label>
                 <textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData({...formData, description: e.target.value})}
+                  value={productData.description}
+                  onChange={(e) => setProductData({...productData, description: e.target.value})}
                   rows={4}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
                 />
@@ -384,8 +441,8 @@ export default function AdminPage(): React.ReactElement {
                   </label>
                   <input
                     type="text"
-                    value={formData.price}
-                    onChange={(e) => setFormData({...formData, price: e.target.value})}
+                    value={productData.price}
+                    onChange={(e) => setProductData({...productData, price: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
                     placeholder="np. 9 900 zł"
                     required
@@ -396,8 +453,8 @@ export default function AdminPage(): React.ReactElement {
                     Kategoria
                   </label>
                   <select
-                    value={formData.category}
-                    onChange={(e) => setFormData({...formData, category: e.target.value})}
+                    value={productData.category}
+                    onChange={(e) => setProductData({...productData, category: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
                   >
                     <option value="">Wybierz kategorię</option>
@@ -409,17 +466,72 @@ export default function AdminPage(): React.ReactElement {
                 </div>
               </div>
 
+              {/* ✅ Nowa sekcja upload obrazków */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  URL obrazka
+                  Obrazek produktu
                 </label>
-                <input
-                  type="text"
-                  value={formData.image}
-                  onChange={(e) => setFormData({...formData, image: e.target.value})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
-                  placeholder="/products/nazwa-produktu.webp"
-                />
+                
+                {/* Upload button */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <label className={`cursor-pointer px-4 py-2 rounded-lg transition duration-200 text-sm ${
+                      uploadingImage 
+                        ? 'bg-gray-400 cursor-not-allowed' 
+                        : 'bg-blue-600 hover:bg-blue-700'
+                    } text-white`}>
+                      {uploadingImage ? 'Przesyłanie...' : 'Wybierz plik'}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="hidden"
+                        disabled={uploadingImage}
+                      />
+                    </label>
+                    <span className="text-sm text-gray-500">
+                      JPG, PNG, WebP (max 5MB)
+                    </span>
+                  </div>
+
+                  {/* Podgląd obrazka */}
+                  {imagePreview && (
+                    <div className="relative inline-block">
+                      <img
+                        src={imagePreview}
+                        alt="Podgląd"
+                        className="w-32 h-32 object-cover rounded-lg border border-gray-300"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setImagePreview('');
+                          setProductData({...productData, image: ''});
+                        }}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Alternatywnie - URL input */}
+                  <div className="border-t pt-3">
+                    <label className="block text-sm font-medium text-gray-600 mb-1">
+                      Lub wklej URL obrazka
+                    </label>
+                    <input
+                      type="text"
+                      value={productData.image}
+                      onChange={(e) => {
+                        setProductData({...productData, image: e.target.value});
+                        setImagePreview(e.target.value);
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
+                      placeholder="/products/nazwa-produktu.webp"
+                    />
+                  </div>
+                </div>
               </div>
 
               <div>
@@ -428,8 +540,8 @@ export default function AdminPage(): React.ReactElement {
                 </label>
                 <input
                   type="text"
-                  value={formData.tags}
-                  onChange={(e) => setFormData({...formData, tags: e.target.value})}
+                  value={productData.tags}
+                  onChange={(e) => setProductData({...productData, tags: e.target.value})} 
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
                   placeholder="laser,odmładzanie,skóra"
                 />
@@ -439,8 +551,8 @@ export default function AdminPage(): React.ReactElement {
                 <label className="flex items-center">
                   <input
                     type="checkbox"
-                    checked={formData.featured}
-                    onChange={(e) => setFormData({...formData, featured: e.target.checked})}
+                    checked={productData.featured}
+                    onChange={(e) => setProductData({...productData, featured: e.target.checked})}
                     className="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
                   <span className="text-sm font-medium text-gray-700">Produkt polecany</span>
