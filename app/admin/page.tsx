@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Product } from '@/app/types/product';
+import Image from 'next/image';
 
 export default function AdminPage(): React.ReactElement {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -337,10 +338,13 @@ export default function AdminPage(): React.ReactElement {
                   <tr key={product.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <img
+                        <Image
                           src={product.image}
                           alt={product.title}
+                          width={48}
+                          height={48}
                           className="w-12 h-12 object-cover rounded-lg mr-4"
+                          unoptimized // Dodaj jeśli obrazki są zewnętrzne
                         />
                         <div>
                           <div className="text-sm font-medium text-gray-900 max-w-xs truncate">
@@ -497,10 +501,13 @@ export default function AdminPage(): React.ReactElement {
                   {/* Podgląd obrazka */}
                   {imagePreview && (
                     <div className="relative inline-block">
-                      <img
+                      <Image
                         src={imagePreview}
                         alt="Podgląd"
+                        width={128}
+                        height={128}
                         className="w-32 h-32 object-cover rounded-lg border border-gray-300"
+                        unoptimized // Dodaj jeśli obrazki mogą być zewnętrzne
                       />
                       <button
                         type="button"

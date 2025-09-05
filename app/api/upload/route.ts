@@ -43,8 +43,8 @@ export async function POST(request: NextRequest) {
     // Stwórz folder jeśli nie istnieje
     try {
       await mkdir(uploadDir, { recursive: true });
-    } catch (error) {
-      // Folder już istnieje
+    } catch {
+      // Folder już istnieje - ignoruj błąd
     }
 
     // Zapisz plik
