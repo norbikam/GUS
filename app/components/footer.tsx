@@ -20,10 +20,6 @@ export default function Footer() {
         </ul>
         <ul className="pt-10 md:pt-0 md:text-right md:pr-10">
             <li className="pb-4 text-xl">Sklep</li>
-            <li className="pb-2"><Link href="/kontakt">Morpheus - 8</Link></li>
-            <li className="pb-2"><Link href="/onas">Frax Ultra Laser Frakcyjny</Link></li>
-            <li className="pb-2"><Link href="/kontakt">HiFUSONIX + Liposonix</Link></li>
-            <li><Link href="/kontakt">VENOM</Link></li>
         </ul>
     </footer>
     );
