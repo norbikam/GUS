@@ -3,8 +3,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { htmlToMarkdown, markdownToHtml } from '@/app/utils/htmlToMarkdown';
 
 interface RichEditorProps {
-  value: string; // Markdown z bazy danych
-  onChange: (value: string) => void; // Zapisuje Markdown do bazy
+  value: string;
+  onChange: (value: string) => void;
   placeholder?: string;
 }
 
@@ -31,32 +31,107 @@ const RichEditor: React.FC<RichEditorProps> = ({
   useEffect(() => {
     if (editorRef.current && editorRef.current.innerHTML !== htmlContent) {
       const selection = window.getSelection();
-      const range = selection?.rangeCount ? selection.getRangeAt(0) : null;
+      const isEditorFocused = document.activeElement === editorRef.current;
+      let savedSelection: { node: Node; offset: number } | null = null;
+      
+      if (isEditorFocused && selection && selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        savedSelection = {
+          node: range.startContainer,
+          offset: range.startOffset
+        };
+      }
       
       editorRef.current.innerHTML = htmlContent;
       
-      // Przywróć kursor jeśli możliwe
-      if (range && selection) {
-        try {
-          selection.removeAllRanges();
-          selection.addRange(range);
-        } catch {
-          // Ignoruj błędy przywracania kursora
-        }
+      if (savedSelection && isEditorFocused) {
+        setTimeout(() => {
+          try {
+            if (editorRef.current && savedSelection) {
+              const range = document.createRange();
+              range.setStart(savedSelection.node, savedSelection.offset);
+              range.collapse(true);
+              
+              const newSelection = window.getSelection();
+              if (newSelection) {
+                newSelection.removeAllRanges();
+                newSelection.addRange(range);
+              }
+            }
+          } catch (error) {
+            if (editorRef.current) {
+              const range = document.createRange();
+              range.selectNodeContents(editorRef.current);
+              range.collapse(false);
+              
+              const selection = window.getSelection();
+              if (selection) {
+                selection.removeAllRanges();
+                selection.addRange(range);
+              }
+            }
+          }
+        }, 0);
       }
     }
   }, [htmlContent]);
 
   const handleUpdate = () => {
     if (editorRef.current) {
+      const selection = window.getSelection();
+      let range: Range | null = null;
+      let cursorOffset = 0;
+      
+      if (selection && selection.rangeCount > 0) {
+        range = selection.getRangeAt(0);
+        cursorOffset = range.startOffset;
+      }
+      
       const html = editorRef.current.innerHTML;
       const markdown = htmlToMarkdown(html);
       setHtmlContent(html);
-      onChange(markdown); // Zapisz jako Markdown
+      onChange(markdown);
+      
+      setTimeout(() => {
+        if (editorRef.current && range && selection) {
+          try {
+            const walker = document.createTreeWalker(
+              editorRef.current,
+              NodeFilter.SHOW_TEXT
+            );
+            
+            let currentOffset = 0;
+            let targetNode = null;
+            let targetOffset = 0;
+            
+            while (walker.nextNode()) {
+              const node = walker.currentNode;
+              const nodeLength = node.textContent?.length || 0;
+              
+              if (currentOffset + nodeLength >= cursorOffset) {
+                targetNode = node;
+                targetOffset = cursorOffset - currentOffset;
+                break;
+              }
+              currentOffset += nodeLength;
+            }
+            
+            if (targetNode) {
+              const newRange = document.createRange();
+              newRange.setStart(targetNode, Math.min(targetOffset, targetNode.textContent?.length || 0));
+              newRange.collapse(true);
+              
+              selection.removeAllRanges();
+              selection.addRange(newRange);
+            }
+          } catch (error) {
+            console.warn('Nie udało się przywrócić pozycji kursora:', error);
+          }
+        }
+      }, 0);
     }
   };
 
-  // Funkcje formatowania
   const execCommand = (command: string, commandValue: string = '') => {
     document.execCommand(command, false, commandValue);
     handleUpdate();
@@ -67,7 +142,6 @@ const RichEditor: React.FC<RichEditorProps> = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    // Skróty klawiszowe
     if (e.ctrlKey || e.metaKey) {
       switch (e.key) {
         case 'b':
@@ -94,7 +168,6 @@ const RichEditor: React.FC<RichEditorProps> = ({
       }
     }
     
-    // Enter w listach
     if (e.key === 'Enter') {
       const selection = window.getSelection();
       if (selection?.rangeCount) {
@@ -108,68 +181,106 @@ const RichEditor: React.FC<RichEditorProps> = ({
     }
   };
 
-  const handlePaste = (e: React.ClipboardEvent) => {
-    e.preventDefault();
-    const text = e.clipboardData.getData('text/plain');
+  const handleHtmlPaste = (html: string) => {
+    let cleanHtml = html;
     
-    // Prosta konwersja Markdown na HTML
+    cleanHtml = cleanHtml.replace(/<([^>]+)(\s+[^>]*)?>/g, (match, tag) => {
+      const cleanTag = tag.toLowerCase().split(' ')[0];
+      
+      const allowedTags = [
+        'p', 'br', 'div', 'span',
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+        'strong', 'b', 'em', 'i', 'u', 's', 'del',
+        'ul', 'ol', 'li',
+        'blockquote',
+        'hr',
+        'a', 'img',
+        'code', 'pre'
+      ];
+      
+      if (allowedTags.includes(cleanTag)) {
+        if (cleanTag === 'a') {
+          const hrefMatch = match.match(/href=["']([^"']*)["']/i);
+          return hrefMatch ? `<a href="${hrefMatch[1]}">` : `<${cleanTag}>`;
+        }
+        if (cleanTag === 'img') {
+          const srcMatch = match.match(/src=["']([^"']*)["']/i);
+          const altMatch = match.match(/alt=["']([^"']*)["']/i);
+          let imgTag = '<img';
+          if (srcMatch) imgTag += ` src="${srcMatch[1]}"`;
+          if (altMatch) imgTag += ` alt="${altMatch[1]}"`;
+          imgTag += '>';
+          return imgTag;
+        }
+        return `<${cleanTag}>`;
+      }
+      
+      return '';
+    });
+    
+    cleanHtml = cleanHtml.replace(/<([^/>]+)><\/\1>/g, '');
+    cleanHtml = cleanHtml.replace(/<div[^>]*>/gi, '<p>');
+    cleanHtml = cleanHtml.replace(/<\/div>/gi, '</p>');
+    cleanHtml = cleanHtml.replace(/<p>\s*<\/p>/g, '');
+    cleanHtml = cleanHtml.replace(/<p>(\s*<br[^>]*>\s*)+<\/p>/g, '<p></p>');
+    cleanHtml = cleanHtml.replace(/(<br[^>]*>\s*){2,}/g, '</p><p>');
+    
+    cleanHtml = cleanHtml
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'");
+    
+    document.execCommand('insertHTML', false, cleanHtml);
+    handleUpdate();
+  };
+
+  const handlePlainTextPaste = (text: string) => {
     const lines = text.split('\n');
-    let formattedText = '';
-    let inList = false;
+    let formattedHtml = '';
     
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
       
-      if (line.startsWith('# ')) {
-        if (inList) { formattedText += '</ul>'; inList = false; }
-        formattedText += `<h1>${line.substring(2)}</h1>`;
-      } else if (line.startsWith('## ')) {
-        if (inList) { formattedText += '</ul>'; inList = false; }
-        formattedText += `<h2>${line.substring(3)}</h2>`;
-      } else if (line.startsWith('### ')) {
-        if (inList) { formattedText += '</ul>'; inList = false; }
-        formattedText += `<h3>${line.substring(4)}</h3>`;
-      } else if (line.startsWith('- ') || line.startsWith('* ')) {
-        if (!inList) { formattedText += '<ul>'; inList = true; }
-        const content = line.substring(2)
-          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-          .replace(/\*(.*?)\*/g, '<em>$1</em>');
-        formattedText += `<li>${content}</li>`;
-      } else if (line.match(/^\d+\. /)) {
-        if (inList) { formattedText += '</ul>'; inList = false; }
-        if (!formattedText.endsWith('</ol>')) { formattedText += '<ol>'; }
-        const content = line.replace(/^\d+\. /, '')
-          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-          .replace(/\*(.*?)\*/g, '<em>$1</em>');
-        formattedText += `<li>${content}</li>`;
-      } else if (line === '---') {
-        if (inList) { formattedText += '</ul>'; inList = false; }
-        if (formattedText.endsWith('</ol>')) { formattedText += '</ol>'; }
-        formattedText += '<hr>';
-      } else if (line === '') {
-        if (inList) { formattedText += '</ul>'; inList = false; }
-        if (formattedText.endsWith('</ol>')) { formattedText += '</ol>'; }
-        if (i < lines.length - 1 && lines[i + 1].trim()) {
-          formattedText += '<br>';
+      if (line === '') {
+        if (i < lines.length - 1 && lines[i + 1].trim() !== '') {
+          formattedHtml += '<br>';
         }
-      } else if (line.length > 0) {
-        if (inList) { formattedText += '</ul>'; inList = false; }
-        if (formattedText.endsWith('</ol>')) { formattedText += '</ol>'; }
-        const processedLine = line
+      } else if (line.startsWith('# ')) {
+        formattedHtml += `<h1>${line.substring(2)}</h1>`;
+      } else if (line.startsWith('## ')) {
+        formattedHtml += `<h2>${line.substring(3)}</h2>`;
+      } else if (line.startsWith('### ')) {
+        formattedHtml += `<h3>${line.substring(4)}</h3>`;
+      } else if (line.startsWith('- ') || line.startsWith('* ')) {
+        formattedHtml += `<ul><li>${line.substring(2)}</li></ul>`;
+      } else if (line === '---') {
+        formattedHtml += '<hr>';
+      } else {
+        const formatted = line
           .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-          .replace(/\*(.*?)\*/g, '<em>$1</em>')
-          .replace(/`(.*?)`/g, '<code>$1</code>');
-        formattedText += `<p>${processedLine}</p>`;
+          .replace(/\*(.*?)\*/g, '<em>$1</em>');
+        formattedHtml += `<p>${formatted}</p>`;
       }
     }
     
-    if (inList) formattedText += '</ul>';
-    if (formattedText.includes('<ol>') && !formattedText.endsWith('</ol>')) {
-      formattedText += '</ol>';
-    }
-
-    document.execCommand('insertHTML', false, formattedText);
+    document.execCommand('insertHTML', false, formattedHtml);
     handleUpdate();
+  };
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+    e.preventDefault();
+    
+    const htmlData = e.clipboardData.getData('text/html');
+    const plainText = e.clipboardData.getData('text/plain');
+    
+    if (htmlData && htmlData.trim()) {
+      handleHtmlPaste(htmlData);
+    } else if (plainText && plainText.trim()) {
+      handlePlainTextPaste(plainText);
+    }
   };
 
   const insertTemplate = () => {
@@ -238,9 +349,7 @@ const RichEditor: React.FC<RichEditorProps> = ({
 
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden bg-white text-black">
-      {/* Compact Toolbar */}
       <div className="border-b border-gray-300 p-2 bg-gray-50 flex flex-wrap gap-1 text-sm">
-        {/* Format buttons */}
         <div className="flex gap-1">
           <button
             type="button"
@@ -278,7 +387,6 @@ const RichEditor: React.FC<RichEditorProps> = ({
 
         <div className="w-px bg-gray-300 mx-1"></div>
 
-        {/* Headers */}
         <div className="flex gap-1">
           <button
             type="button"
@@ -316,7 +424,6 @@ const RichEditor: React.FC<RichEditorProps> = ({
 
         <div className="w-px bg-gray-300 mx-1"></div>
 
-        {/* Lists */}
         <div className="flex gap-1">
           <button
             type="button"
@@ -338,7 +445,6 @@ const RichEditor: React.FC<RichEditorProps> = ({
 
         <div className="w-px bg-gray-300 mx-1"></div>
 
-        {/* Alignment */}
         <div className="flex gap-1">
           <button
             type="button"
@@ -368,7 +474,6 @@ const RichEditor: React.FC<RichEditorProps> = ({
 
         <div className="w-px bg-gray-300 mx-1"></div>
 
-        {/* Tools */}
         <div className="flex gap-1">
           <button
             type="button"
@@ -406,7 +511,6 @@ const RichEditor: React.FC<RichEditorProps> = ({
 
         <div className="flex-1"></div>
 
-        {/* Actions */}
         <div className="flex gap-1">
           <button
             type="button"
@@ -427,7 +531,6 @@ const RichEditor: React.FC<RichEditorProps> = ({
         </div>
       </div>
 
-      {/* Editor z live preview styling */}
       <div
         ref={editorRef}
         contentEditable={true}
@@ -444,7 +547,6 @@ const RichEditor: React.FC<RichEditorProps> = ({
         suppressContentEditableWarning={true}
       />
       
-      {/* Info bar */}
       <div className="border-t border-gray-300 bg-gray-50 px-4 py-2 text-xs text-gray-600">
         <div className="flex justify-between items-center">
           <span>
