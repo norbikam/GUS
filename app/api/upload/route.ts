@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
+import { v2 as cloudinary } from 'cloudinary';
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,7 +16,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Nie wybrano pliku' }, { status: 400 });
     }
 
-    // Sprawdź typ pliku
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
@@ -20,43 +24,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Sprawdź rozmiar (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       return NextResponse.json(
         { error: 'Plik zbyt duży. Maksymalnie 5MB' }, 
-        { status: 400 }
+        { status: 500 }
       );
     }
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+    const base64 = `data:${file.type};base64,${buffer.toString('base64')}`;
 
-    // Stwórz unikalną nazwę pliku
-    const timestamp = Date.now();
-    const originalName = file.name.replace(/\s+/g, '-').toLowerCase();
-    const fileName = `${timestamp}-${originalName}`;
-    
-    // Ścieżka do zapisu
-    const uploadDir = path.join(process.cwd(), 'public', 'products');
-    const filePath = path.join(uploadDir, fileName);
-
-    // Stwórz folder jeśli nie istnieje
-    try {
-      await mkdir(uploadDir, { recursive: true });
-    } catch {
-      // Folder już istnieje - ignoruj błąd
-    }
-
-    // Zapisz plik
-    await writeFile(filePath, buffer);
-
-    // Zwróć URL do pliku
-    const fileUrl = `/products/${fileName}`;
+    // Upload do Cloudinary
+    const result = await cloudinary.uploader.upload(base64, {
+      folder: 'products',
+      public_id: `${Date.now()}-${file.name.split('.')[0]}`,
+      transformation: [
+        { width: 800, height: 600, crop: 'limit' },
+        { quality: 'auto' },
+        { format: 'webp' }
+      ]
+    });
 
     return NextResponse.json({ 
       success: true, 
-      url: fileUrl,
-      fileName: fileName
+      url: result.secure_url,
+      fileName: result.public_id
     });
 
   } catch (error) {
