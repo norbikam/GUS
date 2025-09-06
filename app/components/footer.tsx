@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
     return (
-    <footer className="grid grid-cols-1 md:grid-cols-3 items-center justify-center py-10 bg-gray-800/20 px-10 text-left md:text-center">
+    <footer className="grid grid-cols-1 md:grid-cols-3 items-center justify-center py-10 bg-gray-800/20 px-10 text-left md:text-center z-50">
         <ul className="md:text-left md:pl-10">
             <li>Robert Morawski</li>
             <li>ul. Perłowa 13a</li>

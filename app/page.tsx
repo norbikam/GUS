@@ -5,6 +5,7 @@ import HeroSection from "./components/mainVidBg";
 import Link from "next/link";
 import Image from "next/image";
 import { Product } from './types/product';
+import Particles from "./components/Particles";
 
 export default function Home(): React.ReactElement {
   const [products, setProducts] = useState<Product[]>([]);
@@ -123,6 +124,7 @@ export default function Home(): React.ReactElement {
 
         {/* Reszta oryginalnej strony... */}
         <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-center font-light text-center ">
+          
             <div className="border-l text-left p-10 mx-10">
               <h1 className="text-7xl pb-2">Lasery</h1>
               <p>Odkryj naszą zaawansowaną linię laserów, która wykorzystują najnowsze technologie, by zapewnić Twoim klientom naturalny efekt odmłodzenia i długotrwałe rezultaty.</p>
@@ -143,7 +145,20 @@ export default function Home(): React.ReactElement {
               </div>
         </div>
 
-        <div ref={scrollRef} id="produkty" className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-3 gap-6 p-10 pt-0 w-full bg-[url(/images/starsbgalpha.png)] bg-cover">
+          <div>
+        <div style={{ width: '100%', height: '100%', position: 'absolute' }}>
+          <Particles
+            particleColors={['#ffffff', '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff', '#ff5050', '#50b3ff', '#fff20a']}
+            particleCount={400}
+            particleSpread={10}
+            speed={0.1}
+            particleBaseSize={100}
+            moveParticlesOnHover={true}
+            alphaParticles={false}
+            disableRotation={false}
+          />
+        </div>
+        <div ref={scrollRef} id="produkty" className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-3 gap-6 p-10 pt-0 w-full z-10 relative">
           <div className="p-4 flex flex-col justify-center items-center">
             <h1 className="text-lg md:text-5xl pb-6">Odkryj najnowsze urządzenia</h1>
             <p>U nas, zawsze dostaniesz to, czego potrzebujesz</p>
@@ -165,6 +180,7 @@ export default function Home(): React.ReactElement {
               </div>
             </Link>
           ))}
+        </div>
         </div>
 
         <div className="flex flex-col w-full justify-center items-center font-light text-center gap-4 py-6 px-6">
