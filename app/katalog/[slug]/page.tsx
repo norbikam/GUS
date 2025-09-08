@@ -90,8 +90,8 @@ export default async function ProductPage({ params }: Props) {
           )}
 
           <div className="flex flex-col md:grid grid-cols-2">
-            <p>Możliwość płatności ratalnej do 12 rat 0%</p>
-            <p className="text-left md:text-center">Darmowe szkolenie</p>
+            <p>Możliwość finansowania</p>
+            <p className="text-left md:text-center">Dostępne szkolenia</p>
             <p className="text-2xl text-yellow-600 mt-6">{product.price}</p>
 
             <a
