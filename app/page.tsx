@@ -58,9 +58,9 @@ export default function Home(): React.ReactElement {
         <div className="grid grid-cols-1 md:grid-cols-2 w-full md:px-10 px-8 justify-center items-center font-light bg-gray-200">
           <div className="grid grid-cols-2 w-full gap-4 bg-gray-200 text-black rounded text-center sm:aspect-square md:aspect-auto">
             <div className="py-10"><h2 className="text-3xl">LEASING</h2><p>Wszystkie produkty w dogodnych ratach</p></div>
-            <div className="py-10"><h2 className="text-3xl">SZKOLENIE</h2><p>wliczone w cenę</p></div>
+            <div className="py-10"><h2 className="text-3xl">SZKOLENIE</h2><p>Możliwość odbycia szkolenia</p></div>
             <div className="py-10"><h2 className="text-3xl">15 LAT</h2><p>w branży beauty</p></div>
-            <div className="py-10"><h2 className="text-3xl">ROK</h2><p>gwarancji na wszystkie urządzenia</p></div>
+            <div className="py-10"><h2 className="text-3xl">JAKOŚĆ</h2><p>Urządzenia tylko najwyższej klasy</p></div>
           </div>
           <div className="w-full bg-gray-200 text-black h-full justify-center flex flex-col gap-4 md:p-10 p-6">
               <h1 className="text-4xl font-light">Najlepsza jakość w najlepszej cenie</h1>
