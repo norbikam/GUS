@@ -146,7 +146,7 @@ export default function Home(): React.ReactElement {
         </div>
 
           <div>
-        <div style={{ width: '100%', height: '100%', position: 'absolute' }}>
+        <div style={{ width: '100%', height: '100%', position: 'absolute', zIndex:"-10" }}>
           <Particles
             particleColors={['#ffffff', '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff', '#ff5050', '#50b3ff', '#fff20a']}
             particleCount={400}
