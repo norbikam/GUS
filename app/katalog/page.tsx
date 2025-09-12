@@ -85,7 +85,7 @@ export default function KatalogPage(): React.ReactElement {
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
                 <Link key={product.id} href={`/katalog/${product.slug}`}>
-                  <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent hover:via-white/20 transition">
+                  <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent hover:via-white/20 transition h-full">
                     <div className="rounded-xl bg-black/30 backdrop-blur-sm overflow-hidden flex flex-col h-full">
                       <Image
                         src={product.image}
