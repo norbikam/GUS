@@ -26,8 +26,7 @@ export default function OnasPage() {
         {/* Wstęp */}
         <section className="text-center">
           <p className="mt-4 text-lg md:text-2xl font-light md:px-10">
-            Jesteśmy firmą zajmującą się sprzedażą najwyższej klasy urządzeń dla salonów medycyny estestycznej. Nasza oferta obejmuje szeroki asortyment sprzętu, który pomoże Ci zadbać o najwyższy poziom usług dla swoich klientów.
-          </p>
+Jesteśmy firmą zajmującą się sprzedażą najwyższej klasy urządzeń dla salonów medycyny estetycznej. Nasza oferta obejmuje szeroki asortyment sprzętu, który pomoże Ci zapewnić najwyższy poziom usług dla Twoich klientów.          </p>
         </section>
 
       {/* Dwie karty (glassmorphism) jak na wariancie 2 */}
@@ -37,8 +36,8 @@ export default function OnasPage() {
             <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full">
               <h2 className="text-3xl">Nasza misja</h2>
               <p className="mt-4 text-lg md:text-2xl font-light">
-                Naszą misją jest dostarczanie innowacyjnych rozwiązań, które ułatwiają pracę w salonach medycyny estetycznej. Wierzymy, że odpowiedni sprzęt może znacząco poprawić jakość usług i zadowolenie klientów.
-                Dlatego nieustannie poszukujemy nowych technologii i rozwiązań, które mogą wspierać rozwój branży kosmetologicznej. Naszym celem jest budowanie długotrwałych relacji z klientami, opartych na zaufaniu i profesjonalizmie.
+Naszą misją jest dostarczanie innowacyjnych rozwiązań, które wspierają pracę salonów medycyny estetycznej. Wierzymy, że odpowiedni sprzęt znacząco podnosi jakość usług i satysfakcję klientów. Dlatego nieustannie poszukujemy nowych technologii, które napędzają rozwój branży kosmetologicznej. Naszym celem jest budowanie trwałych relacji z klientami, opartych na zaufaniu i profesjonalizmie.
+
               </p>
             </div>
           </div>
@@ -48,7 +47,7 @@ export default function OnasPage() {
             <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full">
               <h2 className="text-3xl">Nasza oferta</h2>
               <p className="mt-4 text-lg md:text-2xl font-light">
-                Oferujemy szeroki wybór urządzeń, w tym lasery, urządzenia do mikrodermabrazji, sprzęt do depilacji i wiele innych. Nasze produkty są starannie wyselekcjonowane, aby zapewnić najwyższą jakość i efektywność.
+Oferujemy szeroki wybór nowoczesnych urządzeń, w tym lasery, aparaty do mikrodermabrazji, sprzęt do depilacji i wiele innych. Każdy produkt został starannie wyselekcjonowany, aby gwarantować najwyższą jakość i skuteczność.
               </p>
             </div>
           </div>
