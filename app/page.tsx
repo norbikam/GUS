@@ -48,7 +48,7 @@ export default function Home(): React.ReactElement {
 
       <button 
         onClick={scrollTop}
-        className="text-3xl fixed bottom-10 right-8 w-12 h-15 z-[0] rounded-full bg-yellow-500/70"
+        className="text-3xl fixed bottom-10 right-8 w-12 h-15 z-[10] rounded-full bg-yellow-500/70"
       >
         ↑
       </button>
@@ -96,18 +96,18 @@ export default function Home(): React.ReactElement {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center px-0">
-          <div className="p-6 pl-0 pb-0">
+          <div className="p-2 md:p-6 md:pl-2 md:pb-0">
             <div className="relative w-full pt-[56.25%] md:min-h-[420px] rounded-lg overflow-hidden bg-black/10">
               <Image src="/images/venusglow_img.png" alt="VenusGlow Pro" fill className="object-contain" />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent"/>
             </div>
           </div>
-          <div className="relative h-full flex flex-col justify-center text-left p-10 md:pl-10">
+          <div className="relative h-full flex flex-col justify-center items-center text-left p-10 md:pl-10">
             <span aria-hidden className="hidden md:block absolute left-0 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
             <h1 className="text-7xl pb-2">VenusGlow Pro</h1>
             <p>Zainspiruj się możliwościami i odkryj zupełnie nową jakość pracy.</p>
             <Link href="/katalog/lumiglam-pro-19271550nm-zaawansowany-laser-frakcyjny-o-podwjnej-dugoci-fali"><button  
-              className="bg-yellow-500 text-gray-900 md:w-1/3 sm:w-full text-xl py-3 px-6 rounded mt-4 font-bold"
+              className="bg-yellow-500 text-gray-900 md:w-1/3 sm:w-full text-xl py-3 px-6 rounded mt-4 font-bold min-w-full"
             >
               Sprawdź teraz
             </button></Link>
@@ -155,7 +155,7 @@ export default function Home(): React.ReactElement {
               <p className="pl-10">Odkryj linię laserów nowej generacji – stworzoną, by zapewnić Twoim klientom naturalne odmłodzenie i długotrwałe efekty.</p>
             </div>
             {/* Prawa kolumna: surowe zdjęcie bez gradientu (zostaje padding) */}
-            <div className="w-full flex justify-center items-center p-6 pr-0 pt-0">
+            <div className="w-full flex justify-center items-center md:p-6 md:pr-2 md:pt-0 p-2">
               <div className="relative w-full pt-[56.25%] md:min-h-[420px] rounded-lg overflow-hidden bg-black/10">
                 <Image src="/images/gus_machine.png" alt="Maszyna kosmetyczna" fill className="object-contain" />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent"/>
@@ -176,7 +176,7 @@ export default function Home(): React.ReactElement {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 pt-4">
-            {products.slice(1, 6).map((product) => (
+            {products.slice(0, 6).map((product) => (
               <Link key={product.id} href={`/katalog/${product.slug}`}>
                 <div className="overflow-hidden transition flex flex-col text-center h-full">
                   <Image
@@ -210,7 +210,7 @@ export default function Home(): React.ReactElement {
             >
               Skontaktuj się już dziś
             </a>
-            <p>Zapraszamy do zapoznania się z naszą ofertą. Jesteśmy pewni, że znajdziesz coś dla siebie.</p>
+            <p className="pt-4">Zapraszamy do zapoznania się z naszą ofertą. Jesteśmy pewni, że znajdziesz coś dla siebie.</p>
         </div>
         
       </main>

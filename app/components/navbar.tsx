@@ -24,6 +24,8 @@ export default function Navbar() {
     { href: "/kontakt", label: "KONTAKT" },
   ];
 
+  const phoneNumber = "+48 510 255 279";
+
   return (
     <header className="navbar">
       <motion.nav
@@ -41,9 +43,7 @@ export default function Navbar() {
                 <Link
                   key={href}
                   href={href}
-                  className={`transition-colors duration-300 ${
-                    scrolled ? "text-white hover:text-gray-300" : "text-white hover:text-gray-300"
-                  } `}
+                  className={`transition-colors duration-300 text-white hover:text-gray-300`}
                 >
                   {label}
                 </Link>
@@ -62,6 +62,24 @@ export default function Navbar() {
               <Image width={50} height={50} src={`/images/guslogo.png`} alt="GUS"></Image>
             </Link>
           </div>
+
+          {/* Right Section: phone (desktop) + hamburger (mobile) */}
+          <div className="flex justify-end items-center space-x-4">
+            {/* Phone number on desktop */}
+            <a
+              href={`tel:${phoneNumber.replace(/\s/g, "")}`}
+              className={`hidden md:block transition-colors duration-300 text-white hover:text-gray-300`}
+            >
+              {phoneNumber}
+            </a>
+            {/* Mobile Hamburger */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className={`md:hidden transition-colors duration-300 focus:outline-none text-white`}
+            >
+              {menuOpen ? <HiX className="h-6 w-6" /> : <HiMenu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
       </motion.nav>
 
@@ -69,9 +87,7 @@ export default function Navbar() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className={`md:hidden fixed inset-0 z-[45] transition-colors duration-300 bg-black/90 ${
-              scrolled ? "bg-white/90 text-black" : "bg-black text-white"
-            }`}
+            className={`md:hidden fixed inset-0 z-[45] transition-colors duration-300 bg-black/90`}
             initial={{ opacity: 0}}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0,}}
