@@ -40,13 +40,12 @@ export default async function ProductPage({ params }: Props) {
         <div className="p-6 pl-0 pb-0">
           <div className="relative inline-block w-full rounded-lg overflow-hidden">
             <Image
-              src={product.image}
-              alt={product.title}
-              width={800}
-              height={600}
-              priority
-              className="w-full h-auto object-contain"
-            />
+                        src={product.image}
+                        alt={product.title}
+                        height={400}
+                        width={300}
+                        className="object-cover w-full"
+                      />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent" />
           </div>
         </div>
