@@ -173,22 +173,6 @@ export default function Home(): React.ReactElement {
               <h1 className="text-4xl md:text-5xl pb-2">Odkryj najnowsze urządzenia</h1>
               <p>Z nami zawsze znajdziesz to, czego szukasz.</p>
             </div>
-        <div style={{ width: '100%', height: '100%', position: 'absolute', zIndex:"-10" }}>
-          <Particles
-            particleColors={['#ffffff', '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff', '#ff5050', '#50b3ff', '#fff20a']}
-            particleCount={400}
-            particleSpread={10}
-            speed={0.1}
-            particleBaseSize={100}
-            moveParticlesOnHover={true}
-            alphaParticles={false}
-            disableRotation={false}
-          />
-        </div>
-        <div ref={scrollRef} id="produkty" className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-3 gap-6 p-10 pt-0 w-full z-10 relative">
-          <div className="p-4 flex flex-col justify-center items-center">
-            <h1 className="text-lg md:text-5xl pb-6">Odkryj najnowsze urządzenia</h1>
-            <p>U nas, zawsze dostaniesz to, czego potrzebujesz</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 pt-4">
