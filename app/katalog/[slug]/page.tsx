@@ -1,4 +1,3 @@
-```react
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
@@ -37,24 +36,6 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div>
-      <section className="relative w-screen h-[30vh] overflow-hidden mainvideobg">
-        {/* Background Video */}
-        <video
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        >
-          <source src="/videos/bgsmokecoloredcompressed.mp4" type="video/mp4" />
-          Twoja przeglądarka nie wspiera odtwarzania wideo.
-        </video>
-
-        {/* Overlay to darken video for readability */}
-        <div className="absolute inset-0 bg-black/50"/>
-      </section>
-    
       <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center px-0 p-10 pt-20 gap-10">
         <div className="p-6 pl-0 pb-0">
           <div className="relative inline-block w-full rounded-lg overflow-hidden">
@@ -104,4 +85,3 @@ export default async function ProductPage({ params }: Props) {
     </div>
   );
 }
-```
