@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef } from 'react';
 import { Renderer, Camera, Geometry, Program, Mesh } from 'ogl';
 
@@ -58,9 +60,10 @@ const vertex = /* glsl */ `
     
     vec4 mPos = modelMatrix * vec4(pos, 1.0);
     float t = uTime;
-    mPos.x += sin(t * random.z + 6.28 * random.w) * mix(0.1, 1.5, random.x);
-    mPos.y += sin(t * random.y + 6.28 * random.x) * mix(0.1, 1.5, random.w);
-    mPos.z += sin(t * random.w + 6.28 * random.y) * mix(0.1, 1.5, random.z);
+    // Delikatniejszy dryf (mniej "szumu")
+    mPos.x += sin(t * (0.6 + 0.4 * random.z) + 6.28 * random.w) * mix(0.05, 0.6, random.x);
+    mPos.y += sin(t * (0.6 + 0.4 * random.y) + 6.28 * random.x) * mix(0.05, 0.6, random.w);
+    mPos.z += sin(t * (0.6 + 0.4 * random.w) + 6.28 * random.y) * mix(0.05, 0.6, random.z);
     
     vec4 mvPos = viewMatrix * mPos;
 
@@ -91,10 +94,10 @@ const fragment = /* glsl */ `
       if(d > 0.5) {
         discard;
       }
-      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), 1.0);
+      gl_FragColor = vec4(vColor, 1.0);
     } else {
-      float circle = smoothstep(0.5, 0.4, d) * 0.8;
-      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), circle);
+      float circle = smoothstep(0.5, 0.4, d) * 0.9;
+      gl_FragColor = vec4(vColor, circle);
     }
   }
 `;

@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import { Manrope } from "next/font/google";
+
+const heroFont = Manrope({ subsets: ["latin"], weight: ["200","300","400"], variable: "--font-hero" });
 
 export default function HeroSection() {
   // Smooth scroll to next section or by one viewport height
@@ -36,17 +38,19 @@ export default function HeroSection() {
 
       {/* Centered Text */}
       
-      <div className="relative z-10 flex flex-col justify-center items-center h-full px-6 text-center">
-        
-      <Image width={1000} height={1000} alt="GUS" src={`/images/guslogo.png`} className="object-cover absolute z-[-5] blur "></Image>
-      
-        <h1 className="text-4xl md:text-6xl font-bold text-white">
-          Witaj na naszej stronie
+      <div className={`relative z-10 flex flex-col justify-center items-center h-full px-6 text-center ${heroFont.className}`}>
+        <h1
+          className="text-4xl md:text-6xl font-extralight text-white tracking-wide"
+          style={{ textShadow: "0 1px 6px rgba(0,0,0,0.25)" }}
+        >
+          Profesjonalne wyposażenie salonów
         </h1>
-        <p className="mt-4 text-lg md:text-2xl text-gray-200">
-          Odkryj, jak możemy Ci pomóc
+        <p
+          className="mt-3 md:mt-4 text-lg md:text-2xl text-gray-200 font-light"
+          style={{ textShadow: "0 1px 4px rgba(0,0,0,0.2)" }}
+        >
+          Sprawdź nasze urządzenia i rozwiązania
         </p>
-        
       </div>
 
       {/* Animated Scroll Button */}
