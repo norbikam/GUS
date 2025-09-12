@@ -90,7 +90,7 @@ export default async function ProductPage({ params }: Props) {
             </a>
           </div>
           {/* 4) Opis */}
-          <div className="mt-8 prose prose-invert max-w-none">
+          <div className="mt-8 prose prose-invert max-w-none text-white">
             <ReactMarkdown>{product.description || ''}</ReactMarkdown>
           </div>
         </div>
