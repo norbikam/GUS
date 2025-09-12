@@ -61,70 +61,37 @@ export default async function ProductPage({ params }: Props) {
         </div>
       </section>
     
-      <div className="flex flex-col p-10 pt-20 gap-10 md:grid grid-cols-1 md:grid-cols-2 ">
-        <div className="row-span-2">
-          <Image 
-            src={product.image} 
-            alt={product.title} 
-            width={800} 
-            height={500}
-            className="w-full h-auto object-cover rounded-lg shadow-lg"
-          />
+      <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center px-0 p-10 pt-20 gap-10">
+        <div className="p-6 pl-0 pb-0">
+          <div className="relative w-full pt-[56.25%] md:min-h-[420px] rounded-lg overflow-hidden">
+            <Image src={product.image} alt={product.title} fill className="object-contain" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent" />
+          </div>
         </div>
-        <div>
-          <h1 className="text-3xl font-bold mt-6">{product.title}</h1>
-          <br/>
-          
-          {/* Pokaż kategorię jeśli istnieje */}
-          {product.category && (
-            <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold mb-4">
-              {product.category}
-            </span>
-          )}
-          
-          {/* Pokaż badge "Polecane" jeśli produkt jest featured */}
-          {product.featured && (
-            <span className="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-2">
-              Polecane
-            </span>
-          )}
-
-          <div className="flex flex-col md:grid grid-cols-2">
-            <p>Możliwość finansowania</p>
-            <p className="text-left md:text-center">Dostępne szkolenia</p>
-            <p className="text-2xl text-yellow-600 mt-6">{product.price}</p>
-
+        <div className="relative h-full flex flex-col justify-center text-left p-10 md:pl-10">
+          <span aria-hidden className="hidden md:block absolute left-0 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+          {/* 1) Nazwa */}
+          <h1 className="text-3xl md:text-5xl font-bold">{product.title}</h1>
+          {/* 2) Cena */}
+          <p className="text-2xl text-yellow-600 mt-4">{product.price}</p>
+          {/* 3) Przyciski */}
+          <div className="mt-6 flex flex-col sm:flex-row gap-4">
             <a
               href="tel:+48510255279"
-              className="mt-10 inline-block bg-yellow-500 text-gray-800 px-6 py-3 rounded-lg hover:bg-yellow-600 transition text-center"
+              className="inline-block bg-yellow-500 text-gray-800 px-6 py-3 rounded-lg hover:bg-yellow-600 transition text-center w-full sm:w-auto"
             >
               Zadzwoń i zamów
             </a>
             <a
               href="https://wa.me/48510255279?text=Hej%2C%20chcia%C5%82bym%20zam%C3%B3wi%C4%87%20produkt%20z%20katalogu.%20Czy%20mo%C5%BCesz%20mi%20pom%C3%B3c%3F"
-              className="mt-10 inline-block bg-green-600/90 text-gray-50 px-6 py-3 rounded-lg hover:bg-green-600 transition text-center col-2"
+              className="inline-block bg-green-600/90 text-gray-50 px-6 py-3 rounded-lg hover:bg-green-600 transition text-center w-full sm:w-auto"
             >
               Napisz na WhatsApp
             </a>
           </div>
-        </div>
-        <div className="col-2">
-          {/* Wyświetl opis jako Markdown */}
-          <ReactMarkdown>{product.description || ''}</ReactMarkdown> 
-          
-          <div className="mt-8 flex flex-col sm:flex-row gap-4">
-            <a
-              href="tel:+48510255279"
-              className="inline-block bg-yellow-500 text-gray-800 px-6 py-3 rounded-lg hover:bg-yellow-600 transition text-center w-full md:w-auto"
-            >
-              Zadzwoń i zamów
-            </a>
-            <a
-              href="https://wa.me/48510255279?text=Hej%2C%20chcia%C5%82bym%20zam%C3%B3wi%C4%87%20produkt%20z%20katalogu.%20Czy%20mo%C5%BCesz%20mi%20pom%C3%B3c%3F"
-              className="inline-block bg-green-600/90 text-gray-50 px-6 py-3 rounded-lg hover:bg-green-600 transition text-center w-full md:w-auto"
-            >
-              Napisz na WhatsApp
-            </a>
+          {/* 4) Opis */}
+          <div className="mt-8 prose prose-invert max-w-none">
+            <ReactMarkdown>{product.description || ''}</ReactMarkdown>
           </div>
         </div>
         

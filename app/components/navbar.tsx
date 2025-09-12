@@ -24,13 +24,11 @@ export default function Navbar() {
     { href: "/kontakt", label: "KONTAKT" },
   ];
 
-  const phoneNumber = "+48 510 255 279";
-
   return (
     <header className="navbar">
       <motion.nav
         className={`fixed top-0 left-0 w-full z-50 transition-colors duration-500 ${
-          scrolled ? "bg-gray-50/98 shadow-md" : "bg-transparent"
+          scrolled ? "bg-[#0a0a0a]" : "bg-transparent"
         }`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -44,7 +42,7 @@ export default function Navbar() {
                   key={href}
                   href={href}
                   className={`transition-colors duration-300 ${
-                    scrolled ? "text-black hover:text-gray-700" : "text-white hover:text-gray-300"
+                    scrolled ? "text-white hover:text-gray-300" : "text-white hover:text-gray-300"
                   } `}
                 >
                   {label}
@@ -63,28 +61,6 @@ export default function Navbar() {
             >
               <Image width={50} height={50} src={`/images/guslogo.png`} alt="GUS"></Image>
             </Link>
-          </div>
-
-          {/* Right Section: phone (desktop) + hamburger (mobile) */}
-          <div className="flex justify-end items-center space-x-4">
-            {/* Phone number on desktop */}
-            <a
-              href={`tel:${phoneNumber.replace(/\s/g, "")}`}
-              className={`hidden md:block transition-colors duration-300 ${
-                scrolled ? "text-black hover:text-gray-700" : "text-white hover:text-gray-300"
-              }`}
-            >
-              {phoneNumber}
-            </a>
-            {/* Mobile Hamburger */}
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className={`md:hidden transition-colors duration-300 focus:outline-none ${
-                scrolled ? "text-black" : "text-white"
-              }`}
-            >
-              {menuOpen ? <HiX className="h-6 w-6" /> : <HiMenu className="h-6 w-6" />}
-            </button>
           </div>
         </div>
       </motion.nav>
