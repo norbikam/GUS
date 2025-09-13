@@ -36,15 +36,15 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center px-0 p-10 pt-20 gap-10">
-        <div className="p-6 pl-0 pb-0">
-          <div className="relative inline-block w-full rounded-lg overflow-hidden">
+      <div className="flex flex-col md:grid md:grid-cols-2 w-full justify-center items-stretch font-light text-center px-0 p-10 pt-20 gap-10">
+        <div className="p-6 md:pl-2 pb-0">
+          <div className="relative flex w-full rounded-lg overflow-hidden items-center justify-center">
             <Image
                         src={product.image}
                         alt={product.title}
                         height={400}
                         width={300}
-                        className="object-cover w-full"
+                        className="object-cover w-full md:w-[80%]"
                       />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent" />
           </div>
