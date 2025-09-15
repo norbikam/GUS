@@ -794,7 +794,6 @@ export default function AdminPage(): React.ReactElement {
                         value={productData.description}
                         onChange={handleDescriptionChange}
                         placeholder="Wprowadź szczegółowy opis produktu. Obsługuje Markdown, formatowanie i wklejanie sformatowanego tekstu. Użyj przycisków 'Szybkie wstawki' dla gotowych szablonów."
-                        height="500px"
                       />
                     ) : (
                       <div className="border border-gray-200 rounded-lg p-6 bg-gray-50 min-h-[500px] max-h-[500px] overflow-y-auto">
