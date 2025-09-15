@@ -2,8 +2,35 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from '@/app/types/product';
 import Image from 'next/image';
-import MarkdownEditor, { EditorContentChanged } from './components/MarkdownEditor';
-import MarkdownViewer from './components/MarkdownViewer';
+import dynamic from 'next/dynamic';
+
+// ✅ Dynamiczny import komponentów edytora (bez SSR)
+const MarkdownEditor = dynamic(
+  () => import('./components/MarkdownEditor'),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="h-[400px] bg-gray-100 animate-pulse rounded-lg flex items-center justify-center">
+        <span className="text-gray-500">Ładowanie edytora...</span>
+      </div>
+    )
+  }
+);
+
+const MarkdownViewer = dynamic(
+  () => import('./components/MarkdownViewer'),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="animate-pulse bg-gray-100 rounded p-4">
+        <span className="text-gray-500">Ładowanie podglądu...</span>
+      </div>
+    )
+  }
+);
+
+// Import typu osobno (bez dynamicznego importu)
+import type { EditorContentChanged } from './components/MarkdownEditor';
 
 export default function AdminPage(): React.ReactElement {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -29,9 +56,11 @@ export default function AdminPage(): React.ReactElement {
 
   const [uploadingImage, setUploadingImage] = useState<boolean>(false);
   const [imagePreview, setImagePreview] = useState<string>('');
+  const [isMounted, setIsMounted] = useState<boolean>(false);
 
   // Sprawdź czy użytkownik jest już zalogowany
   useEffect(() => {
+    setIsMounted(true);
     const savedAuth = localStorage.getItem('admin_authenticated');
     if (savedAuth === 'true') {
       setIsAuthenticated(true);
@@ -566,7 +595,7 @@ export default function AdminPage(): React.ReactElement {
       </div>
 
       {/* Modal */}
-      {isModalOpen && (
+      {isModalOpen && isMounted && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-2xl max-w-6xl w-full max-h-[95vh] overflow-y-auto">
             <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
@@ -793,10 +822,10 @@ export default function AdminPage(): React.ReactElement {
                       <MarkdownEditor
                         value={productData.description}
                         onChange={handleDescriptionChange}
-                        placeholder="Wprowadź szczegółowy opis produktu. Obsługuje Markdown, formatowanie i wklejanie sformatowanego tekstu. Użyj przycisków 'Szybkie wstawki' dla gotowych szablonów."
+                        placeholder="Wprowadź szczegółowy opis produktu..."
                       />
                     ) : (
-                      <div className="border border-gray-200 rounded-lg p-6 bg-gray-50 min-h-[500px] max-h-[500px] overflow-y-auto">
+                      <div className="border border-gray-200 rounded-lg p-6 bg-gray-50 min-h-[400px] max-h-[400px] overflow-y-auto">
                         <MarkdownViewer value={productData.description} />
                       </div>
                     )}
