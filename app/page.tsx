@@ -106,7 +106,7 @@ export default function Home(): React.ReactElement {
             <span aria-hidden className="hidden md:block absolute left-0 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
             <h1 className="text-7xl pb-2">VenusGlow Pro</h1>
             <p>Zainspiruj się możliwościami i odkryj zupełnie nową jakość pracy.</p>
-            <Link href="/katalog/lumiglam-pro-19271550nm-zaawansowany-laser-frakcyjny-o-podwjnej-dugoci-fali"><button  
+            <Link href="/katalog"><button  
               className="bg-yellow-500 text-gray-900 md:w-1/3 sm:w-full text-xl py-3 px-6 rounded mt-4 font-bold min-w-full"
             >
               Sprawdź teraz
