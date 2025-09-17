@@ -5,6 +5,7 @@ import Navbar from "./components/navbar";
 
 import { ReactLenis } from 'lenis/react'
 import Footer from "./components/footer";
+import { Analytics } from "@vercel/analytics/next"
 
 const jost = Jost({
   variable: "--font-jost",
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <ReactLenis root>
+        <Analytics />
       <body
         className={`${jost.variable} ${jost.variable} antialiased overflow-x-hidden`}
       >
