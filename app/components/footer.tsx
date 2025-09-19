@@ -16,6 +16,12 @@ export default function Footer() {
             <li className="pb-2"><Link href="/kontakt">Kontakt</Link></li>
             <li><Link href="/onas">O nas</Link></li>
         </ul>
+        <ul className="hidden md:block md:pt-0 text-left md:text-right md:pr-10">
+            <li className="pb-4 text-xl">Social media</li>
+            <li className="pb-2"><a href="https://www.facebook.com/GlowUpSkinPolska/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+            <li className="pb-2"><a href="https://www.instagram.com/glowupskinpl" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li><a href="https://api.whatsapp.com/send/?phone=48510255279&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+        </ul>
     </footer>
     );
 }
