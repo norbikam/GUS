@@ -37,7 +37,7 @@ export default async function ProductPage({ params }: Props) {
   return (
     <div>
       <div className="flex flex-col md:grid md:grid-cols-2 w-full justify-center items-stretch font-light text-center px-0 p-10 pt-20 gap-10">
-        <div className="p-6 md:pl-2 pb-0">
+        <div className="flex flex-col items-center gap-6 px-6 md:pl-2 pb-0">
           <div className="relative flex w-full rounded-lg overflow-hidden items-center justify-center">
             <Image
                         src={product.image}
@@ -49,7 +49,7 @@ export default async function ProductPage({ params }: Props) {
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent" />
           </div>
         </div>
-        <div className="relative h-full flex flex-col justify-center text-left p-10 md:pl-10">
+        <div className="relative h-full flex flex-col justify-center text-left p-10 md:pl-10 md:pt-16 md:pb-10">
           <span aria-hidden className="hidden md:block absolute left-0 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
           {/* 1) Nazwa */}
           <h1 className="text-3xl md:text-5xl font-bold">{product.title}</h1>
@@ -70,13 +70,14 @@ export default async function ProductPage({ params }: Props) {
               Napisz na WhatsApp
             </a>
           </div>
-          {/* 4) Opis (wymuś jasny tekst) */}
-          <div className="mt-8 prose prose-invert max-w-none text-gray-100">
-            //<ReactMarkdown>{product.description || ''}</ReactMarkdown>
-{product.description || ''}
+        </div>
+
+        <div className="md:col-span-2 px-6">
+          <div className="mt-4 prose prose-invert max-w-none text-gray-100 text-left">
+            <ReactMarkdown>{product.description ?? ''}</ReactMarkdown>
           </div>
         </div>
-        
+
         <div className="col-span-2">
           <h1 className="text-3xl font-bold mt-6 text-center">Zobacz inne produkty</h1>
           <ProductsDisplay amount={4} />
