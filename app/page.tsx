@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Product } from './types/product';
 import Particles from "./components/Particles";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function Home(): React.ReactElement {
   const [products, setProducts] = useState<Product[]>([]);
@@ -36,34 +37,31 @@ export default function Home(): React.ReactElement {
     }
   }
 
-  const scrollTop = (): void => {
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }
-
   return (
     <div className="">
       <HeroSection/>
 
-      <button 
-        onClick={scrollTop}
-        className="text-3xl fixed bottom-10 right-8 w-12 h-15 z-[10] rounded-full bg-yellow-500/70"
+      <Link
+        href="https://wa.me/48510255279"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat on WhatsApp"
+        className="fixed bottom-10 right-8 z-[10] flex h-14 w-14 items-center justify-center rounded-full bg-green-500/60 text-white shadow-lg transition hover:bg-green-600 hover:scale-110 focus-visible:bg-green-600 focus-visible:scale-110"
       >
-        ↑
-      </button>
+        <FaWhatsapp className="h-8 w-8" />
+      </Link>
 
       <div className="relative w-full">
         {/* Gwiazdy — mniej cząstek, większy rozmiar, prosty shader */}
         <div className="pointer-events-none absolute inset-0 z-[1] opacity-45 md:opacity-55">
           <Particles
             className="w-full h-full"
-            particleCount={260}
+            particleCount={180}
             particleSpread={9}
             speed={0.006}
             particleColors={["#ffffff", "#f7e199", "#d4af37"]}
             alphaParticles={false}
-            particleBaseSize={70}
+            particleBaseSize={55}
             sizeRandomness={0.45}
             cameraDistance={22}
             moveParticlesOnHover={false}

@@ -65,7 +65,7 @@ export default async function ProductPage({ params }: Props) {
             </a>
             <a
               href="https://wa.me/48510255279?text=Hej%2C%20chcia%C5%82bym%20zam%C3%B3wi%C4%87%20produkt%20z%20katalogu.%20Czy%20mo%C5%BCesz%20mi%20pom%C3%B3c%3F"
-              className="inline-block bg-green-600/90 text-gray-50 px-6 py-3 rounded-lg hover:bg-green-600 transition text-center w-full sm:w-auto"
+              className="inline-block bg-yellow-500 text-gray-800 px-6 py-3 rounded-lg hover:bg-yellow-600 transition text-center w-full sm:w-auto"
             >
               Napisz na WhatsApp
             </a>

@@ -48,11 +48,6 @@ body {
   pointer-events: none;
 }
 
-/* Prose styles dla contentu - POPRAWIONE KOLORY */
-.prose {
-
-}
-
 .prose h1 {
   font-size: 1.875rem;
   font-weight: 700;

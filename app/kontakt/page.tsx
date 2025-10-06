@@ -77,8 +77,8 @@ export default function KatalogPage() {
             {/* Przyciski na samym dole karty, równe rozmiary */}
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
               <a href="tel:+48510255279" className="h-12 flex items-center justify-center bg-yellow-500 text-gray-800 rounded-lg hover:bg-yellow-600 transition w-full text-base md:text-lg">Zadzwoń</a>
-              <a href="https://wa.me/48510255279?text=Hej%2C%20chcia%C5%82bym%20zam%C3%B3wi%C4%87%20produkt%20z%20katalogu.%20Czy%20mo%C5%BCesz%20mi%20pom%C3%B3c%3F" className="h-12 flex items-center justify-center bg-green-600/90 text-gray-50 rounded-lg hover:bg-green-600 transition w-full text-base md:text-lg">WhatsApp</a>
-              <a href="mailto:glowupskinpl@gmail.com" className="h-12 flex items-center justify-center bg-blue-600/90 text-gray-50 rounded-lg hover:bg-blue-600 transition w-full text-base md:text-lg">E‑mail</a>
+              <a href="https://wa.me/48510255279?text=Hej%2C%20chcia%C5%82bym%20zam%C3%B3wi%C4%87%20produkt%20z%20katalogu.%20Czy%20mo%C5%BCesz%20mi%20pom%C3%B3c%3F" className="h-12 flex items-center justify-center bg-yellow-500 text-gray-800 rounded-lg hover:bg-yellow-600 transition w-full text-base md:text-lg">WhatsApp</a>
+              <a href="mailto:glowupskinpl@gmail.com" className="h-12 flex items-center justify-center bg-yellow-500 text-gray-800 rounded-lg hover:bg-yellow-600 transition w-full text-base md:text-lg">E‑mail</a>
             </div>
           </div>
         </section>

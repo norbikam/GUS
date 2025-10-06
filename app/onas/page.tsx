@@ -36,7 +36,7 @@ Jesteśmy firmą zajmującą się sprzedażą najwyższej klasy urządzeń dla s
             <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full">
               <h2 className="text-3xl">Nasza misja</h2>
               <p className="mt-4 text-lg md:text-2xl font-light">
-Naszą misją jest dostarczanie innowacyjnych rozwiązań, które wspierają pracę salonów medycyny estetycznej. Wierzymy, że odpowiedni sprzęt znacząco podnosi jakość usług i satysfakcję klientów. Dlatego nieustannie poszukujemy nowych technologii, które napędzają rozwój branży kosmetologicznej. Naszym celem jest budowanie trwałych relacji z klientami, opartych na zaufaniu i profesjonalizmie.
+Naszą misją jest dostarczanie naszym klientom wyłącznie sprawdzonych, innowacyjnych rozwiązań, które wyróżniają się zarówno jakością, jak i konkurencyjnymi cenami. Nieustannie dostosowujemy naszą ofertę do dynamicznie zmieniających się potrzeb rynku, wprowadzając każdego miesiąca nowe produkty oraz formuły, które wyprzedzają najnowsze trendy i osiągnięcia w branży. W medycynie estetycznej kluczowe jest nadążanie za postępem, dlatego w GlowUpSkin znajdziesz wszystko, co sprawi, że Twój salon będzie nie tylko ekskluzywny, ale również zapewni zabiegi na najwyższym, profesjonalnym poziomie.
 
               </p>
             </div>
@@ -47,7 +47,7 @@ Naszą misją jest dostarczanie innowacyjnych rozwiązań, które wspierają pra
             <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full">
               <h2 className="text-3xl">Nasza oferta</h2>
               <p className="mt-4 text-lg md:text-2xl font-light">
-Oferujemy szeroki wybór nowoczesnych urządzeń, w tym lasery, aparaty do mikrodermabrazji, sprzęt do depilacji i wiele innych. Każdy produkt został starannie wyselekcjonowany, aby gwarantować najwyższą jakość i skuteczność.
+Oferujemy szeroki wybór nowoczesnych urządzeń, takich jak lasery, aparaty do mikrodermabrazji, sprzęt do depilacji i wiele innych. Każdy produkt został starannie wyselekcjonowany, by zapewnić najwyższą jakość i skuteczność. Wszystkie urządzenia objęte są <b>3-letnią</b> gwarancją serwisową, a sprzęt dostarczamy bezpośrednio do salonu klienta. Dodatkowo oferujemy szkolenia z obsługi urządzeń <b>prowadzone na miejscu</b>, aby zapewnić pełne wsparcie i komfort użytkowania.
               </p>
             </div>
           </div>
