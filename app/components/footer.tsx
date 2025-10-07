@@ -28,7 +28,7 @@ export default function Footer() {
                 </Link>
             </li>
             <li>
-                <Link href="#" aria-label="YouTube">
+                <Link href="https://www.youtube.com/@GlowUpSkinpl" aria-label="YouTube">
                     YouTube
                 </Link>
             </li>
