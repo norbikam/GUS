@@ -41,7 +41,7 @@ export default function KatalogPage() {
       <div className="pointer-events-none absolute inset-0 z-[1] opacity-45 md:opacity-55">
         <Particles
           className="w-full h-full"
-          particleCount={260}
+          particleCount={120}
           particleSpread={9}
           speed={0.006}
           particleColors={["#ffffff", "#f7e199", "#d4af37"]}

@@ -6,7 +6,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Product } from './types/product';
 import Particles from "./components/Particles";
-import { FaWhatsapp } from "react-icons/fa";
 
 export default function Home(): React.ReactElement {
   const [products, setProducts] = useState<Product[]>([]);
@@ -41,22 +40,12 @@ export default function Home(): React.ReactElement {
     <div className="">
       <HeroSection/>
 
-      <Link
-        href="https://wa.me/48510255279"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat on WhatsApp"
-        className="fixed bottom-10 right-8 z-[10] flex h-14 w-14 items-center justify-center rounded-full bg-green-500/60 text-white shadow-lg transition hover:bg-green-600 hover:scale-110 focus-visible:bg-green-600 focus-visible:scale-110"
-      >
-        <FaWhatsapp className="h-8 w-8" />
-      </Link>
-
       <div className="relative w-full">
         {/* Gwiazdy — mniej cząstek, większy rozmiar, prosty shader */}
         <div className="pointer-events-none absolute inset-0 z-[1] opacity-45 md:opacity-55">
           <Particles
             className="w-full h-full"
-            particleCount={180}
+            particleCount={140}
             particleSpread={9}
             speed={0.006}
             particleColors={["#ffffff", "#f7e199", "#d4af37"]}

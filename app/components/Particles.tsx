@@ -15,6 +15,7 @@ interface ParticlesProps {
   sizeRandomness?: number;
   cameraDistance?: number;
   disableRotation?: boolean;
+  particleOpacity?: number;
   className?: string;
 }
 
@@ -47,6 +48,7 @@ const vertex = /* glsl */ `
   uniform float uSpread;
   uniform float uBaseSize;
   uniform float uSizeRandomness;
+  uniform float uOpacity;
   
   varying vec4 vRandom;
   varying vec3 vColor;
@@ -83,6 +85,7 @@ const fragment = /* glsl */ `
   
   uniform float uTime;
   uniform float uAlphaParticles;
+  uniform float uOpacity;
   varying vec4 vRandom;
   varying vec3 vColor;
   
@@ -94,10 +97,10 @@ const fragment = /* glsl */ `
       if(d > 0.5) {
         discard;
       }
-      gl_FragColor = vec4(vColor, 1.0);
+      gl_FragColor = vec4(vColor, uOpacity);
     } else {
       float circle = smoothstep(0.5, 0.4, d) * 0.9;
-      gl_FragColor = vec4(vColor, circle);
+      gl_FragColor = vec4(vColor, circle * uOpacity);
     }
   }
 `;
@@ -114,6 +117,7 @@ const Particles: React.FC<ParticlesProps> = ({
   sizeRandomness = 1,
   cameraDistance = 20,
   disableRotation = false,
+  particleOpacity = 0.55,
   className
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -186,7 +190,8 @@ const Particles: React.FC<ParticlesProps> = ({
         uSpread: { value: particleSpread },
         uBaseSize: { value: particleBaseSize },
         uSizeRandomness: { value: sizeRandomness },
-        uAlphaParticles: { value: alphaParticles ? 1 : 0 }
+        uAlphaParticles: { value: alphaParticles ? 1 : 0 },
+        uOpacity: { value: particleOpacity }
       },
       transparent: true,
       depthTest: false
@@ -245,7 +250,8 @@ const Particles: React.FC<ParticlesProps> = ({
     particleBaseSize,
     sizeRandomness,
     cameraDistance,
-    disableRotation
+    disableRotation,
+    particleOpacity
   ]);
 
   return <div ref={containerRef} className={`relative w-full h-full ${className}`} />;
