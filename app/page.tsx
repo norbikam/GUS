@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Product } from './types/product';
 import Particles from "./components/Particles";
+import ProductCarousel from "./components/ProductCarousel";
 
 export default function Home(): React.ReactElement {
   const [products, setProducts] = useState<Product[]>([]);
@@ -27,6 +28,13 @@ export default function Home(): React.ReactElement {
 
     fetchProducts();
   }, []);
+
+  // Grupowanie produktów według kategorii
+  const getProductsByCategory = (category: string) => {
+    return products.filter(p => p.category === category && p.active);
+  };
+
+  const featuredProducts = products.filter(p => p.featured && p.active);
 
   const scrollToNext = (): void => {
     if (scrollRef.current) {
@@ -71,13 +79,13 @@ export default function Home(): React.ReactElement {
             <p className="text-2xl">Sprawdź nasze polecane urządzenia</p>
             <button 
               onClick={scrollToNext} 
-              className="bg-yellow-500 text-gray-900 text-xl py-3 px-8 rounded font-bold"
+              className="bg-yellow-500 text-gray-900 text-xl py-3 px-8 rounded font-bold hover:bg-yellow-600 transition"
             >
               Polecane
             </button>
           </div>
         </div>
-        {/* (Przeniesione) Separator pojawi się pod sekcją Lasery */}
+
         <div className="mt-10 w-full">
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         </div>
@@ -94,54 +102,19 @@ export default function Home(): React.ReactElement {
             <h1 className="text-7xl pb-2">VenusGlow Pro</h1>
             <p>Zainspiruj się możliwościami i odkryj zupełnie nową jakość pracy.</p>
             <Link href="/katalog"><button  
-              className="bg-yellow-500 text-gray-900 md:w-1/3 sm:w-full text-xl py-3 px-6 rounded mt-4 font-bold min-w-full"
+              className="bg-yellow-500 text-gray-900 md:w-1/3 sm:w-full text-xl py-3 px-6 rounded mt-4 font-bold min-w-full hover:bg-yellow-600 transition"
             >
               Sprawdź teraz
             </button></Link>
           </div>
         </div>
-        {/* Mocniejszy separator pod sekcją Lasery */}
-        
 
-        {/* Sekcja polecanych produktów
-        <div className="bg-[url(/images/starsbgalpha.png)] bg-cover">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-10">
-            {products.filter(p => p.featured).slice(0, 4).map((product) => (
-              <Link key={product.id} href={`/katalog/${product.slug}`}>
-                <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105 flex flex-col h-full">
-                  <div className="relative h-64">
-                    <Image
-                      src={product.image}
-                      alt={product.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                    <div className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 text-xs rounded">
-                      Polecane
-                    </div>
-                  </div>
-                  <div className="p-4 flex flex-col justify-between flex-grow">
-                    <h2 className="text-lg font-bold mb-2">{product.title}</h2>
-                    <p className="text-xl font-semibold text-blue-600 border-t pt-2">
-                      {product.price}
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div> */}
-
-        {/* Reszta oryginalnej strony... */}
         <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center gap-6 -mt-[32px]">
-            {/* Lewa kolumna: tytuł i opis z delikatnym gradientowym paskiem po lewej */}
             <div className="relative h-full flex flex-col justify-center text-left py-10 pr-10 pl-0">
               <span aria-hidden className="hidden md:block absolute left-3 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
               <h1 className="text-7xl pb-2 pl-10">Lasery</h1>
               <p className="pl-10">Odkryj linię laserów nowej generacji – stworzoną, by zapewnić Twoim klientom naturalne odmłodzenie i długotrwałe efekty.</p>
             </div>
-            {/* Prawa kolumna: surowe zdjęcie bez gradientu (zostaje padding) */}
             <div className="w-full flex justify-center items-center md:p-6 md:pr-2 md:pt-0 p-2">
               <div className="relative w-full pt-[56.25%] md:min-h-[420px] rounded-lg overflow-hidden bg-black/10">
                 <Image src="/images/gus_machine.png" alt="Maszyna kosmetyczna" fill className="object-contain" />
@@ -149,11 +122,12 @@ export default function Home(): React.ReactElement {
               </div>
             </div>
         </div>
+
         <div className="mt-10 w-full">
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         </div>
 
-          <div>
+                  <div>
         <section ref={scrollRef} id="produkty" className="w-full px-8 md:px-10 pt-0">
           <div className="w-full max-w-6xl mx-auto">
             <div className="text-left p-10">
@@ -185,9 +159,63 @@ export default function Home(): React.ReactElement {
         </section>
         </div>
 
+        {/* SEKCJA KARUZELI - Polecane produkty */}
+        <div ref={scrollRef} id="produkty" className="w-full">
+          {featuredProducts.length > 0 && (
+            <ProductCarousel
+              title="✨ Polecane produkty"
+              products={featuredProducts}
+            />
+          )}
+        </div>
+
+        {/* KARUZELE DLA RÓŻNYCH KATEGORII */}
+        <div className="w-full space-y-8">
+          {getProductsByCategory("laser").length > 0 && (
+            <ProductCarousel
+              title="🔬 Lasery"
+              products={getProductsByCategory("laser")}
+              categorySlug="laser"
+            />
+          )}
+
+          {getProductsByCategory("hifu").length > 0 && (
+            <ProductCarousel
+              title="💎 Urządzenia HIFU"
+              products={getProductsByCategory("hifu")}
+              categorySlug="hifu"
+            />
+          )}
+
+          {getProductsByCategory("depilacja").length > 0 && (
+            <ProductCarousel
+              title="✨ Depilacja laserowa"
+              products={getProductsByCategory("depilacja")}
+              categorySlug="depilacja"
+            />
+          )}
+
+          {getProductsByCategory("plazma").length > 0 && (
+            <ProductCarousel
+              title="⚡ Urządzenia plazmowe"
+              products={getProductsByCategory("plazma")}
+              categorySlug="plazma"
+            />
+          )}
+
+          {getProductsByCategory("mikronakłuwanie").length > 0 && (
+            <ProductCarousel
+              title="💉 Mikronakłuwanie"
+              products={getProductsByCategory("mikronakłuwanie")}
+              categorySlug="mikronakłuwanie"
+            />
+          )}
+        </div>
+
         <div className="mt-10 w-full">
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         </div>
+
         <div className="flex flex-col w-full justify-center items-center font-light text-center gap-4 py-6 px-6">
           <h2 className="text-3xl md:text-5xl">Zapraszamy do współpracy</h2>
           <p className="text-lg">Pomożemy Ci z wyborem odpowiedniego wyposażenia dla twojego salonu</p>

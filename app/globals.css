@@ -110,3 +110,22 @@ body {
 .rich-editor-content {
   background-color: #ffffff !important;
 }
+
+/* Ukryj scrollbar dla karuzeli */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth snap scrolling */
+.snap-x {
+  scroll-snap-type: x mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
