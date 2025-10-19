@@ -42,7 +42,7 @@ export default function CategoryDropdown({
   };
 
   return (
-    <div ref={dropdownRef} className="relative w-full md:w-64 z-[100]">
+    <div ref={dropdownRef} className="relative w-full md:w-64">
       {/* Przycisk dropdown */}
       <button
         onClick={() => setIsOpen(!isOpen)}

@@ -172,7 +172,7 @@ export default function KatalogPage(): React.ReactElement {
                 <span className="text-sm text-gray-400">Aktywne filtry:</span>
                 {searchTerm && (
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">
-                    Szukaj: "{searchTerm}"
+                    Szukaj: {`"${searchTerm}"`}
                     <button
                       onClick={() => setSearchTerm('')}
                       className="ml-2 hover:text-yellow-100"
