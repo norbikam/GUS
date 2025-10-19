@@ -19,7 +19,7 @@ const categoryMap = {
 // Które produkty są polecane
 const featuredSlugs = ['morpheus', 'Frax-Ultra', 'Venom', 'HiFUSONIX', 'AuraXPL', 'EternaSilk'];
 
-export async function POST(request) {
+export async function POST() {
   try {
     console.log('🚀 Rozpoczynam aktualizację kategorii...');
     
