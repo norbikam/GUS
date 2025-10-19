@@ -50,7 +50,7 @@ export async function GET() {
         return {
           key: category,
           label: CATEGORY_LABELS[category] || category,
-          icon: CATEGORY_ICONS[category] || '📦',
+          icon: CATEGORY_ICONS[category] || '',
           count: count
         };
       })
