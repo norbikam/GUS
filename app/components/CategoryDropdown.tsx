@@ -2,10 +2,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-interface Category {
+export interface Category {
   key: string;
   label: string;
   icon: string;
+  count?: number;
 }
 
 interface CategoryDropdownProps {
@@ -42,7 +43,7 @@ export default function CategoryDropdown({
   };
 
   return (
-    <div ref={dropdownRef} className="relative w-full md:w-64">
+    <div ref={dropdownRef} className="relative w-full md:w-64 z-[100]">
       {/* Przycisk dropdown */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -50,9 +51,16 @@ export default function CategoryDropdown({
       >
         <div className="flex items-center gap-3">
           <span className="text-xl">{selectedCategoryData?.icon}</span>
-          <span className="font-medium text-gray-200">
-            {selectedCategoryData?.label || 'Wybierz kategorię'}
-          </span>
+          <div className="flex flex-col">
+            <span className="font-medium text-gray-200">
+              {selectedCategoryData?.label || 'Wybierz kategorię'}
+            </span>
+            {selectedCategoryData?.count !== undefined && (
+              <span className="text-xs text-gray-400">
+                {selectedCategoryData.count} {selectedCategoryData.count === 1 ? 'produkt' : 'produktów'}
+              </span>
+            )}
+          </div>
         </div>
         
         <motion.svg
@@ -85,7 +93,7 @@ export default function CategoryDropdown({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="absolute z-[10000] w-full mt-2 bg-gray-900/95 backdrop-blur-md border border-white/10 rounded-lg shadow-2xl overflow-hidden"
+              className="absolute z-[100] w-full mt-2 bg-gray-900/95 backdrop-blur-md border border-white/10 rounded-lg shadow-2xl overflow-hidden"
             >
               <div className="py-2 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
                 {categories.map((category, index) => (
@@ -102,13 +110,20 @@ export default function CategoryDropdown({
                     }`}
                   >
                     <span className="text-xl">{category.icon}</span>
-                    <span className="font-medium">{category.label}</span>
+                    <div className="flex-1">
+                      <span className="font-medium block">{category.label}</span>
+                      {category.count !== undefined && (
+                        <span className="text-xs text-gray-400">
+                          {category.count} {category.count === 1 ? 'produkt' : 'produktów'}
+                        </span>
+                      )}
+                    </div>
                     
                     {selectedCategory === category.key && (
                       <motion.svg
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        className="ml-auto w-5 h-5"
+                        className="w-5 h-5"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
