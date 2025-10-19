@@ -171,34 +171,34 @@ export default function Home(): React.ReactElement {
 
         {/* KARUZELE DLA RÓŻNYCH KATEGORII */}
         <div className="w-full space-y-8">
-          {getProductsByCategory("laser").length > 0 && (
+          {getProductsByCategory("Lasery").length > 0 && (
             <ProductCarousel
               title="🔬 Lasery"
-              products={getProductsByCategory("laser")}
+              products={getProductsByCategory("Lasery")}
               categorySlug="laser"
             />
           )}
 
-          {getProductsByCategory("hifu").length > 0 && (
+          {getProductsByCategory("HIFU").length > 0 && (
             <ProductCarousel
               title="💎 Urządzenia HIFU"
-              products={getProductsByCategory("hifu")}
+              products={getProductsByCategory("HIFU")}
               categorySlug="hifu"
             />
           )}
 
-          {getProductsByCategory("depilacja").length > 0 && (
+          {getProductsByCategory("Radiofrekwencja").length > 0 && (
             <ProductCarousel
-              title="✨ Depilacja laserowa"
-              products={getProductsByCategory("depilacja")}
+              title="✨ Radiofrekwencja"
+              products={getProductsByCategory("Radiofrekwencja")}
               categorySlug="depilacja"
             />
           )}
 
-          {getProductsByCategory("plazma").length > 0 && (
+          {getProductsByCategory("Plazma").length > 0 && (
             <ProductCarousel
               title="⚡ Urządzenia plazmowe"
-              products={getProductsByCategory("plazma")}
+              products={getProductsByCategory("Plazma")}
               categorySlug="plazma"
             />
           )}
