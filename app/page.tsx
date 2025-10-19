@@ -175,7 +175,7 @@ export default function Home(): React.ReactElement {
             <ProductCarousel
               title="🔬 Lasery"
               products={getProductsByCategory("Lasery")}
-              categorySlug="laser"
+              categorySlug="laserr"
             />
           )}
 
@@ -191,7 +191,7 @@ export default function Home(): React.ReactElement {
             <ProductCarousel
               title="✨ Radiofrekwencja"
               products={getProductsByCategory("Radiofrekwencja")}
-              categorySlug="depilacja"
+              categorySlug="Radiofrekwencja"
             />
           )}
 
@@ -199,15 +199,39 @@ export default function Home(): React.ReactElement {
             <ProductCarousel
               title="⚡ Urządzenia plazmowe"
               products={getProductsByCategory("Plazma")}
-              categorySlug="plazma"
+              categorySlug="Plazma"
             />
           )}
 
-          {getProductsByCategory("mikronakłuwanie").length > 0 && (
+          {getProductsByCategory("IPL").length > 0 && (
             <ProductCarousel
-              title="💉 Mikronakłuwanie"
-              products={getProductsByCategory("mikronakłuwanie")}
-              categorySlug="mikronakłuwanie"
+              title="IPL"
+              products={getProductsByCategory("IPL")}
+              categorySlug="IPL"
+            />
+          )}
+
+          {getProductsByCategory("Kriolipoliza").length > 0 && (
+            <ProductCarousel
+              title="Kriolipoliza"
+              products={getProductsByCategory("Kriolipoliza")}
+              categorySlug="kriolipoliza"
+            />
+          )}
+
+          {getProductsByCategory("Mezoterapia").length > 0 && (
+            <ProductCarousel
+              title="mezoterapia"
+              products={getProductsByCategory("mezoterapia")}
+              categorySlug="mezoterapia"
+            />
+          )}
+
+          {getProductsByCategory("Inne").length > 0 && (
+            <ProductCarousel
+              title="Inne"
+              products={getProductsByCategory("Inne")}
+              categorySlug="Inne"
             />
           )}
         </div>
