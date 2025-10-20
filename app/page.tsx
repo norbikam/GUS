@@ -175,7 +175,7 @@ export default function Home(): React.ReactElement {
             <ProductCarousel
               title="🔬 Lasery"
               products={getProductsByCategory("Lasery")}
-              categorySlug="Lasery"
+              categorySlug="laserr"
             />
           )}
 
