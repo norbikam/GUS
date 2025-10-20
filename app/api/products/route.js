@@ -1,4 +1,3 @@
-// app/api/products/route.js
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
@@ -13,12 +12,10 @@ export async function GET(request) {
     
     console.log('Parametry wyszukiwania:', { search, category, featured });
     
-    // Buduj warunki where - POPRAWNE dla SQLite
     const where = {
       active: true
     };
 
-    // Dodaj warunki wyszukiwania (SQLite nie ma mode: 'insensitive')
     if (search) {
       const searchLower = search.toLowerCase();
       where.OR = [
@@ -28,12 +25,10 @@ export async function GET(request) {
       ];
     }
 
-    // Dodaj filtr kategorii
     if (category && category !== 'all') {
       where.category = category;
     }
 
-    // Dodaj filtr featured
     if (featured === 'true') {
       where.featured = true;
     }
@@ -74,7 +69,8 @@ export async function POST(request) {
       data: {
         ...data,
         slug,
-        tags: data.tags || ''
+        tags: data.tags || '',
+        images: data.images || []
       }
     });
 

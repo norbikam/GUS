@@ -1,87 +1,132 @@
-import { notFound } from "next/navigation";
-import Image from "next/image";
-import ReactMarkdown from "react-markdown";
-import { ProductsDisplay } from "@/app/components/productsdisplay";
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
+import ReactMarkdown from 'react-markdown';
+import ProductGallery from '@/app/components/ProductGallery';
 
-type Props = {
-  params: Promise<{ slug: string }>;
-};
-
-// Funkcja do pobierania produktu z bazy danych
-async function getProductBySlug(slug: string) {
-  try {
-    const product = await prisma.product.findFirst({
-      where: {
-        slug: slug,
-        active: true
-      }
-    });
-    return product;
-  } catch (error) {
-    console.error('Błąd podczas pobierania produktu:', error);
-    return null;
-  }
+interface ProductPageProps {
+  params: {
+    slug: string;
+  };
 }
 
-export default async function ProductPage({ params }: Props) {
-  const { slug } = await params;
-  
-  // Pobierz produkt z bazy danych
-  const product = await getProductBySlug(slug);
+async function getProduct(slug: string) {
+  const product = await prisma.product.findUnique({
+    where: { slug }
+  });
+
+  return product;
+}
+
+export default async function ProductPage({ params }: ProductPageProps) {
+  const product = await getProduct(params.slug);
 
   if (!product) {
-    return notFound();
+    notFound();
   }
 
+  // Przygotuj tablicę zdjęć - główne + dodatkowe
+  const allImages = [product.image, ...(product.images || [])].filter(Boolean);
+
   return (
-    <div>
-      <div className="flex flex-col md:grid md:grid-cols-2 w-full justify-center items-stretch font-light text-center px-0 p-10 pt-20 gap-10">
-        <div className="flex flex-col items-center gap-6 px-6 md:pl-2 pb-0">
-          <div className="relative flex w-full rounded-lg overflow-hidden items-center justify-center">
-            <Image
-                        src={product.image}
-                        alt={product.title}
-                        height={400}
-                        width={300}
-                        className="object-cover w-full md:w-[80%]"
-                      />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent" />
+    <div className="relative min-h-screen pt-24 pb-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        {/* Breadcrumbs */}
+        <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
+          <Link href="/" className="hover:text-yellow-500 transition">
+            Strona główna
+          </Link>
+          <span>/</span>
+          <Link href="/katalog" className="hover:text-yellow-500 transition">
+            Katalog
+          </Link>
+          <span>/</span>
+          <span className="text-gray-200">{product.title}</span>
+        </nav>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* Galeria zdjęć */}
+          <div className="lg:sticky lg:top-24 lg:self-start">
+            <ProductGallery images={allImages} title={product.title} />
           </div>
-        </div>
-        <div className="relative h-full flex flex-col justify-center text-left p-10 md:pl-10 md:pt-16 md:pb-10">
-          <span aria-hidden className="hidden md:block absolute left-0 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
-          {/* 1) Nazwa */}
-          <h1 className="text-3xl md:text-5xl font-bold">{product.title}</h1>
-          {/* 2) Cena */}
-          <p className="text-2xl text-yellow-600 mt-4">{product.price}</p>
-          {/* 3) Przyciski */}
-          <div className="mt-6 flex flex-col sm:flex-row gap-4">
-            <a
-              href="tel:+48510255279"
-              className="inline-block bg-yellow-500 text-gray-800 px-6 py-3 rounded-lg hover:bg-yellow-600 transition text-center w-full sm:w-auto"
-            >
-              Zadzwoń i zamów
-            </a>
-            <a
-              href="https://wa.me/48510255279?text=Hej%2C%20chcia%C5%82bym%20zam%C3%B3wi%C4%87%20produkt%20z%20katalogu.%20Czy%20mo%C5%BCesz%20mi%20pom%C3%B3c%3F"
-              className="inline-block bg-yellow-500 text-gray-800 px-6 py-3 rounded-lg hover:bg-yellow-600 transition text-center w-full sm:w-auto"
-            >
-              Napisz na WhatsApp
-            </a>
+
+          {/* Informacje o produkcie */}
+          <div className="space-y-6">
+            {/* Kategoria i status */}
+            <div className="flex items-center gap-3 flex-wrap">
+              {product.category && (
+                <Link
+                  href={`/katalog?category=${product.category}`}
+                  className="inline-flex items-center px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm hover:bg-blue-500/30 transition"
+                >
+                  {product.category}
+                </Link>
+              )}
+              {product.featured && (
+                <span className="inline-flex items-center px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm">
+                  ⭐ Polecane
+                </span>
+              )}
+            </div>
+
+            {/* Tytuł */}
+            <h1 className="text-4xl md:text-5xl font-bold text-white">
+              {product.title}
+            </h1>
+
+            {/* Cena */}
+            <div className="p-6 bg-gradient-to-br from-yellow-500/10 to-yellow-600/5 border border-yellow-500/20 rounded-xl">
+              <div className="text-sm text-gray-400 mb-2">Cena</div>
+              <div className="text-4xl font-bold text-yellow-500">
+                {product.price}
+              </div>
+            </div>
+
+            {/* Przyciski akcji */}
+            <div className="flex gap-4 flex-wrap">
+              <Link
+                href="/kontakt"
+                className="flex-1 min-w-[200px] bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg transition text-center"
+              >
+                Zapytaj o produkt
+              </Link>
+              <button className="p-4 bg-gray-900/30 hover:bg-gray-900/50 border border-white/10 rounded-lg transition">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Separator */}
+            <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+            {/* Opis produktu */}
+            <div className="prose prose-invert prose-lg max-w-none">
+              <ReactMarkdown>{product.description || 'Brak opisu'}</ReactMarkdown>
+            </div>
+
+            {/* Tagi */}
+            {product.tags && (
+              <div className="pt-6 border-t border-white/10">
+                <h3 className="text-sm text-gray-400 mb-3">Tagi</h3>
+                <div className="flex flex-wrap gap-2">
+                  {product.tags.split(',').map((tag: string, index: number) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 bg-gray-900/30 border border-white/10 rounded-full text-sm text-gray-300"
+                    >
+                      {tag.trim()}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
           </div>
         </div>
 
-        <div className="md:col-span-2 px-6">
-          <div className="mt-4 prose prose-invert max-w-none text-gray-100 text-left">
-            <ReactMarkdown>{product.description ?? ''}</ReactMarkdown>
-          </div>
-        </div>
-
-        <div className="col-span-2">
-          <h1 className="text-3xl font-bold mt-6 text-center">Zobacz inne produkty</h1>
-          <ProductsDisplay amount={4} />
-        </div>
+        {/* Sekcja podobnych produktów (opcjonalnie) */}
+        {/* Możesz tutaj dodać sekcję z podobnymi produktami */}
       </div>
     </div>
   );
