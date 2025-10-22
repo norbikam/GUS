@@ -30,17 +30,31 @@ export function parseImages(images: unknown): ImageItem[] | null {
 /**
  * Waliduje tablicę images przed zapisem do bazy
  */
-export function validateImages(images: any[]): boolean {
+// Add this helper function at the top
+function isValidImageItem(img: unknown): img is { id: string; url: string } {
+  return (
+    typeof img === 'object' &&
+    img !== null &&
+    'id' in img &&
+    'url' in img &&
+    typeof (img as { url: unknown }).url === 'string' &&
+    Boolean((img as { id: unknown }).id)
+  );
+}
+
+export function validateImages(images: unknown): boolean {
   if (!Array.isArray(images)) return false;
   
   for (const img of images) {
-    if (!img.id || !img.url || typeof img.url !== 'string') {
+    if (!isValidImageItem(img)) {
       return false;
     }
   }
-	  
-	  return true;
-	}
+  
+  return true;
+}
+
+
 	
 	/**
 	 * Upewnia się że przynajmniej jedno zdjęcie jest główne

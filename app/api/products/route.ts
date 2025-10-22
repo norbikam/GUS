@@ -82,19 +82,19 @@ export async function POST(request: Request) {
 
     return NextResponse.json(product, { status: 201 });
 
-  } catch (error: any) {
-    console.error('❌ ERROR in POST /api/products:', error);
-    console.error('📋 Error details:', {
-      message: error.message,
-      code: error.code,
-      meta: error.meta,
-      stack: error.stack
-    });
+  } catch (error) {
+    // console.error('❌ ERROR in POST /api/products:', error);
+    // console.error('📋 Error details:', {
+    //   message: error.message,
+    //   code: error.code,
+    //   meta: error.meta,
+    //   stack: error.stack
+    // });
 
     return NextResponse.json(
       { 
         error: 'Failed to create product',
-        details: error.message,
+        details: error,
         hint: 'Check server logs for detailed error information'
       },
       { status: 500 }
@@ -116,7 +116,7 @@ export async function GET(request: Request) {
     });
 
     return NextResponse.json(products);
-  } catch (error: any) {
+  } catch (error) {
     console.error('❌ Error fetching products:', error);
     return NextResponse.json(
       { error: 'Failed to fetch products' },

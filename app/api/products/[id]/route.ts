@@ -1,6 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+// Add this type definition at the top of the file (after imports)
+type UpdateData = {
+  title?: string;
+  slug?: string;
+  description?: string | null;
+  price?: string;
+  category?: string | null;
+  tags?: string;
+  featured?: boolean;
+  active?: boolean;
+  image?: string | null;
+  images?: Array<{ id: string; url: string }> | null;
+};
+
+type ImageInput = {
+  id?: string;
+  url?: string;
+  isPrimary?: boolean;
+};
+
+type CleanedImage = {
+  id: string;
+  url: string;
+  isPrimary?: boolean;
+};
+
+
 // ✅ Helper function do generowania slug
 function generateSlug(title: string): string {
   return title
@@ -49,7 +76,7 @@ export async function PUT(
     }
 
     // Przygotuj dane do aktualizacji
-    const updateData: any = {};
+    const updateData: UpdateData = {};
     
     // ✅ Proste pola tekstowe
     if (body.title !== undefined && body.title !== null) {
@@ -86,8 +113,8 @@ export async function PUT(
       console.log('🖼️  Processing', body.images.length, 'images from frontend');
       
       // Głębokie czyszczenie - tylko dozwolone pola
-      const cleanImages = body.images.map((img: any, index: number) => {
-        const cleaned: any = {
+      const cleanImages = body.images.map((img: ImageInput, index: number) => {
+        const cleaned: CleanedImage = {
           id: String(img.id || `img-${Date.now()}-${index}`),
           url: String(img.url || '').trim()
         };
@@ -101,7 +128,7 @@ export async function PUT(
       });
       
       // Walidacja URL
-      const validImages = cleanImages.filter((img: any) => {
+      const validImages = cleanImages.filter((img: CleanedImage) => {
         const isValid = img.url && (
           img.url.startsWith('http://') || 
           img.url.startsWith('https://') ||
@@ -121,7 +148,7 @@ export async function PUT(
         // 🎯 KLUCZOWA LOGIKA: Rozdziel na główne + pozostałe
         
         // 1. Znajdź główne zdjęcie (isPrimary: true)
-        let primaryImage = validImages.find((img: any) => img.isPrimary === true);
+        let primaryImage = validImages.find((img: CleanedImage) => img.isPrimary === true);
         
         // Jeśli nie ma głównego, ustaw pierwsze jako główne
         if (!primaryImage) {
@@ -130,7 +157,7 @@ export async function PUT(
         }
         
         // 2. Pobierz pozostałe zdjęcia (wszystkie oprócz głównego)
-        const otherImages = validImages.filter((img: any) => img.id !== primaryImage!.id);
+        const otherImages = validImages.filter((img: CleanedImage) => img.id !== primaryImage!.id);
         
         console.log('📸 Primary image:', primaryImage.url);
         console.log('🖼️  Other images:', otherImages.length);
@@ -140,7 +167,7 @@ export async function PUT(
         
         // Pozostałe zdjęcia jako JSON (bez pola isPrimary)
         if (otherImages.length > 0) {
-          const finalOtherImages = otherImages.map((img: any) => ({
+          const finalOtherImages = otherImages.map((img: CleanedImage) => ({
             id: img.id,
             url: img.url
           }));
@@ -159,15 +186,15 @@ export async function PUT(
     }
 
     // ✅ Usuń pola których Prisma nie akceptuje
-    delete (updateData as any).id;
-    delete (updateData as any).createdAt;
-    delete (updateData as any).updatedAt;
+    const dataToClean = updateData as Record<string, unknown>;
+    delete dataToClean.id;
+    delete dataToClean.createdAt;
+    delete dataToClean.updatedAt;
     // NIE usuwaj slug - właśnie go zaktualizowaliśmy!
 
-    // ✅ Usuń undefined wartości
     Object.keys(updateData).forEach(key => {
-      if (updateData[key] === undefined) {
-        delete updateData[key];
+      if (updateData[key as keyof UpdateData] === undefined) {
+        delete updateData[key as keyof UpdateData];
       }
     });
 
@@ -211,7 +238,7 @@ export async function PUT(
     
     // Prisma-specific error info
     if (error && typeof error === 'object' && 'code' in error) {
-      console.error('❌ Prisma error code:', (error as any).code);
+      console.error('❌ Prisma error code:', (error).code);
       console.error('❌ Prisma error meta:', (error as any).meta);
       
       // Jeśli błąd dotyczy typu pola
