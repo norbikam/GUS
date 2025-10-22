@@ -51,8 +51,8 @@ export default function ProductGallery({
       {/* Główne zdjęcie */}
       <div 
         className="relative w-full rounded-lg overflow-hidden bg-black/20 cursor-zoom-in group"
-        onMouseEnter={() => setIsZoomed(true)}
-        onMouseLeave={() => setIsZoomed(false)}
+        onMouseDown={() => setIsZoomed(true)}
+        onMouseUp={() => setIsZoomed(false)}
       >
         <div className="relative aspect-square md:aspect-[4/3] flex items-center justify-center">
           <Image
@@ -135,12 +135,7 @@ export default function ProductGallery({
         </div>
       )}
 
-      {/* Wskazówka zoom (tylko desktop) */}
-      {isZoomed && (
-        <p className="hidden md:block text-center text-sm text-gray-400">
-          🔍 Najedź myszką aby powiększyć
-        </p>
-      )}
+
     </div>
   );
 }
