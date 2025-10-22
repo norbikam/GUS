@@ -67,7 +67,55 @@ export default function Home(): React.ReactElement {
 
         <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 w-full md:px-10 px-8 justify-center items-center font-light">
+
+        <div className="mt-10 w-full">
+          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center px-0">
+          <div className="p-2 md:p-6 md:pl-2 md:pb-0">
+            <div className="relative w-full pt-[56.25%] md:min-h-[420px] rounded-lg overflow-hidden bg-black/10">
+              <Image src="/images/venusglow_img.png" alt="VenusGlow Pro" fill className="object-contain" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent"/>
+            </div>
+          </div>
+          <div className="relative h-full flex flex-col justify-center items-center text-left p-10 md:pl-10">
+            <span aria-hidden className="hidden md:block absolute left-0 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+            <h1 className="text-7xl pb-2">VenusGlow Pro</h1>
+            <p>Zainspiruj się możliwościami i odkryj zupełnie nową jakość pracy.</p>
+            <Link href="/katalog"><button  
+              className="bg-yellow-500 text-gray-900 md:w-1/3 sm:w-full text-xl py-3 px-6 rounded mt-4 font-bold min-w-full hover:bg-yellow-600 transition"
+            >
+              Sprawdź teraz
+            </button></Link>
+          </div>
+        </div>
+
+          {/* SEKCJA KARUZELI - Polecane produkty */}
+        <div ref={scrollRef} id="produkty" className="w-full">
+          {featuredProducts.length > 0 && (
+            <ProductCarousel
+              title="✨ Polecane produkty"
+              products={featuredProducts}
+            />
+          )}
+        </div>
+
+          {/*<div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center gap-6 -mt-[32px]">
+            <div className="relative h-full flex flex-col justify-center text-left py-10 pr-10 pl-0">
+              <span aria-hidden className="hidden md:block absolute left-3 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+              <h1 className="text-7xl pb-2 pl-10">Lasery</h1>
+              <p className="pl-10">Odkryj linię laserów nowej generacji – stworzoną, by zapewnić Twoim klientom naturalne odmłodzenie i długotrwałe efekty.</p>
+            </div>
+            <div className="w-full flex justify-center items-center md:p-6 md:pr-2 md:pt-0 p-2">
+              <div className="relative w-full pt-[56.25%] md:min-h-[420px] rounded-lg overflow-hidden bg-black/10">
+                <Image src="/images/gus_machine.png" alt="Maszyna kosmetyczna" fill className="object-contain" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent"/>
+              </div>
+            </div>
+        </div>*/}
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 w-full md:px-10 px-8 justify-center items-center font-light">
           <div className="grid grid-cols-2 w-full gap-4 text-gray-200 rounded text-center sm:aspect-square md:aspect-auto">
             <div className="py-10"><h2 className="text-3xl">LEASING</h2><p>Wszystkie produkty w dogodnych ratach</p></div>
             <div className="py-10"><h2 className="text-3xl">SZKOLENIE</h2><p>Możliwość odbycia szkolenia</p></div>
@@ -85,43 +133,6 @@ export default function Home(): React.ReactElement {
             </button>
           </div>
         </div>
-
-        <div className="mt-10 w-full">
-          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center px-0">
-          <div className="p-2 md:p-6 md:pl-2 md:pb-0">
-            <div className="relative w-full pt-[56.25%] md:min-h-[420px] rounded-lg overflow-hidden bg-black/10">
-              <Image src="https://www.gus-medic.pl/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdeiadptrt%2Fimage%2Fupload%2Fv1761119231%2Fproducts%2F1761119231135-venusglow1.png&w=640&q=75" alt="VenusGlow Pro" fill className="object-contain" />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent"/>
-            </div>
-          </div>
-          <div className="relative h-full flex flex-col justify-center items-center text-left p-10 md:pl-10">
-            <span aria-hidden className="hidden md:block absolute left-0 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
-            <h1 className="text-7xl pb-2">VenusGlow Pro</h1>
-            <p>Zainspiruj się możliwościami i odkryj zupełnie nową jakość pracy.</p>
-            <Link href="/katalog"><button  
-              className="bg-yellow-500 text-gray-900 md:w-1/3 sm:w-full text-xl py-3 px-6 rounded mt-4 font-bold min-w-full hover:bg-yellow-600 transition"
-            >
-              Sprawdź teraz
-            </button></Link>
-          </div>
-        </div>
-
-          {/*<div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center gap-6 -mt-[32px]">
-            <div className="relative h-full flex flex-col justify-center text-left py-10 pr-10 pl-0">
-              <span aria-hidden className="hidden md:block absolute left-3 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
-              <h1 className="text-7xl pb-2 pl-10">Lasery</h1>
-              <p className="pl-10">Odkryj linię laserów nowej generacji – stworzoną, by zapewnić Twoim klientom naturalne odmłodzenie i długotrwałe efekty.</p>
-            </div>
-            <div className="w-full flex justify-center items-center md:p-6 md:pr-2 md:pt-0 p-2">
-              <div className="relative w-full pt-[56.25%] md:min-h-[420px] rounded-lg overflow-hidden bg-black/10">
-                <Image src="/images/gus_machine.png" alt="Maszyna kosmetyczna" fill className="object-contain" />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent"/>
-              </div>
-            </div>
-        </div>*/}
 
         <div className="mt-10 w-full">
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
@@ -159,15 +170,7 @@ export default function Home(): React.ReactElement {
         </section>
         </div>
 
-        {/* SEKCJA KARUZELI - Polecane produkty */}
-        <div ref={scrollRef} id="produkty" className="w-full">
-          {featuredProducts.length > 0 && (
-            <ProductCarousel
-              title="✨ Polecane produkty"
-              products={featuredProducts}
-            />
-          )}
-        </div>
+        
 
         {/* KARUZELE DLA RÓŻNYCH KATEGORII */}
         <div className="w-full space-y-8">
