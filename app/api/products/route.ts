@@ -3,6 +3,30 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+// ✅ Definiujemy typy
+type ImageInput = {
+  id?: string;
+  url?: string;
+  isPrimary?: boolean;
+};
+
+type CleanedImage = {
+  id: string;
+  url: string;
+  isPrimary?: boolean;
+};
+
+type ProductData = {
+  name: string;
+  price: number;
+  description?: string | null;
+  category?: string | null;
+  inStock?: boolean;
+  featured?: boolean;
+  images?: CleanedImage[] | null;
+  image?: string | null;
+};
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -17,14 +41,14 @@ export async function POST(request: Request) {
     }
 
     // ✅ KLUCZOWE: Przygotowanie danych images
-    let finalImages: any = null;
+    let finalImages: CleanedImage[] | null = null;
 
     if (body.images && Array.isArray(body.images) && body.images.length > 0) {
       console.log('🖼️  Processing', body.images.length, 'images');
       
       // Deep clean każdego obrazu - usuń React metadata
-      const cleanImages = body.images.map((img: any, index: number) => {
-        const cleaned: any = {
+      const cleanImages = body.images.map((img: ImageInput, index: number): CleanedImage => {
+        const cleaned: CleanedImage = {
           id: String(img.id || `img-${Date.now()}-${index}`),
           url: String(img.url || '')
         };
@@ -38,7 +62,7 @@ export async function POST(request: Request) {
       });
 
       // Upewnij się że jest dokładnie jeden primary image
-      const hasPrimary = cleanImages.some((img: any) => img.isPrimary === true);
+      const hasPrimary = cleanImages.some((img: CleanedImage) => img.isPrimary === true);
       if (!hasPrimary && cleanImages.length > 0) {
         cleanImages[0].isPrimary = true;
       }
@@ -47,12 +71,14 @@ export async function POST(request: Request) {
       // Prisma automatycznie skonwertuje to na JSON
       finalImages = cleanImages;
 
-      console.log('✅ Final images prepared:', finalImages.length, 'images');
+
+      if(finalImages != null){
+      console.log('✅ Final images prepared:', finalImages.length, 'images');}
       console.log('📋 Images structure:', JSON.stringify(finalImages, null, 2));
     }
 
     // Przygotuj dane do zapisu
-    const productData: any = {
+    const productData: ProductData = {
       name: String(body.name),
       price: parseFloat(body.price),
       description: body.description ? String(body.description) : null,
@@ -83,18 +109,23 @@ export async function POST(request: Request) {
     return NextResponse.json(product, { status: 201 });
 
   } catch (error) {
-    // console.error('❌ ERROR in POST /api/products:', error);
-    // console.error('📋 Error details:', {
-    //   message: error.message,
-    //   code: error.code,
-    //   meta: error.meta,
-    //   stack: error.stack
-    // });
+    console.error('❌ ERROR in POST /api/products:', error);
+    
+    // ✅ Bezpieczne logowanie błędów
+    if (error && typeof error === 'object') {
+      const err = error as { message?: string; code?: string; meta?: unknown; stack?: string };
+      console.error('📋 Error details:', {
+        message: err.message,
+        code: err.code,
+        meta: err.meta,
+        stack: err.stack
+      });
+    }
 
     return NextResponse.json(
       { 
         error: 'Failed to create product',
-        details: error,
+        details: error instanceof Error ? error.message : 'Unknown error',
         hint: 'Check server logs for detailed error information'
       },
       { status: 500 }

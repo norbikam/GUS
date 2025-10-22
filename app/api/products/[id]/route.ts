@@ -239,21 +239,8 @@ export async function PUT(
     // Prisma-specific error info
     if (error && typeof error === 'object' && 'code' in error) {
       console.error('❌ Prisma error code:', (error).code);
-      console.error('❌ Prisma error meta:', (error as any).meta);
+      console.error('❌ Prisma error meta:', (error));
       
-      // Jeśli błąd dotyczy typu pola
-      if ((error as any).message?.includes('Invalid value provided')) {
-        console.error('');
-        console.error('🔍 DIAGNOSIS: Field type mismatch detected');
-        console.error('🔍 This usually means the Prisma schema expects a different type');
-        console.error('🔍 Check that schema.prisma has:');
-        console.error('🔍   image       String?');
-        console.error('🔍   images      Json?       <-- Must be Json?, not String?');
-        console.error('');
-        console.error('🔍 If schema is correct, run:');
-        console.error('🔍   npx prisma generate');
-        console.error('🔍   (restart server)');
-      }
     }
     
     return NextResponse.json(
