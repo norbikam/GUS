@@ -93,7 +93,7 @@ export default function Home(): React.ReactElement {
         <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center px-0">
           <div className="p-2 md:p-6 md:pl-2 md:pb-0">
             <div className="relative w-full pt-[56.25%] md:min-h-[420px] rounded-lg overflow-hidden bg-black/10">
-              <Image src="/images/venusglow_img.png" alt="VenusGlow Pro" fill className="object-contain" />
+              <Image src="https://www.gus-medic.pl/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdeiadptrt%2Fimage%2Fupload%2Fv1761119231%2Fproducts%2F1761119231135-venusglow1.png&w=640&q=75" alt="VenusGlow Pro" fill className="object-contain" />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent"/>
             </div>
           </div>
@@ -109,7 +109,7 @@ export default function Home(): React.ReactElement {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center gap-6 -mt-[32px]">
+          {/*<div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center gap-6 -mt-[32px]">
             <div className="relative h-full flex flex-col justify-center text-left py-10 pr-10 pl-0">
               <span aria-hidden className="hidden md:block absolute left-3 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
               <h1 className="text-7xl pb-2 pl-10">Lasery</h1>
@@ -121,7 +121,7 @@ export default function Home(): React.ReactElement {
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent"/>
               </div>
             </div>
-        </div>
+        </div>*/}
 
         <div className="mt-10 w-full">
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
