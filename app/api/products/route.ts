@@ -17,27 +17,66 @@ type CleanedImage = {
 };
 
 type ProductData = {
-  name: string;
-  price: number;
+  title: string;       // ✅ Zmienione z name
+  slug: string;        // ✅ Dodane
+  price: string;       // ✅ Zmienione z number
   description?: string | null;
   category?: string | null;
-  inStock?: boolean;
-  featured?: boolean;
+  tags: string;        // ✅ Dodane
+  featured: boolean;
+  active: boolean;     // ✅ Dodane
+  image: string;       // ✅ Wymagane (nie optional)
   images?: CleanedImage[] | null;
-  image?: string | null;
 };
+
+// ✅ Helper function do generowania slug
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .trim()
+    .replace(/ą/g, 'a')
+    .replace(/ć/g, 'c')
+    .replace(/ę/g, 'e')
+    .replace(/ł/g, 'l')
+    .replace(/ń/g, 'n')
+    .replace(/ó/g, 'o')
+    .replace(/ś/g, 's')
+    .replace(/ź|ż/g, 'z')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     console.log('📥 POST /api/products - Received body:', JSON.stringify(body, null, 2));
 
+    // ✅ Pobierz wartości (obsługa title i name dla kompatybilności)
+    const productTitle = body.title || body.name;
+    const productPrice = body.price;
+
     // Walidacja wymaganych pól
-    if (!body.name || !body.price) {
+    if (!productTitle || !productPrice) {
       return NextResponse.json(
-        { error: 'Name and price are required' },
+        { error: 'Title and price are required' },
         { status: 400 }
       );
+    }
+
+    // ✅ Generuj slug
+    const generatedSlug = generateSlug(productTitle);
+    
+    // ✅ Sprawdź unikalność slug
+    let finalSlug = generatedSlug;
+    const existingSlug = await prisma.product.findFirst({
+      where: { slug: generatedSlug }
+    });
+
+    if (existingSlug) {
+      finalSlug = `${generatedSlug}-${Date.now()}`;
+      console.log('⚠️  Slug collision, using:', finalSlug);
     }
 
     // ✅ KLUCZOWE: Przygotowanie danych images
@@ -46,14 +85,12 @@ export async function POST(request: Request) {
     if (body.images && Array.isArray(body.images) && body.images.length > 0) {
       console.log('🖼️  Processing', body.images.length, 'images');
       
-      // Deep clean każdego obrazu - usuń React metadata
       const cleanImages = body.images.map((img: ImageInput, index: number): CleanedImage => {
         const cleaned: CleanedImage = {
           id: String(img.id || `img-${Date.now()}-${index}`),
           url: String(img.url || '')
         };
         
-        // Dodaj isPrimary tylko jeśli istnieje
         if (typeof img.isPrimary === 'boolean') {
           cleaned.isPrimary = img.isPrimary;
         }
@@ -61,40 +98,46 @@ export async function POST(request: Request) {
         return cleaned;
       });
 
-      // Upewnij się że jest dokładnie jeden primary image
       const hasPrimary = cleanImages.some((img: CleanedImage) => img.isPrimary === true);
       if (!hasPrimary && cleanImages.length > 0) {
         cleanImages[0].isPrimary = true;
       }
 
-      // ✅ WAŻNE: Przypisz jako plain JavaScript object/array
-      // Prisma automatycznie skonwertuje to na JSON
       finalImages = cleanImages;
 
-
-      if(finalImages != null){
-      console.log('✅ Final images prepared:', finalImages.length, 'images');}
+      if (finalImages != null) {
+        console.log('✅ Final images prepared:', finalImages.length, 'images');
+      }
       console.log('📋 Images structure:', JSON.stringify(finalImages, null, 2));
+    }
+
+    // ✅ Ustal główny obraz (WYMAGANE pole)
+    let mainImage = '';
+    if (body.image && typeof body.image === 'string') {
+      mainImage = body.image;
+    } else if (finalImages && finalImages.length > 0) {
+      mainImage = finalImages[0].url;
+    } else {
+      // Fallback - musi być jakiś obraz
+      mainImage = '/placeholder.jpg';
     }
 
     // Przygotuj dane do zapisu
     const productData: ProductData = {
-      name: String(body.name),
-      price: parseFloat(body.price),
+      title: String(productTitle),           // ✅ title zamiast name
+      slug: finalSlug,                       // ✅ Dodane
+      price: String(productPrice),           // ✅ String zamiast parseFloat
       description: body.description ? String(body.description) : null,
       category: body.category ? String(body.category) : null,
-      inStock: Boolean(body.inStock ?? true),
+      tags: body.tags ? String(body.tags) : '',  // ✅ Dodane
       featured: Boolean(body.featured ?? false),
+      active: Boolean(body.active ?? true), // ✅ Dodane
+      image: mainImage,                      // ✅ Wymagane
     };
 
-    // ✅ KLUCZOWE: Dodaj images tylko jeśli istnieją
+    // ✅ Dodaj images tylko jeśli istnieją
     if (finalImages !== null) {
       productData.images = finalImages;
-    }
-
-    // Legacy support: jeśli jest pojedynczy image (stary format)
-    if (body.image && typeof body.image === 'string') {
-      productData.image = body.image;
     }
 
     console.log('💾 Creating product with data:', JSON.stringify(productData, null, 2));
@@ -111,7 +154,6 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('❌ ERROR in POST /api/products:', error);
     
-    // ✅ Bezpieczne logowanie błędów
     if (error && typeof error === 'object') {
       const err = error as { message?: string; code?: string; meta?: unknown; stack?: string };
       console.error('📋 Error details:', {
@@ -133,7 +175,7 @@ export async function POST(request: Request) {
   }
 }
 
-// GET endpoint (bez zmian - już działa)
+// GET endpoint
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
