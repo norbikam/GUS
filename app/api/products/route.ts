@@ -2,6 +2,7 @@
 
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { Prisma, Product } from '@prisma/client';
 
 // ✅ Definiujemy typy
 type ImageInput = {
@@ -180,19 +181,80 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const featured = searchParams.get('featured');
+    const category = searchParams.get('category');
+    const search = searchParams.get('search');
+    const active = searchParams.get('active');
 
-    const where = featured === 'true' ? { featured: true } : {};
+    console.log('📥 GET /api/products - Params:', { featured, category, search, active });
 
-    const products = await prisma.product.findMany({
+    // ✅ KROK 1: Buduj podstawowe query dla Prisma (bez wyszukiwania)
+    const where: Prisma.ProductWhereInput = {};
+    
+    if (featured === 'true') {
+      where.featured = true;
+    }
+    
+    if (category && category !== 'all') {
+      where.category = category;
+    }
+    
+    // Domyślnie tylko aktywne produkty
+    if (active === 'false') {
+      where.active = false;
+    } else if (active !== 'all') {
+      where.active = true;
+    }
+
+    console.log('🔍 Prisma where:', JSON.stringify(where, null, 2));
+
+    // ✅ KROK 2: Pobierz produkty z bazy
+    let products = await prisma.product.findMany({
       where,
       orderBy: { createdAt: 'desc' }
     });
 
+    console.log(`📦 Pobrano z bazy: ${products.length} produktów`);
+
+    // ✅ KROK 3: Filtruj wyszukiwanie PO STRONIE SERWERA (w Node.js)
+    if (search && search.trim()) {
+      const searchLower = search.trim().toLowerCase();
+      console.log(`🔍 Filtrowanie po: "${searchLower}"`);
+      
+      products = products.filter((product: Product) => {
+        // Sprawdź czy którekolwiek pole zawiera szukaną frazę
+        const titleMatch = product.title?.toLowerCase().includes(searchLower);
+        const descMatch = product.description?.toLowerCase().includes(searchLower);
+        const tagsMatch = product.tags?.toLowerCase().includes(searchLower);
+        const categoryMatch = product.category?.toLowerCase().includes(searchLower);
+        
+        const isMatch = titleMatch || descMatch || tagsMatch || categoryMatch;
+        
+        if (isMatch) {
+          console.log(`  ✓ Znaleziono: ${product.title}`);
+        }
+        
+        return isMatch;
+      });
+      
+      console.log(`📊 Po filtrowaniu: ${products.length} produktów`);
+    }
+
+    console.log(`✅ Zwracam: ${products.length} produktów`);
+
     return NextResponse.json(products);
   } catch (error) {
     console.error('❌ Error fetching products:', error);
+    
+    if (error && typeof error === 'object') {
+      const err = error as { message?: string; code?: string };
+      console.error('Error details:', {
+        message: err.message,
+        code: err.code
+      });
+    }
+    
     return NextResponse.json(
-      { error: 'Failed to fetch products' },
+      { error: 'Failed to fetch products', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
