@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Particles from "../components/Particles";
+import Link from "next/link";
 
 export default function OnasPage() {
   return (
@@ -68,6 +70,36 @@ export default function OnasPage() {
         <div className="mt-8 w-full">
           <div className="mx-auto h-[2px] w-2/3 md:w-1/2 bg-gradient-to-r from-transparent via-white/50 to-transparent" />
         </div>
+
+        <section className="grid grid-cols-1 gap-8">
+          <h1 className="text-5xl text-center">Współprace</h1>
+          {/* Karta: misja */}
+          <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
+            <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full">
+              <h2 className="text-3xl text-center">Dr Michał Ekkert</h2>
+              <Link href="https://drekkert.pl/" className="cursor-default"><Image src="/cooperations/michal-ekkert-qr.webp" alt="Dr Michał Ekkert" width={400} height={400} className="mx-auto rounded-lg mt-4 cursor-pointer hover:scale-[1.05] transition-all duration-200" /></Link>
+            </div>
+          </div>
+
+          {/* Współprace */}
+          <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
+            <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
+            <div>
+              <h2 className="text-3xl text-center">Edyta Babula-Frątczak</h2>
+              <Image src="/cooperations/edyta-babula-fratczak.jpeg" alt="Edyta Babula-Frątczak" width={400} height={400} className="mx-auto rounded-lg mt-4" />
+              <p className="text-center text-gray-300"><br></br>Ekspert, dydaktyk, założycielka Warszawskiej Szkoły Medycyny Estetycznej i Kosmetologii</p>
+              </div>
+              <div className="flex justify-center align-middle content-center">
+              <p className="mt-4 text-lg md:text-2xl font-light text-center">
+                Edyta Babula-Frątczak to ceniony autorytet w branży kosmetologicznej i medycyny estetycznej. Posiada unikalne, interdyscyplinarne wykształcenie, łączące specjalizację w marketingu z zaawansowaną kosmetologią, co pozwala jej na holistyczne podejście do rozwoju biznesu i edukacji w sektorze beauty.
+                <br />
+                <br />
+                Jako właściciel i główny dydaktyk Warszawskiej Szkoły Medycyny Estetycznej i Kosmetologii, Edyta jest pionierem w kreowaniu innowacyjnych programów edukacyjnych. Jej misją jest nie tylko przekazywanie wiedzy, ale i wdrażanie najwyższych standardów zawodowych, co czyni ją liderem w kształtowaniu przyszłych pokoleń specjalistów..
+                </p>
+                </div>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );
