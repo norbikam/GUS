@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import { ProductsDisplay } from "@/app/components/productsdisplay";
 import { prisma } from '@/lib/prisma';
 import ProductGallery from "@/app/components/ProductGallery";
 import { parseImages } from "@/app/admin/components/prisma-helpers";
