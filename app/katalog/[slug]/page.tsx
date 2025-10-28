@@ -5,13 +5,14 @@ import ProductGallery from "@/app/components/ProductGallery";
 import { parseImages } from "@/app/admin/components/prisma-helpers";
 import Link from "next/link";
 import Image from "next/image";
+import { Product } from "@prisma/client";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
 // Funkcja do pobierania produktu z bazy danych
-async function getProductBySlug(slug: string) {
+async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
     const product = await prisma.product.findFirst({
       where: {
@@ -27,7 +28,7 @@ async function getProductBySlug(slug: string) {
 }
 
 // Funkcja do pobierania losowych produktów (oprócz aktualnego)
-async function getRandomProducts(currentSlug: string, amount: number = 4) {
+async function getRandomProducts(currentSlug: string, amount: number = 4): Promise<Product[]> {
   try {
     const products = await prisma.product.findMany({
       where: {
