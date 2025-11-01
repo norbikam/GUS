@@ -22,6 +22,8 @@ export default function Navbar() {
     { href: "/katalog", label: "SKLEP" },
     { href: "/onas", label: "O NAS" },
     { href: "/kontakt", label: "KONTAKT" },
+    // { href: "/serwis", label: "SERWIS" },
+    // { href: "/szkolenia", label: "SZKOLENIA" },
   ];
 
   return (
@@ -50,10 +52,10 @@ export default function Navbar() {
           </div>
 
           {/* Center Logo */}
-          <div className="flex justify-center">
+          <div className="flex justify-center z-[-10]">
             <Link
               href="/"
-              className={`font-semibold text-3xl transition-colors duration-300 ${
+              className={`font-semibold text-3xl transition-colors duration-300  ${
                 scrolled ? "text-yellow-500" : "text-white"
               }`}
             >

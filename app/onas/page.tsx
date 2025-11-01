@@ -73,7 +73,8 @@ export default function OnasPage() {
 
         <section className="grid grid-cols-1 gap-8">
           <h1 className="text-5xl text-center">Współprace</h1>
-          {/* Karta: misja */}
+
+          {/* Espółpraca */}
           <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
             <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full">
               <h2 className="text-3xl text-center">Dr Michał Ekkert</h2>
@@ -81,7 +82,7 @@ export default function OnasPage() {
             </div>
           </div>
 
-          {/* Współprace */}
+          {/* Współpraca */}
           <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
             <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
             <div>
@@ -94,11 +95,54 @@ export default function OnasPage() {
                 Edyta Babula-Frątczak to ceniony autorytet w branży kosmetologicznej i medycyny estetycznej. Posiada unikalne, interdyscyplinarne wykształcenie, łączące specjalizację w marketingu z zaawansowaną kosmetologią, co pozwala jej na holistyczne podejście do rozwoju biznesu i edukacji w sektorze beauty.
                 <br />
                 <br />
-                Jako właściciel i główny dydaktyk Warszawskiej Szkoły Medycyny Estetycznej i Kosmetologii, Edyta jest pionierem w kreowaniu innowacyjnych programów edukacyjnych. Jej misją jest nie tylko przekazywanie wiedzy, ale i wdrażanie najwyższych standardów zawodowych, co czyni ją liderem w kształtowaniu przyszłych pokoleń specjalistów..
+                Jako właściciel i główny dydaktyk Warszawskiej Szkoły Medycyny Estetycznej i Kosmetologii, Edyta jest pionierem w kreowaniu innowacyjnych programów edukacyjnych. Jej misją jest nie tylko przekazywanie wiedzy, ale i wdrażanie najwyższych standardów zawodowych, co czyni ją liderem w kształtowaniu przyszłych pokoleń specjalistów.
                 </p>
                 </div>
             </div>
           </div>
+
+          {/* Współpraca */}
+          <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
+            <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
+              <div>
+              <h2 className="text-3xl text-center">Anna Goc</h2>
+              <Image src="/cooperations/anna-goc.jpg" alt="Edyta Babula-Frątczak" width={400} height={400} className="mx-auto rounded-lg mt-4" />
+              <p className="text-center text-gray-300"><br></br>Absolwentka Śląskiego Uniwersytetu Medycznego w Katowicach na kierunku Kosmetologia</p>
+              </div>
+              <div className="justify-center align-middle content-center">
+              <p className="mt-4 text-lg md:text-2xl font-light text-center">
+                Doświadczenie zawodowe zdobywała, pracując w wiodących firmach branży kosmetycznej i medycyny estetycznej, ze szczególnym naciskiem na nowoczesne technologie high-tech. Jako szkoleniowiec w firmie specjalizującej się w innowacyjnych urządzeniach do modelowania sylwetki i regeneracji skóry, doskonaliła praktyczne umiejętności w zakresie pracy z zaawansowanymi technologiami.                <br />
+                <br />
+                Specjalizuje się w peelingach chemicznych oraz terapiach anti-aging, łącząc wiedzę naukową z doświadczeniem praktycznym. W pracy stawia na indywidualne podejście do Pacjenta i kompleksowe planowanie terapii, które pozwala uzyskać naturalne i długotrwałe efekty.                
+                <br/>
+                <br/>
+                Nieustannie poszerza swoją wiedzę, uczestnicząc w szkoleniach i konferencjach branżowych. Z pasją łączy nowoczesne technologie z klasycznymi metodami pielęgnacji, tworząc skuteczne, spersonalizowane rozwiązania dla każdego Pacjenta.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Współpraca */}
+          {/* <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
+            <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
+              <div>
+              <h2 className="text-3xl text-center">Alan Dąbrowski</h2>
+              <Image src="/cooperations/anna-goc.jpg" alt="Edyta Babula-Frątczak" width={400} height={400} className="mx-auto rounded-lg mt-4" />
+              <p className="text-center text-gray-300"><br></br>Absolwentka Śląskiego Uniwersytetu Medycznego w Katowicach na kierunku Kosmetologia</p>
+              </div>
+              <div className="justify-center align-middle content-center">
+              <p className="mt-4 text-lg md:text-2xl font-light text-center">
+                Doświadczenie zawodowe zdobywała, pracując w wiodących firmach branży kosmetycznej i medycyny estetycznej, ze szczególnym naciskiem na nowoczesne technologie high-tech. Jako szkoleniowiec w firmie specjalizującej się w innowacyjnych urządzeniach do modelowania sylwetki i regeneracji skóry, doskonaliła praktyczne umiejętności w zakresie pracy z zaawansowanymi technologiami.                <br />
+                <br />
+                Specjalizuje się w peelingach chemicznych oraz terapiach anti-aging, łącząc wiedzę naukową z doświadczeniem praktycznym. W pracy stawia na indywidualne podejście do Pacjenta i kompleksowe planowanie terapii, które pozwala uzyskać naturalne i długotrwałe efekty.                
+                <br/>
+                <br/>
+                Nieustannie poszerza swoją wiedzę, uczestnicząc w szkoleniach i konferencjach branżowych. Z pasją łączy nowoczesne technologie z klasycznymi metodami pielęgnacji, tworząc skuteczne, spersonalizowane rozwiązania dla każdego Pacjenta.
+                </p>
+              </div>
+            </div>
+          </div> */}
+
         </section>
       </main>
     </div>
