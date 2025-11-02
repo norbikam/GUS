@@ -157,12 +157,12 @@ export default function SzkoleniaPage() {
             </div>
 
             {/* Alan Dąbrowski */}
-            <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
+            {/* <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
               <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
                 <div>
                   <h2 className="text-3xl text-center">Alan Dąbrowski</h2>
                   <Image 
-                    src="/cooperations/alan-dabrowski.jpeg" 
+                    src="/cooperations/alan-dabrowski.jpg" 
                     alt="Alan Dąbrowski" 
                     width={400} 
                     height={400} 
@@ -178,11 +178,11 @@ export default function SzkoleniaPage() {
                     Alan Dąbrowski to uznany ekspert i wizjoner w dziedzinie edukacji kosmetologicznej. Jako założyciel Alan Dąbrowski Academy, stworzył miejsce oferujące edukację zawodową na najwyższym poziomie w Polsce i na świecie.
                     <br />
                     <br />
-                    Jest jedynym polskim trenerem akredytowanym w brytyjskiej organizacji Beauty ITEC, co gwarantuje międzynarodowe standardy edukacji oraz dyplomy akceptowane w 39 krajach świata. Łączy nowoczesne technologie z unikalnym podejściem opartym na misji „być Mistrzem".
+                    Jest jedynym polskim trenerem akredytowanym w brytyjskiej organizacji Beauty ITEC, co gwarantuje międzynarodowe standardy edukacji oraz dyplomy akceptowane w 39 krajach świata. Łączy nowoczesne technologie z unikalnym podejściem opartym na misji &quot;być Mistrzem.&quot;
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
 
