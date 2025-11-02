@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Particles from "../components/Particles";
-import Link from "next/link";
 
 export default function OnasPage() {
   return (
@@ -168,17 +167,10 @@ export default function OnasPage() {
             </div>
             <div className="flex justify-center align-middle content-center">
               <p className="mt-4 text-lg md:text-2xl font-light text-center">
-                Sławomir Sobusiak to uznany ekspert w dziedzinie medycyny estetycznej z ponad 
-                20-letnim doświadczeniem w branży sprzętu medycznego. Od 2002 roku dzieli się 
-                swoją wiedzą jako wykładowca na studiach podyplomowych oraz prelegent na licznych 
-                kongresach i konferencjach branżowych.
+                Sławomir Sobusiak to uznany ekspert w dziedzinie medycyny estetycznej z ponad 20-letnim doświadczeniem w branży sprzętu medycznego. Od 2002 roku dzieli się swoją wiedzą jako wykładowca na studiach podyplomowych oraz prelegent na licznych kongresach i konferencjach branżowych.
                 <br />
                 <br />
-                Jest specjalistą w zakresie aparatów medycznych wykorzystywanych w medycynie 
-                estetycznej, ginekologii estetycznej oraz fizjoterapii. Jako praktyk i autorytet 
-                w dziedzinie technik łączonych, posiada unikalne kompetencje w zakresie rodzajów 
-                i parametrów laserów, umiejętnie łącząc różne metody w celu osiągnięcia optymalnych 
-                efektów zabiegowych.
+                Jest specjalistą w zakresie aparatów medycznych wykorzystywanych w medycynie estetycznej, ginekologii estetycznej oraz fizjoterapii. Jako praktyk i autorytet w dziedzinie technik łączonych, posiada unikalne kompetencje w zakresie rodzajów i parametrów laserów, umiejętnie łącząc różne metody w celu osiągnięcia optymalnych efektów zabiegowych.
               </p>
             </div>
           </div>
