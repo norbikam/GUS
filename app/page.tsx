@@ -95,7 +95,7 @@ export default function Home(): React.ReactElement {
         <div ref={scrollRef} id="produkty" className="w-full">
           {featuredProducts.length > 0 && (
             <ProductCarousel
-              title="✨ Polecane produkty"
+              title="Hity sprzedaży"
               products={featuredProducts}
             />
           )}
@@ -115,12 +115,30 @@ export default function Home(): React.ReactElement {
             </div>
         </div>*/}
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 w-full md:px-10 px-8 justify-center items-center font-light">
+          <div className="grid grid-cols-1 md:grid-cols-2 w-full md:px-10 px-8 justify-center items-center font-light">
           <div className="grid grid-cols-2 w-full gap-4 text-gray-200 rounded text-center sm:aspect-square md:aspect-auto">
             <div className="py-10"><h2 className="text-3xl">LEASING</h2><p>Wszystkie produkty w dogodnych ratach</p></div>
-            <div className="py-10"><h2 className="text-3xl">SZKOLENIE</h2><p>Możliwość odbycia szkolenia</p></div>
-            <div className="py-10"><h2 className="text-3xl">15 LAT</h2><p>w branży beauty</p></div>
-            <div className="py-10"><h2 className="text-3xl">GWARANCJA</h2><p>Obsługa w autoryzowanym serwisie</p></div>
+            <div className="py-10">
+              <Link
+                href="/szkolenia"
+                className="inline-block px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f7e199] text-black font-semibold rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Szkolenia
+              </Link>
+            </div>
+            <div className="py-10">
+              <Link
+                href="/ambasadorzy"
+                className="inline-block px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f7e199] text-black font-semibold rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Ambasadorzy
+              </Link></div>
+            <div className="py-10"><Link
+                href="/serwis"
+                className="inline-block px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f7e199] text-black font-semibold rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Serwis
+              </Link></div>
           </div>
           <div className="w-full text-gray-200 h-full flex flex-col items-center justify-center text-center gap-4">
             <h1 className="text-4xl font-light">Najlepsza jakość w najlepszej cenie</h1>
@@ -176,7 +194,7 @@ export default function Home(): React.ReactElement {
         <div className="w-full space-y-8">
           {getProductsByCategory("Lasery").length > 0 && (
             <ProductCarousel
-              title="🔬 Lasery"
+              title="Lasery"
               products={getProductsByCategory("Lasery")}
               categorySlug="laserr"
             />
@@ -184,7 +202,7 @@ export default function Home(): React.ReactElement {
 
           {getProductsByCategory("HIFU").length > 0 && (
             <ProductCarousel
-              title="💎 Urządzenia HIFU"
+              title="Urządzenia HIFU"
               products={getProductsByCategory("HIFU")}
               categorySlug="hifu"
             />
@@ -192,7 +210,7 @@ export default function Home(): React.ReactElement {
 
           {getProductsByCategory("Radiofrekwencja").length > 0 && (
             <ProductCarousel
-              title="✨ Radiofrekwencja"
+              title="Radiofrekwencja"
               products={getProductsByCategory("Radiofrekwencja")}
               categorySlug="Radiofrekwencja"
             />
@@ -200,7 +218,7 @@ export default function Home(): React.ReactElement {
 
           {getProductsByCategory("Plazma").length > 0 && (
             <ProductCarousel
-              title="⚡ Urządzenia plazmowe"
+              title="Urządzenia plazmowe"
               products={getProductsByCategory("Plazma")}
               categorySlug="Plazma"
             />
