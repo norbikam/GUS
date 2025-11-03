@@ -52,7 +52,7 @@ export default function Navbar() {
           </div>
 
           {/* Center Logo */}
-          <div className="flex justify-center z-[-10]">
+          <div className="flex justify-center z-0">
             <Link
               href="/"
               className={`font-semibold text-3xl transition-colors duration-300  ${
