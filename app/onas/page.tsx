@@ -197,7 +197,7 @@ export default function OnasPage() {
             <p className="mt-4 text-lg md:text-2xl font-light text-center">
               Joanna Majdaniuk to ekspertka z ogromnym doświadczeniem w medycynie estetycznej, 
               specjalistka od makijażu permanentnego oraz ceniona szkoleniowiec. Prowadzi 
-              "Permanent make up & Aesthetic by Joanna Majdaniuk" – centrum szkoleniowe 
+              &quot;Permanent make up & Aesthetic by Joanna Majdaniuk&quot; – centrum szkoleniowe 
               specjalizujące się w medycynie estetycznej i makijażu permanentnym.
               <br />
               <br />
