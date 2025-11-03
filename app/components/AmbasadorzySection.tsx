@@ -58,7 +58,7 @@ export default function AmbasadorzySection() {
       <div className="max-w-7xl mx-auto">
         {/* Nagłówek sekcji */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl mb-4">Nasi Ambasadorzy</h2>
+          <h2 className="text-4xl md:text-5xl mb-4">Nasze Współprace</h2>
           <p className="text-lg md:text-xl font-light text-gray-300">
             Współpracujemy z najlepszymi ekspertami w branży medycyny estetycznej
           </p>
@@ -123,10 +123,10 @@ export default function AmbasadorzySection() {
         {/* CTA - Zobacz więcej */}
         <div className="text-center">
           <Link
-            href="/ambasadorzy"
+            href="/onas"
             className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f7e199] text-black font-semibold rounded-lg hover:opacity-90 transition-opacity"
           >
-            Poznaj wszystkich ambasadorów
+            Poznaj wszystkich
             <span className="text-lg">→</span>
           </Link>
         </div>
