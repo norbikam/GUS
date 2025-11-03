@@ -239,7 +239,7 @@ export default function OnasPage() {
               organizacji Beauty ITEC, co gwarantuje międzynarodowe standardy edukacji oraz dyplomy 
               akceptowane w 39 krajach świata. W swojej Akademii łączy nowoczesne technologie 
               stosowane w Galligan Beauty College oraz Greas Point Studio z unikalnym podejściem 
-              opartym na misji „być Mistrzem".
+              opartym na misji &quot;być Mistrzem&quot;.
             </p>
           </div>
         </div>
