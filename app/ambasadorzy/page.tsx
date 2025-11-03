@@ -247,6 +247,42 @@ export default function AmbasadorzyPage() {
               </div>
             </div>
 
+            <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
+            <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
+              <div>
+                <h2 className="text-3xl text-center">Joanna Majdaniuk</h2>
+                <Image 
+                  src="/cooperations/joanna-majdaniuk.jpeg" 
+                  alt="Joanna Majdaniuk" 
+                  width={400} 
+                  height={400} 
+                  className="mx-auto rounded-lg mt-4" 
+                />
+                <p className="text-center text-gray-300 mt-4">
+                  Ambasadorka marki<br />
+                  Ekspertka z ogromnym doświadczeniem w medycynie estetycznej<br />
+                  Specjalistka od makijażu permanentnego i ceniona szkoleniowiec
+                </p>
+              </div>
+              <div className="flex justify-center align-middle content-center">
+                <p className="mt-4 text-lg md:text-2xl font-light text-center">
+                  Joanna Majdaniuk to ekspertka z ogromnym doświadczeniem w medycynie estetycznej, 
+                  specjalistka od makijażu permanentnego oraz ceniona szkoleniowiec. Prowadzi 
+                  "Permanent make up & Aesthetic by Joanna Majdaniuk" – centrum szkoleniowe 
+                  specjalizujące się w medycynie estetycznej i makijażu permanentnym.
+                  <br />
+                  <br />
+                  Jest certyfikowaną linergistką na poziomie Master, która każdego dnia doskonali 
+                  swoje umiejętności. Specjalizuje się w zabiegach autologii, radiofrekwencji 
+                  mikroigłowej oraz autorskiej technice wypełniania ust. Jej wiedza, precyzja 
+                  i indywidualne podejście do każdego klienta sprawiają, że osiąga spektakularne, 
+                  naturalne efekty. Jako ambasadorka GlowUpSkin, łączy pasję do nowoczesnych 
+                  technologii z najwyższymi standardami jakości.
+                </p>
+              </div>
+            </div>
+          </div>
+
             {/* Alan Dąbrowski */}
             {/* <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
               <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">

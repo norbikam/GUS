@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Product } from './types/product';
 import Particles from "./components/Particles";
 import ProductCarousel from "./components/ProductCarousel";
+import AmbasadorzySection from "./components/AmbasadorzySection";
 
 export default function Home(): React.ReactElement {
   const [products, setProducts] = useState<Product[]>([]);
@@ -260,6 +261,8 @@ export default function Home(): React.ReactElement {
         <div className="mt-10 w-full">
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         </div>
+
+        <AmbasadorzySection />
 
         <div className="flex flex-col w-full justify-center items-center font-light text-center gap-4 py-6 px-6">
           <h2 className="text-3xl md:text-5xl">Zapraszamy do współpracy</h2>
