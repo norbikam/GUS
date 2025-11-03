@@ -258,7 +258,7 @@ export default function OnasPage() {
           />
           <p className="text-center text-gray-300">
             <br />
-            Konsultant techniczny, specjalista ds. sprzętu medycznego i wyrobów do medycyny estetycznej
+            Konsultant techniczny, specjalista ds. sprzętu medycznego
           </p>
         </div>
         <div className="flex justify-center align-middle content-center">
