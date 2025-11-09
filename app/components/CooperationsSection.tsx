@@ -20,7 +20,7 @@ export default function CooperationsSection() {
       description: "Ponad 25 lat doświadczenia w medycynie estetycznej. Założyciel Instytutu Kosmetologii i Badań Leków.",
       image: "/cooperations/michal-ekkert.jpeg",
       type: "trainer",
-      isOwner: true, // WSPÓŁWŁAŚCICIEL
+      isOwner: false, // WSPÓŁWŁAŚCICIEL
     },
     {
       name: "Edyta Babula-Frątczak",
