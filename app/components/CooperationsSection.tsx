@@ -5,7 +5,7 @@ interface CooperationsSectionProps {
   variant?: "homepage" | "full";
 }
 
-export default function CooperationsSection({ variant = "full" }: CooperationsSectionProps) {
+export default function CooperationsSection({}: CooperationsSectionProps) {
   const cooperations = [
     {
       name: "Dr n. med. Michał Ekkert",
