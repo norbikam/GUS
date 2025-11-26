@@ -23,7 +23,7 @@ export default function AdminPage(): React.ReactElement {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [showPreview, setShowPreview] = useState<boolean>(false);
   const [productData, setProductData] = useState({
-    title: '', description: '', price: '', category: '', image: '', images: [] as ImageItem[], tags: '', featured: false, active: true
+    title: '', description: '', price: '', category: '', image: '', images: [] as ImageItem[], tags: '', youtubeUrl: '', featured: false, active: true
   });
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -172,6 +172,7 @@ export default function AdminPage(): React.ReactElement {
         image: product.image || '',
         images: allImages,  // ✅ Wszystkie zdjęcia (główne + pozostałe)
         tags: product.tags || '',
+        youtubeUrl: product.youtubeUrl || '',
         featured: product.featured,
         active: product.active ?? true
       });
@@ -189,6 +190,7 @@ export default function AdminPage(): React.ReactElement {
         image: '',
         images: [],  // Pusta tablica
         tags: '',
+        youtubeUrl: '',
         featured: false,
         active: true
       });
@@ -297,6 +299,21 @@ export default function AdminPage(): React.ReactElement {
                   </div>
                   <div><label className="block text-sm font-medium text-gray-700 mb-2">Galeria zdjęć produktu</label><MultiImageUpload images={productData.images} onChange={handleImagesChange} maxImages={10} /></div>
                   <div><label className="block text-sm font-medium text-gray-700 mb-2">Tagi (oddzielone przecinkami)</label><input type="text" value={productData.tags} onChange={(e) => setProductData({...productData, tags: e.target.value})} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors" placeholder="laser, odmładzanie, skóra, profesjonalny" /></div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Link do YouTube (opcjonalny)
+                    </label>
+                    <input
+                      type="url"
+                      value={productData.youtubeUrl}
+                      onChange={(e) => setProductData({...productData, youtubeUrl: e.target.value})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors"
+                      placeholder="https://www.youtube.com/watch?v=..."
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Wklej pełny URL filmu z YouTube
+                    </p>
+                  </div>
                   <div className="space-y-4">
                     <label className="flex items-center"><input type="checkbox" checked={productData.featured} onChange={(e) => setProductData({...productData, featured: e.target.checked})} className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" /><span className="ml-3 text-sm font-medium text-gray-700">⭐ Produkt polecany</span></label>
                     <label className="flex items-center"><input type="checkbox" checked={productData.active} onChange={(e) => setProductData({...productData, active: e.target.checked})} className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" /><span className="ml-3 text-sm font-medium text-gray-700">✅ Produkt aktywny</span></label>

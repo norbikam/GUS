@@ -9,6 +9,7 @@ type UpdateData = {
   price?: string;
   category?: string | null;
   tags?: string;
+  youtubeUrl?: string | null;
   featured?: boolean;
   active?: boolean;
   image?: string | null;
@@ -99,7 +100,9 @@ export async function PUT(
     if (body.tags !== undefined) {
       updateData.tags = body.tags ? String(body.tags) : '';
     }
-    
+    if (body.youtubeUrl !== undefined) {
+      updateData.youtubeUrl = body.youtubeUrl ? String(body.youtubeUrl) : '';
+    }
     // ✅ Boolean fields
     if (body.featured !== undefined) {
       updateData.featured = Boolean(body.featured);

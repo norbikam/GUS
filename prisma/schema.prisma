@@ -18,6 +18,7 @@ model Product {
   images      Json?
   category    String?
   tags        String
+  youtubeUrl  String?
   featured    Boolean  @default(false)
   active      Boolean  @default(true)
   createdAt   DateTime @default(now())

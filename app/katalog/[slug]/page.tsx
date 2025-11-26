@@ -6,6 +6,7 @@ import { parseImages } from "@/app/admin/components/prisma-helpers";
 import Link from "next/link";
 import Image from "next/image";
 import { Product } from "@prisma/client";
+import YouTubeEmbed from "@/app/components/YouTubeEmbed";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -112,6 +113,16 @@ export default async function ProductPage({ params }: Props) {
             <ReactMarkdown>{product.description ?? ''}</ReactMarkdown>
           </div>
         </div>
+
+        {/* 👈 DODAJ TEN FRAGMENT TUTAJ */}
+        {product.youtubeUrl && (
+          <div className="md:col-span-2 px-6 mt-8">
+            <h2 className="text-2xl font-bold mb-4 text-center">Zobacz produkt w akcji</h2>
+            <div className="max-w-4xl mx-auto">
+              <YouTubeEmbed url={product.youtubeUrl} title={product.title} />
+            </div>
+          </div>
+        )}  
 
         {/* Inne produkty - RENDEROWANE Z BAZY DANYCH */}
         <div className="col-span-2">

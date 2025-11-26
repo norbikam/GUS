@@ -14,6 +14,7 @@ export interface Product {
   images?: ImageItem[] | null;
   category: string | null;
   tags: string;
+  youtubeUrl?: string | null;
   featured: boolean;
   active: boolean;
   createdAt: Date;

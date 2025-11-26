@@ -24,6 +24,7 @@ type ProductData = {
   description?: string | null;
   category?: string | null;
   tags: string;        // ✅ Dodane
+  youtubeUrl?: string | null;
   featured: boolean;
   active: boolean;     // ✅ Dodane
   image: string;       // ✅ Wymagane (nie optional)
@@ -131,6 +132,7 @@ export async function POST(request: Request) {
       description: body.description ? String(body.description) : null,
       category: body.category ? String(body.category) : null,
       tags: body.tags ? String(body.tags) : '',  // ✅ Dodane
+      youtubeUrl: body.youtubeUrl ? String(body.youtubeUrl) : null,
       featured: Boolean(body.featured ?? false),
       active: Boolean(body.active ?? true), // ✅ Dodane
       image: mainImage,                      // ✅ Wymagane
