@@ -291,7 +291,8 @@ export default function OnasPage() {
       <p className="text-center text-gray-300">
         <br />
         Ambasadorka marki GUS Medic<br />
-        Ekspertka kosmetologii zaawansowanej i technologii laserowych
+        Ekspertka kosmetologii zaawansowanej i technologii laserowych<br/>
+        Manager ds. Programu Ambasadorskiego
       </p>
     </div>
     <div className="flex justify-center align-middle content-center">

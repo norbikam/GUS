@@ -27,8 +27,8 @@ export default function CooperationsSection({}: CooperationsSectionProps) {
     },
     {
       name: "Magda Batraniec",
-      role: "Ekspertka kosmetologii zaawansowanej",
-      subtitle: "Specjalistka technologii laserowych",
+      role: "Ekspertka kosmetologii zaawansowanej, Manager ds. Programu Ambasadorskiego",
+      subtitle: "Specjalistka technologii laserowych, Manager ds. Programu Ambasadorskiego",
       description: "Ambasadorka marki GUS Medic. Specjalistka anti-aging i makijażu permanentnego. Prowadzi gabinety w Niemczech i Polsce.",
       image: "/cooperations/magda-batraniec.jpg",
       type: "expert",
