@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Product } from './types/product';
 import Particles from "./components/Particles";
 import ProductCarousel from "./components/ProductCarousel";
-import AmbasadorzySection from "./components/CooperationsSection";
+// import AmbasadorzySection from "./components/CooperationsSection";
 
 export default function Home(): React.ReactElement {
   const [products, setProducts] = useState<Product[]>([]);
