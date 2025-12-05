@@ -149,7 +149,7 @@ export default function OnasPage() {
             </div>
           </div>
 
-          {/* <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
+          <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
           <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
             <div>
               <h2 className="text-3xl text-center">Sławomir Sobusiak</h2>
@@ -174,7 +174,7 @@ export default function OnasPage() {
               </p>
             </div>
           </div>
-        </div> */}
+        </div>
 
         <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
         <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
@@ -271,40 +271,45 @@ export default function OnasPage() {
     <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
   <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
     <div>
-      <h2 className="text-3xl text-center">Magda Batraniec</h2>
-      <Image 
-        src="/cooperations/magda-batraniec.jpeg" 
-        alt="Magda Batraniec" 
-        width={400} 
-        height={400} 
-        className="mx-auto rounded-lg mt-4" 
-      />
-      <p className="text-center text-gray-300">
-        <br />
-        Ambasadorka marki GUS Medic<br />
-        Ekspertka kosmetologii zaawansowanej i technologii laserowych
-      </p>
-    </div>
-    <div className="flex justify-center align-middle content-center">
-      <p className="mt-4 text-lg md:text-2xl font-light text-center">
-        Magda Batraniec to doświadczona kosmetolog i praktyk, prowadząca dwa gabinety — 
-        jeden w Niemczech, drugi w Polsce. Znana z podejścia opartego na świadomej, 
-        bezpiecznej kosmetologii, tworzy skuteczne terapie oparte na nowoczesnej 
-        aparaturze laserowej oraz precyzyjnie planowanych procedurach pielęgnacyjnych.
-        <br />
-        <br />
-        Jest autorką artykułów w profesjonalnych czasopismach kosmetologicznych i branżowych, 
-        a swoją wiedzę stale rozwija, uczestnicząc w licznych szkoleniach, konferencjach 
-        międzynarodowych oraz polskich wydarzeniach naukowych. Specjalizuje się również 
-        w makijażu permanentnym, łącząc technikę manualną z głębokim zrozumieniem procesów 
-        regeneracyjnych skóry.
-        <br />
-        <br />
-        Jako ambasadorka marki GUS Medic reprezentuje najwyższy poziom pracy z zaawansowaną 
-        aparaturą i propaguje świadome podejście do pielęgnacji. Jej misją jest tworzenie 
-        terapii, które realnie poprawiają jakość skóry i pewność siebie jej klientek.
-      </p>
-    </div>
+  <h2 className="text-3xl text-center">Magda Batraniec</h2>
+  <Image 
+    src="/cooperations/magda-batraniec.jpeg" 
+    alt="Magda Batraniec" 
+    width={400} 
+    height={400} 
+    className="mx-auto rounded-lg mt-4" 
+  />
+  <p className="text-center text-gray-300">
+    <br />
+    Specjalistka ds. Strategii i Komunikacji GUS Medic<br />
+    Ekspertka Kosmetologii Zaawansowanej<br />
+    Manager ds. Programu Ambasadorskiego
+  </p>
+</div>
+<div className="flex justify-center align-middle content-center">
+  <p className="mt-4 text-lg md:text-2xl font-light text-center">
+    Magda Batraniec to jedna z kluczowych ekspertek współtworzących profesjonalny 
+    wizerunek GUS Medic. Łączy zaawansowaną wiedzę kosmetologiczną z wyczuciem 
+    strategii marketingowej, tworząc kierunek komunikacji marki o wysokiej 
+    spójności, jakości i merytoryce.
+    <br />
+    <br />
+    Prowadzi dwa gabinety – w Niemczech i w Polsce – gdzie jako czynny praktyk 
+    pracuje w oparciu o świadome, bezpieczne terapie skóry, nowoczesne technologie 
+    i indywidualny dobór procedur. Jest autorką publikacji w specjalistycznych 
+    czasopismach kosmetologicznych oraz uczestniczką prestiżowych konferencji 
+    branżowych, zarówno w Polsce, jak i za granicą.
+    <br />
+    <br />
+    W GUS Medic odpowiada za strategiczną komunikację, rozwój wizerunku i kompleksowe 
+    zarządzanie programem ambasadorek. Tworzy koncepcje marketingowe, nadzoruje 
+    działania kreatywne i dba o to, aby przekaz marki był nie tylko estetyczny, 
+    lecz przede wszystkim ekspercki i wartościowy. Jej praca łączy naukę, praktykę 
+    i wizję rozwoju – dzięki czemu GUS Medic konsekwentnie buduje pozycję marki 
+    premium w branży beauty.
+  </p>
+</div>
+
   </div>
 </div>
 
