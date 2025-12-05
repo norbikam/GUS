@@ -149,7 +149,7 @@ export default function OnasPage() {
             </div>
           </div>
 
-          <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
+          {/* <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
           <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
             <div>
               <h2 className="text-3xl text-center">Sławomir Sobusiak</h2>
@@ -174,7 +174,7 @@ export default function OnasPage() {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
         <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
@@ -258,21 +258,12 @@ export default function OnasPage() {
           />
           <p className="text-center text-gray-300">
             <br />
-            Konsultant techniczny, specjalista ds. sprzętu medycznego
+            Serwis
           </p>
         </div>
         <div className="flex justify-center align-middle content-center">
           <p className="mt-4 text-lg md:text-2xl font-light text-center">
-            Jacek Olszewski to doświadczony konsultant techniczny specjalizujący się 
-            w sprzęcie medycznym dedykowanym branży kosmetologicznej i medycyny estetycznej. 
-            Dzięki wieloletniemu doświadczeniu w branży, zapewnia kompleksowe wsparcie 
-            techniczne oraz doradztwo w zakresie doboru i obsługi aparatury medycznej.
-            <br />
-            <br />
-            Jako specjalista techniczny, pomaga klientom w optymalizacji wykorzystania 
-            technologii medycznych, zapewniając najwyższe standardy bezpieczeństwa 
-            i efektywności zabiegów. Jego wiedza i praktyczne podejście sprawiają, 
-            że jest cenionym partnerem dla profesjonalistów z branży beauty i medycyny estetycznej.
+            
           </p>
         </div>
       </div>

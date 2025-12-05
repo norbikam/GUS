@@ -183,7 +183,27 @@ export default function SzkoleniaPage() {
                 </div>
               </div>
             </div>
-          </div>
+
+            <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
+                        <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
+                          <div>
+                          <h2 className="text-3xl text-center">Anna Goc</h2>
+                          <Image src="/cooperations/anna-goc.jpg" alt="Anna Goc" width={400} height={400} className="mx-auto rounded-lg mt-4" />
+                          <p className="text-center text-gray-300"><br></br>Absolwentka Śląskiego Uniwersytetu Medycznego w Katowicach na kierunku Kosmetologia</p>
+                          </div>
+                          <div className="justify-center align-middle content-center">
+                          <p className="mt-4 text-lg md:text-2xl font-light text-center">
+                            Doświadczenie zawodowe zdobywała, pracując w wiodących firmach branży kosmetycznej i medycyny estetycznej, ze szczególnym naciskiem na nowoczesne technologie high-tech. Jako szkoleniowiec w firmie specjalizującej się w innowacyjnych urządzeniach do modelowania sylwetki i regeneracji skóry, doskonaliła praktyczne umiejętności w zakresie pracy z zaawansowanymi technologiami.                <br />
+                            <br />
+                            Specjalizuje się w peelingach chemicznych oraz terapiach anti-aging, łącząc wiedzę naukową z doświadczeniem praktycznym. W pracy stawia na indywidualne podejście do Pacjenta i kompleksowe planowanie terapii, które pozwala uzyskać naturalne i długotrwałe efekty.                
+                            <br/>
+                            <br/>
+                            Nieustannie poszerza swoją wiedzę, uczestnicząc w szkoleniach i konferencjach branżowych. Z pasją łączy nowoczesne technologie z klasycznymi metodami pielęgnacji, tworząc skuteczne, spersonalizowane rozwiązania dla każdego Pacjenta.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+          </div>  
         </section>
 
         {/* Separator */}
