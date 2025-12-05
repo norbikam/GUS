@@ -100,21 +100,10 @@ export default function SerwisPage() {
                 />
                 <p className="text-center text-gray-300 mt-4">
                   Konsultant techniczny<br />
-                  Specjalista ds. sprzętu medycznego i wyrobów do medycyny estetycznej
                 </p>
               </div>
               <div className="flex justify-center align-middle content-center">
                 <p className="mt-4 text-lg md:text-2xl font-light text-center">
-                  Jacek Olszewski to doświadczony konsultant techniczny specjalizujący się 
-                  w sprzęcie medycznym dedykowanym branży kosmetologicznej i medycyny estetycznej. 
-                  Dzięki wieloletniemu doświadczeniu w branży, zapewnia kompleksowe wsparcie 
-                  techniczne oraz doradztwo w zakresie doboru i obsługi aparatury medycznej.
-                  <br />
-                  <br />
-                  Jako specjalista techniczny, pomaga klientom w optymalizacji wykorzystania 
-                  technologii medycznych, zapewniając najwyższe standardy bezpieczeństwa 
-                  i efektywności zabiegów. Jego wiedza i praktyczne podejście sprawiają, 
-                  że jest cenionym partnerem dla profesjonalistów z branży beauty i medycyny estetycznej.
                 </p>
               </div>
             </div>

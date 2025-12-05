@@ -149,33 +149,6 @@ export default function OnasPage() {
             </div>
           </div>
 
-          <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
-          <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
-            <div>
-              <h2 className="text-3xl text-center">Sławomir Sobusiak</h2>
-              <Image 
-                src="/cooperations/slawomir-sobusiak.jpg" 
-                alt="Sławomir Sobusiak" 
-                width={400} 
-                height={400} 
-                className="mx-auto rounded-lg mt-4" 
-              />
-              <p className="text-center text-gray-300">
-                <br />
-                Ekspert w dziedzinie medycyny estetycznej, wykładowca na studiach podyplomowych, prelegent kongresów branżowych<br/>Ekspert
-              </p>
-            </div>
-            <div className="flex justify-center align-middle content-center">
-              <p className="mt-4 text-lg md:text-2xl font-light text-center">
-                Sławomir Sobusiak to uznany ekspert w dziedzinie medycyny estetycznej z ponad 20-letnim doświadczeniem w branży sprzętu medycznego. Od 2002 roku dzieli się swoją wiedzą jako wykładowca na studiach podyplomowych oraz prelegent na licznych kongresach i konferencjach branżowych.
-                <br />
-                <br />
-                Jest specjalistą w zakresie aparatów medycznych wykorzystywanych w medycynie estetycznej, ginekologii estetycznej oraz fizjoterapii. Jako praktyk i autorytet w dziedzinie technik łączonych, posiada unikalne kompetencje w zakresie rodzajów i parametrów laserów, umiejętnie łącząc różne metody w celu osiągnięcia optymalnych efektów zabiegowych.
-              </p>
-            </div>
-          </div>
-        </div>
-
         <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
         <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
           <div>
