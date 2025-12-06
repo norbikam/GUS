@@ -1,18 +1,9 @@
 // app/api/categories/route.js
-import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { NextResponse } from 'next/server';
 
-// Mapowanie kategorii na ikony
-const CATEGORY_ICONS = {
-  'laser': '🔬',
-  'hifu': '💎',
-  'depilacja': '✨',
-  'plazma': '⚡',
-  'mikronakłuwanie': '💉',
-  'inne': '🏥',
-};
+// Usuwamy CATEGORY_ICONS całkowicie
 
-// Mapowanie kategorii na ładne nazwy
 const CATEGORY_LABELS = {
   'laser': 'Lasery',
   'hifu': 'Urządzenia HIFU',
@@ -24,120 +15,71 @@ const CATEGORY_LABELS = {
 
 export async function GET() {
   try {
-    // Pobierz unikalne kategorie z bazy
-    const categoriesFromDB = await prisma.product.findMany({
-      where: {
-        active: true,
-        category: {
-          not: null
+    const products = await prisma.product.findMany({
+      select: { category: true, active: true },
+    });
+
+    const categoryCounts = {};
+    products.forEach((product) => {
+      if (product.category) {
+        if (!categoryCounts[product.category]) {
+          categoryCounts[product.category] = { total: 0, active: 0 };
         }
-      },
-      select: {
-        category: true
-      },
-      distinct: ['category']
+        categoryCounts[product.category].total++;
+        if (product.active) {
+          categoryCounts[product.category].active++;
+        }
+      }
     });
 
-    // Zlicz produkty w każdej kategorii
-    const categoriesWithCount = await Promise.all(
-      categoriesFromDB.map(async ({ category }) => {
-        const count = await prisma.product.count({
-          where: {
-            category: category,
-            active: true
-          }
-        });
+    const categories = Object.entries(categoryCounts)
+      .map(([key, counts]) => ({
+        key,
+        label: CATEGORY_LABELS[key] || key,
+        icon: '', // Puste emoji
+        count: counts.active,
+        total: counts.total,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label, 'pl'));
 
-        return {
-          key: category,
-          label: CATEGORY_LABELS[category] || category,
-          icon: CATEGORY_ICONS[category] || '📦', // Domyślna ikona dla nowych kategorii
-          count: count
-        };
-      })
-    );
-
-    // Sortuj alfabetycznie i dodaj "Wszystkie" na początku
-    const sortedCategories = categoriesWithCount.sort((a, b) => 
-      a.label.localeCompare(b.label, 'pl')
-    );
-
-    // Policz wszystkie produkty
-    const totalCount = await prisma.product.count({
-      where: { active: true }
-    });
-
-    const allCategories = [
-      {
-        key: 'all',
-        label: 'Wszystkie kategorie',
-        icon: '🔍',
-        count: totalCount
-      },
-      ...sortedCategories
-    ];
-
-    return NextResponse.json(allCategories);
-    
+    return NextResponse.json(categories);
   } catch (error) {
-    console.error('❌ Błąd podczas pobierania kategorii:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch categories' },
-      { status: 500 }
-    );
+    console.error('Błąd podczas pobierania kategorii:', error);
+    return NextResponse.json({ error: 'Błąd serwera' }, { status: 500 });
   }
 }
 
-// POST - Dodaj nową kategorię
-export async function POST(request) {
+export async function POST(req) {
   try {
-    const { category, label, icon } = await request.json();
+    const { key, label } = await req.json();
 
-    // Walidacja
-    if (!category || typeof category !== 'string') {
+    if (!key || !label) {
       return NextResponse.json(
-        { error: 'Nazwa kategorii (klucz) jest wymagana' },
+        { error: 'Klucz i nazwa kategorii są wymagane' },
         { status: 400 }
       );
     }
 
-    const trimmedCategory = category.trim().toLowerCase();
-    const trimmedLabel = label?.trim() || category.trim();
-    const trimmedIcon = icon?.trim() || '📦';
-
-    if (trimmedCategory.length === 0) {
-      return NextResponse.json(
-        { error: 'Nazwa kategorii nie może być pusta' },
-        { status: 400 }
-      );
-    }
-
-    // Sprawdź czy kategoria już istnieje
-    const existingProduct = await prisma.product.findFirst({
-      where: { category: trimmedCategory }
+    const existingProducts = await prisma.product.findFirst({
+      where: { category: key },
     });
 
-    if (existingProduct) {
+    if (existingProducts) {
       return NextResponse.json(
         { error: 'Kategoria już istnieje' },
         { status: 409 }
       );
     }
 
-    // Zwróć nową kategorię (nie zapisujemy do osobnej tabeli, kategorie są częścią produktów)
-    return NextResponse.json({ 
-      success: true, 
-      category: {
-        key: trimmedCategory,
-        label: trimmedLabel,
-        icon: trimmedIcon
-      }
+    return NextResponse.json({
+      key,
+      label,
+      icon: '', // Puste emoji
+      count: 0,
+      total: 0,
     });
   } catch (error) {
-    console.error('❌ Błąd podczas tworzenia kategorii:', error);
-    return NextResponse.json(
-      { error: 'Failed to create category' },
-      { status: 500 }
-    );
+    console.error('Błąd podczas tworzenia kategorii:', error);
+    return NextResponse.json({ error: 'Błąd serwera' }, { status: 500 });
   }
 }
