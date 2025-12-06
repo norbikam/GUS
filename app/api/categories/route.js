@@ -1,3 +1,4 @@
+// app/api/categories/route.js
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
@@ -50,7 +51,7 @@ export async function GET() {
         return {
           key: category,
           label: CATEGORY_LABELS[category] || category,
-          icon: CATEGORY_ICONS[category] || '',
+          icon: CATEGORY_ICONS[category] || '📦', // Domyślna ikona dla nowych kategorii
           count: count
         };
       })
@@ -82,6 +83,60 @@ export async function GET() {
     console.error('❌ Błąd podczas pobierania kategorii:', error);
     return NextResponse.json(
       { error: 'Failed to fetch categories' },
+      { status: 500 }
+    );
+  }
+}
+
+// POST - Dodaj nową kategorię
+export async function POST(request) {
+  try {
+    const { category, label, icon } = await request.json();
+
+    // Walidacja
+    if (!category || typeof category !== 'string') {
+      return NextResponse.json(
+        { error: 'Nazwa kategorii (klucz) jest wymagana' },
+        { status: 400 }
+      );
+    }
+
+    const trimmedCategory = category.trim().toLowerCase();
+    const trimmedLabel = label?.trim() || category.trim();
+    const trimmedIcon = icon?.trim() || '📦';
+
+    if (trimmedCategory.length === 0) {
+      return NextResponse.json(
+        { error: 'Nazwa kategorii nie może być pusta' },
+        { status: 400 }
+      );
+    }
+
+    // Sprawdź czy kategoria już istnieje
+    const existingProduct = await prisma.product.findFirst({
+      where: { category: trimmedCategory }
+    });
+
+    if (existingProduct) {
+      return NextResponse.json(
+        { error: 'Kategoria już istnieje' },
+        { status: 409 }
+      );
+    }
+
+    // Zwróć nową kategorię (nie zapisujemy do osobnej tabeli, kategorie są częścią produktów)
+    return NextResponse.json({ 
+      success: true, 
+      category: {
+        key: trimmedCategory,
+        label: trimmedLabel,
+        icon: trimmedIcon
+      }
+    });
+  } catch (error) {
+    console.error('❌ Błąd podczas tworzenia kategorii:', error);
+    return NextResponse.json(
+      { error: 'Failed to create category' },
       { status: 500 }
     );
   }
