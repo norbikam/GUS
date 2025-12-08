@@ -29,7 +29,7 @@ export default function RootLayout({
       <ReactLenis root>
         <Analytics />
       <body
-        className={`${jost.variable} ${jost.variable} antialiased overflow-x-hidden overflow-hidden`}
+        className={`${jost.variable} ${jost.variable} antialiased overflow-x-hidden`}
       >
         <Navbar />
         {children}
