@@ -66,14 +66,12 @@ export default function KatalogPage() {
             <h3 className="text-2xl mt-6">Dane kontaktowe</h3>
             <ul className="mt-2 text-lg font-light space-y-1">
               <li>Telefon: +48 510 255 279</li>
-              <li>E-mail: glowupskinpl@gmail.com</li>
+              <li>E-mail: kontakt@gus-medic.pl</li>
               <li>WhatsApp: +48 510 255 279</li>
               <div className="my-10 w-full">
                 <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
               </div>
               <li>Robert Morawski</li>
-              <li>ul. Perłowa 13a</li>
-              <li>76-270 Ustka</li>
               <li>NIP: 839-255-66-23</li>
             </ul>
             {/* Przyciski na samym dole karty, równe rozmiary */}
