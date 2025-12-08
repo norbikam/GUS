@@ -6,6 +6,7 @@ import { HiMenu, HiX } from "react-icons/hi";
 import Link from "next/link";
 import { FacebookColor, InstagramColor, WhatsAppColor } from "./Social";
 import Image from "next/image";
+import CategoryMenu from "./CategoryMenu";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -22,8 +23,6 @@ export default function Navbar() {
     { href: "/katalog", label: "SKLEP" },
     { href: "/onas", label: "O NAS" },
     { href: "/kontakt", label: "KONTAKT" },
-    // { href: "/serwis", label: "SERWIS" },
-    // { href: "/szkolenia", label: "SZKOLENIA" },
   ];
 
   return (
@@ -36,9 +35,9 @@ export default function Navbar() {
         animate={{ opacity: 1 }}
       >
         <div className="lg:max-w-[90vw] md:max-w-full mx-auto px-6 py-4 grid grid-cols-3 items-center">
-          {/* Left placeholder / links */}
+          {/* Left - Desktop Navigation Links */}
           <div className="flex items-center space-x-8">
-            <div className="hidden lg:flex gap-4 lg:text-nowrap md:grid md:grid-cols-2">
+            <div className="hidden lg:flex gap-4 lg:text-nowrap md:grid md:grid-cols-2 items-center">
               {navLinks.map(({ href, label }) => (
                 <Link
                   key={href}
@@ -48,6 +47,8 @@ export default function Navbar() {
                   {label}
                 </Link>
               ))}
+              {/* Menu kategorii dla desktop */}
+              <CategoryMenu />
             </div>
           </div>
 
@@ -63,7 +64,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Right Section: phone (desktop) + hamburger (mobile) */}
+          {/* Right Section: hamburger (mobile) */}
           <div className="flex justify-end items-center space-x-4">
             {/* Mobile Hamburger */}
             <button
@@ -102,6 +103,8 @@ export default function Navbar() {
                   {label}
                 </Link>
               ))}
+              {/* Menu kategorii dla mobile */}
+              <CategoryMenu isMobile={true} onLinkClick={() => setMenuOpen(false)} />
             </div>
           </motion.div>
         )}
