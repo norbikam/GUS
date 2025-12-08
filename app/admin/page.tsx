@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Product } from '@/app/types/product';
-import { parseImages } from './components/prisma-helpers'; // ✅ Import
+import { parseImages } from './components/prisma-helpers';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
@@ -9,9 +9,18 @@ import dynamic from 'next/dynamic';
 const MarkdownEditor = dynamic(() => import('./components/MarkdownEditor'), { ssr: false, loading: () => <div className="h-[400px] bg-gray-100 animate-pulse rounded-lg flex items-center justify-center"><span className="text-gray-500">Ładowanie edytora...</span></div> });
 const MarkdownViewer = dynamic(() => import('./components/MarkdownViewer'), { ssr: false, loading: () => <div className="animate-pulse bg-gray-100 rounded p-4"><span className="text-gray-500">Ładowanie podglądu...</span></div> });
 const MultiImageUpload = dynamic(() => import('./components/MultiImageUpload'), { ssr: false, loading: () => <div className="h-[200px] bg-gray-100 animate-pulse rounded-lg flex items-center justify-center"><span className="text-gray-500">Ładowanie galerii...</span></div> });
+const CategoryModal = dynamic(() => import('@/app/components/CategoryModal'), { ssr: false });
 
 import type { EditorContentChanged } from './components/MarkdownEditor';
 import type { ImageItem } from './components/MultiImageUpload';
+
+// Typ dla kategorii
+type Category = {
+  key: string;
+  label: string;
+  icon: string;
+  count?: number;
+};
 
 export default function AdminPage(): React.ReactElement {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -27,8 +36,44 @@ export default function AdminPage(): React.ReactElement {
   });
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
+useEffect(() => {
+  if (isModalOpen) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = 'unset';
+  }
+  return () => {
+    document.body.style.overflow = 'unset';
+  };
+}, [isModalOpen]);
+  
+  // ✅ Nowe state dla kategorii
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState<boolean>(false);
+  const [availableCategories, setAvailableCategories] = useState<Category[]>([]);
+
   useEffect(() => { setIsMounted(true); const savedAuth = localStorage.getItem('admin_authenticated'); if (savedAuth === 'true') setIsAuthenticated(true); }, []);
-  useEffect(() => { if (isAuthenticated) fetchProducts(); }, [isAuthenticated]);
+  useEffect(() => { if (isAuthenticated) { fetchProducts(); fetchCategories(); } }, [isAuthenticated]);
+
+  // ✅ Funkcja do pobierania kategorii
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('/api/categories');
+      if (response.ok) {
+        const data = await response.json();
+        // Pomiń "Wszystkie kategorie"
+        setAvailableCategories(data.filter((cat: Category) => cat.key !== 'all'));
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  // ✅ Handler dla nowej kategorii
+  const handleCategoryCreated = (newCategory: { key: string; label: string; icon: string }) => {
+    setAvailableCategories(prev => [...prev, newCategory]);
+    // Ustaw nową kategorię w formularzu
+    setProductData(prev => ({ ...prev, category: newCategory.key }));
+  };
 
   const handleLogin = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
@@ -65,27 +110,41 @@ export default function AdminPage(): React.ReactElement {
     );
   }
 
-  const fetchProducts = async (): Promise<void> => {
-    try { setLoading(true); const response = await fetch('/api/products'); const data: Product[] = await response.json(); setProducts(data); } 
-    catch (error) { console.error('Błąd podczas pobierania produktów:', error); alert('Błąd podczas pobierania produktów'); } 
-    finally { setLoading(false); }
-  };
+const fetchProducts = async () => {
+  try {
+    const response = await fetch('/api/products?active=all');
+    
+    if (!response.ok) {
+      console.error('Failed to fetch products:', response.status);
+      setProducts([]);
+      return;
+    }
+    
+    const data = await response.json();
+    
+    if (Array.isArray(data)) {
+      setProducts(data);
+    } else {
+      console.error('Products data is not an array:', data);
+      setProducts([]);
+    }
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    setProducts([]);
+  }
+};
 
-  // ✅ NAPRAWIONA Helper function - priorytet dla pola 'image'
   const getPrimaryImage = (product: Product): string => {
-    // 1. Priorytet: główne zdjęcie z pola 'image'
     if (product.image && typeof product.image === 'string') {
       return product.image;
     }
     
-    // 2. Fallback: pierwsze zdjęcie z pola 'images'
     const parsedImages = parseImages(product.images);
     if (parsedImages && parsedImages.length > 0) {
       const primary = parsedImages.find(img => img.isPrimary);
       return primary ? primary.url : parsedImages[0].url;
     }
     
-    // 3. Ostateczny fallback
     return '/placeholder-product.jpg';
   };
 
@@ -120,7 +179,6 @@ export default function AdminPage(): React.ReactElement {
     finally { setLoading(false); }
   };
 
-  // ✅ KLUCZOWA NAPRAWA - funkcja openModal łączy image + images
   const openModal = (product?: Product): void => {
     if (product) {
       setEditingProduct(product);
@@ -132,20 +190,17 @@ export default function AdminPage(): React.ReactElement {
         imagesType: typeof product.images
       });
       
-      // ✅ KLUCZOWA LOGIKA: Połącz image (główne) + images (pozostałe)
       const allImages: ImageItem[] = [];
       
-      // 1. Dodaj główne zdjęcie z pola 'image' (jeśli istnieje)
       if (product.image && typeof product.image === 'string') {
         allImages.push({
           id: 'primary-image',
           url: product.image,
-          isPrimary: true  // ✅ Oznacz jako główne
+          isPrimary: true
         });
         console.log('✅ Added primary image from "image" field:', product.image);
       }
       
-      // 2. Dodaj pozostałe zdjęcia z pola 'images' (jeśli istnieją)
       if (product.images) {
         const additionalImages = parseImages(product.images);
         
@@ -154,7 +209,7 @@ export default function AdminPage(): React.ReactElement {
             allImages.push({
               id: img.id,
               url: img.url,
-              isPrimary: false  // ✅ Pozostałe nie są główne
+              isPrimary: false
             });
           });
           console.log('✅ Added', additionalImages.length, 'additional images from "images" field');
@@ -170,7 +225,7 @@ export default function AdminPage(): React.ReactElement {
         price: product.price,
         category: product.category || '',
         image: product.image || '',
-        images: allImages,  // ✅ Wszystkie zdjęcia (główne + pozostałe)
+        images: allImages,
         tags: product.tags || '',
         youtubeUrl: product.youtubeUrl || '',
         featured: product.featured,
@@ -179,7 +234,6 @@ export default function AdminPage(): React.ReactElement {
       
       console.log('📝 Product data set with', allImages.length, 'images');
     } else {
-      // Nowy produkt - puste dane
       console.log('📝 Opening modal for new product');
       setEditingProduct(null);
       setProductData({
@@ -188,7 +242,7 @@ export default function AdminPage(): React.ReactElement {
         price: '',
         category: '',
         image: '',
-        images: [],  // Pusta tablica
+        images: [],
         tags: '',
         youtubeUrl: '',
         featured: false,
@@ -202,9 +256,9 @@ export default function AdminPage(): React.ReactElement {
 
   const closeModal = (): void => { setIsModalOpen(false); setEditingProduct(null); setShowPreview(false); };
 
-  const activeProducts = products.filter(p => p.active !== false);
-  const featuredProducts = products.filter(p => p.featured);
-  const categories = new Set(products.map(p => p.category).filter(Boolean));
+const activeProducts = Array.isArray(products) ? products.filter(p => p.active !== false) : [];
+const featuredProducts = Array.isArray(products) ? products.filter(p => p.featured) : [];
+const categories = Array.isArray(products) ? new Set(products.map(p => p.category).filter(Boolean)) : new Set();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -241,13 +295,10 @@ export default function AdminPage(): React.ReactElement {
                     <tr><td colSpan={5} className="px-6 py-12 text-center"><div className="text-gray-400"><svg className="mx-auto h-12 w-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg><h3 className="text-sm font-medium text-gray-900 mb-1">Brak produktów</h3><p className="text-sm text-gray-500">Dodaj pierwszy produkt aby rozpocząć</p></div></td></tr>
                   ) : (
                     products.map((product) => {
-                      // ✅ NAPRAWIONY licznik - policz image + images
                       let totalImages = 0;
                       
-                      // Policz główne zdjęcie z pola 'image'
                       if (product.image) totalImages++;
                       
-                      // Policz pozostałe zdjęcia z pola 'images'
                       const additionalImages = parseImages(product.images);
                       if (additionalImages && additionalImages.length > 0) {
                         totalImages += additionalImages.length;
@@ -259,7 +310,6 @@ export default function AdminPage(): React.ReactElement {
                             <div className="flex items-center">
                               <div className="flex-shrink-0 h-12 w-12 relative">
                                 <Image src={getPrimaryImage(product)} alt={product.title} width={48} height={48} className="h-12 w-12 object-cover rounded-lg border border-gray-200" unoptimized />
-                                {/* ✅ Badge - pokazuje wszystkie zdjęcia (image + images) */}
                                 {totalImages > 1 && (
                                   <div className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">{totalImages}</div>
                                 )}
@@ -282,57 +332,219 @@ export default function AdminPage(): React.ReactElement {
         </div>
       </div>
 
-      {isModalOpen && isMounted && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-6xl w-full max-h-[95vh] overflow-y-auto">
-            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center sticky top-0 z-10">
-              <h3 className="text-xl font-semibold text-gray-900 flex items-center"><svg className="h-6 w-6 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>{editingProduct ? 'Edytuj Produkt' : 'Dodaj Nowy Produkt'}</h3>
-              <button onClick={closeModal} className="text-gray-400 hover:text-gray-600 transition-colors"><svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg></button>
-            </div>
-            <form onSubmit={handleSubmit} className="p-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                  <div><label className="block text-sm font-medium text-gray-700 mb-2">Nazwa produktu *</label><input type="text" value={productData.title} onChange={(e) => setProductData({...productData, title: e.target.value})} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors" placeholder="np. LUMIGLAM PRO Laser System" required /></div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div><label className="block text-sm font-medium text-gray-700 mb-2">Cena *</label><input type="text" value={productData.price} onChange={(e) => setProductData({...productData, price: e.target.value})} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors" placeholder="np. 29 900 zł" required /></div>
-                    <div><label className="block text-sm font-medium text-gray-700 mb-2">Kategoria</label><select value={productData.category} onChange={(e) => setProductData({...productData, category: e.target.value})} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors"><option value="">Wybierz kategorię</option><option value="Lasery">Lasery</option><option value="HIFU">HIFU</option><option value="Plazma">Plazma</option><option value="Radiofrekwencja">Radiofrekwencja</option><option value="IPL">IPL</option><option value="Kriolipoliza">Kriolipoliza</option><option value="Mezoterapia">Mezoterapia</option><option value="Inne">Inne</option></select></div>
-                  </div>
-                  <div><label className="block text-sm font-medium text-gray-700 mb-2">Galeria zdjęć produktu</label><MultiImageUpload images={productData.images} onChange={handleImagesChange} maxImages={10} /></div>
-                  <div><label className="block text-sm font-medium text-gray-700 mb-2">Tagi (oddzielone przecinkami)</label><input type="text" value={productData.tags} onChange={(e) => setProductData({...productData, tags: e.target.value})} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors" placeholder="laser, odmładzanie, skóra, profesjonalny" /></div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Link do YouTube (opcjonalny)
-                    </label>
-                    <input
-                      type="url"
-                      value={productData.youtubeUrl}
-                      onChange={(e) => setProductData({...productData, youtubeUrl: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors"
-                      placeholder="https://www.youtube.com/watch?v=..."
-                    />
-                    <p className="text-xs text-gray-500 mt-1">
-                      Wklej pełny URL filmu z YouTube
-                    </p>
-                  </div>
-                  <div className="space-y-4">
-                    <label className="flex items-center"><input type="checkbox" checked={productData.featured} onChange={(e) => setProductData({...productData, featured: e.target.checked})} className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" /><span className="ml-3 text-sm font-medium text-gray-700">⭐ Produkt polecany</span></label>
-                    <label className="flex items-center"><input type="checkbox" checked={productData.active} onChange={(e) => setProductData({...productData, active: e.target.checked})} className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" /><span className="ml-3 text-sm font-medium text-gray-700">✅ Produkt aktywny</span></label>
-                  </div>
-                </div>
-                <div className="space-y-6">
-                  <div>
-                    <div className="flex justify-between items-center mb-2"><label className="block text-sm font-medium text-gray-700">Opis produktu</label>{productData.description && (<button type="button" onClick={() => setShowPreview(!showPreview)} className="text-sm text-blue-600 hover:text-blue-700 font-medium">{showPreview ? '✏️ Edytuj' : '👁️ Podgląd'}</button>)}</div>
-                    {!showPreview ? (<MarkdownEditor value={productData.description} onChange={handleDescriptionChange} placeholder="Wprowadź szczegółowy opis produktu..." />) : (<div className="border border-gray-200 rounded-lg p-6 bg-gray-50 min-h-[400px] max-h-[400px] overflow-y-auto"><MarkdownViewer value={productData.description} /></div>)}
-                  </div>
-                </div>
-              </div>
-              <div className="flex justify-end gap-4 pt-6 border-t border-gray-200 mt-8">
-                <button type="button" onClick={closeModal} className="px-6 py-3 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition duration-200 font-medium">Anuluj</button>
-                <button type="submit" disabled={loading} className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-200 disabled:opacity-50 font-medium flex items-center">{loading ? (<svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>) : null}{loading ? 'Zapisywanie...' : (editingProduct ? 'Zapisz zmiany' : 'Dodaj produkt')}</button>
-              </div>
-            </form>
+{isModalOpen && isMounted && (
+  <>
+    {/* Backdrop */}
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 z-40"
+      onClick={closeModal}
+    />
+    
+    {/* Scrollable Wrapper */}
+    <div className="fixed inset-0 z-50 overflow-y-auto">
+      <div className="min-h-screen px-4 py-8 flex items-start justify-center">
+        
+        {/* Modal Box */}
+        <div 
+          className="bg-white rounded-xl shadow-2xl w-full max-w-6xl my-8 relative"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center rounded-t-xl">
+            <h3 className="text-xl font-semibold text-gray-900 flex items-center">
+              <svg className="h-6 w-6 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+              {editingProduct ? 'Edytuj Produkt' : 'Dodaj Nowy Produkt'}
+            </h3>
+            <button 
+              onClick={closeModal} 
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+              type="button"
+            >
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
+          
+          {/* Form Content */}
+          <form onSubmit={handleSubmit} className="p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Nazwa produktu *</label>
+                  <input 
+                    type="text" 
+                    value={productData.title} 
+                    onChange={(e) => setProductData({...productData, title: e.target.value})} 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors" 
+                    placeholder="np. LUMIGLAM PRO Laser System" 
+                    required 
+                  />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Cena *</label>
+                    <input 
+                      type="text" 
+                      value={productData.price} 
+                      onChange={(e) => setProductData({...productData, price: e.target.value})} 
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors" 
+                      placeholder="np. 29 900 zł" 
+                      required 
+                    />
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-sm font-medium text-gray-700">Kategoria</label>
+                      <button
+                        type="button"
+                        onClick={() => setIsCategoryModalOpen(true)}
+                        className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                      >
+                        + Nowa
+                      </button>
+                    </div>
+                    <select 
+                      value={productData.category} 
+                      onChange={(e) => setProductData({...productData, category: e.target.value})} 
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors"
+                    >
+                      <option value="">Wybierz kategorię</option>
+                      {availableCategories.map(cat => (
+                        <option key={cat.key} value={cat.key}>
+                          {cat.icon} {cat.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Galeria zdjęć produktu</label>
+                  <MultiImageUpload images={productData.images} onChange={handleImagesChange} maxImages={10} />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Tagi (oddzielone przecinkami)</label>
+                  <input 
+                    type="text" 
+                    value={productData.tags} 
+                    onChange={(e) => setProductData({...productData, tags: e.target.value})} 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors" 
+                    placeholder="laser, odmładzanie, skóra, profesjonalny" 
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Link do YouTube (opcjonalny)
+                  </label>
+                  <input
+                    type="url"
+                    value={productData.youtubeUrl}
+                    onChange={(e) => setProductData({...productData, youtubeUrl: e.target.value})}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors"
+                    placeholder="https://www.youtube.com/watch?v=..."
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Wklej pełny URL filmu z YouTube
+                  </p>
+                </div>
+                
+                <div className="space-y-4">
+                  <label className="flex items-center">
+                    <input 
+                      type="checkbox" 
+                      checked={productData.featured} 
+                      onChange={(e) => setProductData({...productData, featured: e.target.checked})} 
+                      className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" 
+                    />
+                    <span className="ml-3 text-sm font-medium text-gray-700">⭐ Produkt polecany</span>
+                  </label>
+                  <label className="flex items-center">
+                    <input 
+                      type="checkbox" 
+                      checked={productData.active} 
+                      onChange={(e) => setProductData({...productData, active: e.target.checked})} 
+                      className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" 
+                    />
+                    <span className="ml-3 text-sm font-medium text-gray-700">✅ Produkt aktywny</span>
+                  </label>
+                </div>
+              </div>
+              
+              <div className="space-y-6">
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="block text-sm font-medium text-gray-700">Opis produktu</label>
+                    {productData.description && (
+                      <button 
+                        type="button" 
+                        onClick={() => setShowPreview(!showPreview)} 
+                        className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                      >
+                        {showPreview ? '✏️ Edytuj' : '👁️ Podgląd'}
+                      </button>
+                    )}
+                  </div>
+                  {!showPreview ? (
+                    <MarkdownEditor 
+                      value={productData.description} 
+                      onChange={handleDescriptionChange} 
+                      placeholder="Wprowadź szczegółowy opis produktu..." 
+                    />
+                  ) : (
+                    <div className="border border-gray-200 rounded-lg p-6 bg-gray-50 min-h-[400px] max-h-[400px] overflow-y-auto">
+                      <MarkdownViewer value={productData.description} />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex justify-end gap-4 pt-6 border-t border-gray-200 mt-8">
+              <button 
+                type="button" 
+                onClick={closeModal} 
+                className="px-6 py-3 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition duration-200 font-medium"
+              >
+                Anuluj
+              </button>
+              <button 
+                type="submit" 
+                disabled={loading} 
+                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-200 disabled:opacity-50 font-medium flex items-center"
+              >
+                {loading ? (
+                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                ) : null}
+                {loading ? 'Zapisywanie...' : (editingProduct ? 'Zapisz zmiany' : 'Dodaj produkt')}
+              </button>
+            </div>
+          </form>
         </div>
+        
+      </div>
+    </div>
+  </>
+)}
+
+
+
+
+      {/* ✅ Modal dla kategorii */}
+      {isCategoryModalOpen && isMounted && (
+        <CategoryModal
+          isOpen={isCategoryModalOpen}
+          onClose={() => setIsCategoryModalOpen(false)}
+          onCategoryCreated={handleCategoryCreated}
+        />
       )}
     </div>
   );
