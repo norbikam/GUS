@@ -18,16 +18,17 @@ type CleanedImage = {
 };
 
 type ProductData = {
-  title: string;       // ✅ Zmienione z name
-  slug: string;        // ✅ Dodane
-  price: string;       // ✅ Zmienione z number
+  title: string;       
+  slug: string;        
+  price: string;       
   description?: string | null;
   category?: string | null;
-  tags: string;        // ✅ Dodane
+  tags: string;        
   youtubeUrl?: string | null;
+  pdfUrl?: string | null; 
   featured: boolean;
-  active: boolean;     // ✅ Dodane
-  image: string;       // ✅ Wymagane (nie optional)
+  active: boolean;     
+  image: string;       
   images?: CleanedImage[] | null;
 };
 
@@ -126,16 +127,17 @@ export async function POST(request: Request) {
 
     // Przygotuj dane do zapisu
     const productData: ProductData = {
-      title: String(productTitle),           // ✅ title zamiast name
-      slug: finalSlug,                       // ✅ Dodane
-      price: String(productPrice),           // ✅ String zamiast parseFloat
+      title: String(productTitle),          
+      slug: finalSlug,                       
+      price: String(productPrice),           
       description: body.description ? String(body.description) : null,
       category: body.category ? String(body.category) : null,
-      tags: body.tags ? String(body.tags) : '',  // ✅ Dodane
+      tags: body.tags ? String(body.tags) : '', 
       youtubeUrl: body.youtubeUrl ? String(body.youtubeUrl) : null,
+      pdfUrl: body.pdfUrl ? String(body.pdfUrl) : null, 
       featured: Boolean(body.featured ?? false),
-      active: Boolean(body.active ?? true), // ✅ Dodane
-      image: mainImage,                      // ✅ Wymagane
+      active: Boolean(body.active ?? true), 
+      image: mainImage,                    
     };
 
     // ✅ Dodaj images tylko jeśli istnieją

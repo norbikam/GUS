@@ -4,6 +4,11 @@ import { Product } from '@/app/types/product';
 import { parseImages } from './components/prisma-helpers';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+const PdfUpload = dynamic(() => import('../components/PdfUpload'), { 
+  ssr: false, 
+  loading: () => <div className="h-[100px] bg-gray-100 animate-pulse rounded-lg"></div> 
+});
+
 
 // Dynamiczne importy komponentów
 const MarkdownEditor = dynamic(() => import('./components/MarkdownEditor'), { ssr: false, loading: () => <div className="h-[400px] bg-gray-100 animate-pulse rounded-lg flex items-center justify-center"><span className="text-gray-500">Ładowanie edytora...</span></div> });
@@ -31,7 +36,7 @@ export default function AdminPage(): React.ReactElement {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [showPreview, setShowPreview] = useState<boolean>(false);
   const [productData, setProductData] = useState({
-    title: '', description: '', price: '', category: '', image: '', images: [] as ImageItem[], tags: '', youtubeUrl: '', featured: false, active: true
+    title: '', description: '', price: '', category: '', image: '', images: [] as ImageItem[], tags: '', youtubeUrl: '', pdfUrl: '', featured: false, active: true
   });
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -227,6 +232,7 @@ const fetchProducts = async () => {
         images: allImages,
         tags: product.tags || '',
         youtubeUrl: product.youtubeUrl || '',
+        pdfUrl: product.pdfUrl || '',
         featured: product.featured,
         active: product.active ?? true
       });
@@ -244,6 +250,7 @@ const fetchProducts = async () => {
         images: [],
         tags: '',
         youtubeUrl: '',
+        pdfUrl: '',
         featured: false,
         active: true
       });
@@ -451,6 +458,13 @@ const categories = Array.isArray(products) ? new Set(products.map(p => p.categor
                   <p className="text-xs text-gray-500 mt-1">
                     Wklej pełny URL filmu z YouTube
                   </p>
+                </div>
+
+                <div>
+                  <PdfUpload
+                    pdfUrl={productData.pdfUrl}
+                    onChange={(url) => setProductData({...productData, pdfUrl: url})}
+                  />
                 </div>
                 
                 <div className="space-y-4">
