@@ -2,8 +2,6 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
-// Usuwamy CATEGORY_ICONS całkowicie
-
 const CATEGORY_LABELS = {
   'laser': 'Lasery',
   'hifu': 'Urządzenia HIFU',
@@ -36,7 +34,6 @@ export async function GET() {
       .map(([key, counts]) => ({
         key,
         label: CATEGORY_LABELS[key] || key,
-        icon: '', // Puste emoji
         count: counts.active,
         total: counts.total,
       }))
@@ -51,17 +48,20 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    const { key, label } = await req.json();
+    // Pobierz dane zgodnie z tym, co wysyła frontend
+    const { category, label } = await req.json();
 
-    if (!key || !label) {
+    // Walidacja
+    if (!category || !label) {
       return NextResponse.json(
         { error: 'Klucz i nazwa kategorii są wymagane' },
         { status: 400 }
       );
     }
 
+    // Sprawdź czy kategoria już istnieje
     const existingProducts = await prisma.product.findFirst({
-      where: { category: key },
+      where: { category: category },
     });
 
     if (existingProducts) {
@@ -71,13 +71,16 @@ export async function POST(req) {
       );
     }
 
+    // Zwróć odpowiedź w strukturze, której oczekuje frontend
     return NextResponse.json({
-      key,
-      label,
-      icon: '', // Puste emoji
-      count: 0,
-      total: 0,
-    });
+      category: {
+        key: category,
+        label: label,
+        count: 0,
+        total: 0,
+      }
+    }, { status: 201 });
+    
   } catch (error) {
     console.error('Błąd podczas tworzenia kategorii:', error);
     return NextResponse.json({ error: 'Błąd serwera' }, { status: 500 });

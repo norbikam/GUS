@@ -6,7 +6,7 @@ import { useState } from 'react';
 interface CategoryModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onCategoryCreated: (category: { key: string; label: string; icon: string }) => void;
+  onCategoryCreated: (category: { key: string; label: string }) => void;
 }
 
 export default function CategoryModal({ 
@@ -16,12 +16,8 @@ export default function CategoryModal({
 }: CategoryModalProps) {
   const [categoryKey, setCategoryKey] = useState('');
   const [categoryLabel, setCategoryLabel] = useState('');
-  const [categoryIcon, setCategoryIcon] = useState('📦');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  // Sugestie ikon
-  const iconSuggestions = ['🔬', '💎', '✨', '⚡', '💉', '🏥', '💊', '🩺', '🧪', '📦', '🎯', '⭐'];
 
   if (!isOpen) return null;
 
@@ -36,8 +32,7 @@ export default function CategoryModal({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           category: categoryKey.trim().toLowerCase(),
-          label: categoryLabel.trim(),
-          icon: categoryIcon 
+          label: categoryLabel.trim()
         })
       });
 
@@ -49,12 +44,15 @@ export default function CategoryModal({
         return;
       }
 
-      // Sukces
-      onCategoryCreated(data.category);
-      setCategoryKey('');
-      setCategoryLabel('');
-      setCategoryIcon('📦');
-      onClose();
+      // Sukces - teraz data.category będzie istnieć
+      if (data.category) {
+        onCategoryCreated(data.category);
+        setCategoryKey('');
+        setCategoryLabel('');
+        onClose();
+      } else {
+        setError('Nieprawidłowa odpowiedź serwera');
+      }
     } catch (err) {
       setError('Błąd połączenia. Spróbuj ponownie.');
       console.error('Error creating category:', err);
@@ -66,7 +64,6 @@ export default function CategoryModal({
   const handleClose = () => {
     setCategoryKey('');
     setCategoryLabel('');
-    setCategoryIcon('📦');
     setError('');
     onClose();
   };
@@ -115,46 +112,10 @@ export default function CategoryModal({
             </p>
           </div>
 
-          {/* Ikona */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">
-              Ikona
-            </label>
-            <div className="flex items-center gap-2 mb-2">
-              <input
-                type="text"
-                value={categoryIcon}
-                onChange={(e) => setCategoryIcon(e.target.value)}
-                maxLength={2}
-                className="w-16 px-3 py-2 border border-gray-300 rounded-md text-center text-xl"
-                disabled={loading}
-              />
-              <span className="text-sm text-gray-600">lub wybierz:</span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {iconSuggestions.map(icon => (
-                <button
-                  key={icon}
-                  type="button"
-                  onClick={() => setCategoryIcon(icon)}
-                  className={`w-10 h-10 text-xl rounded border ${
-                    categoryIcon === icon 
-                      ? 'border-blue-500 bg-blue-50' 
-                      : 'border-gray-300 hover:border-blue-300'
-                  }`}
-                  disabled={loading}
-                >
-                  {icon}
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* Podgląd */}
           <div className="mb-4 p-3 bg-gray-50 rounded-md">
             <p className="text-sm text-gray-600 mb-1">Podgląd:</p>
             <div className="flex items-center gap-2">
-              <span className="text-2xl">{categoryIcon}</span>
               <span className="font-medium">{categoryLabel || 'Nazwa kategorii'}</span>
             </div>
           </div>
