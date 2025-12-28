@@ -108,7 +108,8 @@ export default async function ProductPage({ params }: Props) {
           </div>
         </div>
 
-        <div className="col-span-2">
+        {/* PDF Viewer*/}
+        <div className="col-span-2 w-full max-w-full md:max-w-6xl mx-auto px-0 md:px-40">
           {product.pdfUrl && <PdfViewer pdfUrl={product.pdfUrl}/>}
         </div>
 
@@ -119,7 +120,7 @@ export default async function ProductPage({ params }: Props) {
           </div>
         </div>}
 
-        {/* 👈 DODAJ TEN FRAGMENT TUTAJ */}
+        {/* YouTube */}
         {product.youtubeUrl && (
           <div className="md:col-span-2 px-6 mt-8">
             <h2 className="text-2xl font-bold mb-4 text-center">Zobacz produkt w akcji</h2>
@@ -129,7 +130,7 @@ export default async function ProductPage({ params }: Props) {
           </div>
         )}  
 
-        {/* Inne produkty - RENDEROWANE Z BAZY DANYCH */}
+        {/* Inne produkty */}
         <div className="col-span-2">
           <h1 className="text-3xl font-bold mt-6 text-center">Zobacz inne produkty</h1>
           

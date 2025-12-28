@@ -31,7 +31,7 @@ export default function PdfViewer({ pdfUrl }: PdfViewerProps) {
 
   return (
     <div 
-      className="w-full bg-white"
+      className="w-full"
       ref={(ref) => {
         if (ref && containerWidth === 0) {
           setContainerWidth(ref.offsetWidth);
@@ -62,7 +62,7 @@ export default function PdfViewer({ pdfUrl }: PdfViewerProps) {
           </div>
         }
       >
-        <div className="flex flex-col items-center gap-4 py-4">
+        <div className="flex flex-col items-center py-4">
           {Array.from(new Array(numPages), (_, index) => (
             <Page
               key={`page_${index + 1}`}
