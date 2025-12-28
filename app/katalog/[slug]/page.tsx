@@ -113,11 +113,11 @@ export default async function ProductPage({ params }: Props) {
         </div>
 
         {/* Opis produktu */}
-        <div className="md:col-span-2 px-6">
+        {!product.pdfUrl && <div className="md:col-span-2 px-6">
           <div className="mt-4 prose prose-invert max-w-none text-gray-100 text-left">
             <ReactMarkdown>{product.description ?? ''}</ReactMarkdown>
           </div>
-        </div>
+        </div>}
 
         {/* 👈 DODAJ TEN FRAGMENT TUTAJ */}
         {product.youtubeUrl && (
