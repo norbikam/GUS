@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Product } from "@prisma/client";
 import YouTubeEmbed from "@/app/components/YouTubeEmbed";
+import PdfViewer from "@/app/components/PdfViewer";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -105,6 +106,10 @@ export default async function ProductPage({ params }: Props) {
               Napisz na WhatsApp
             </a>
           </div>
+        </div>
+
+        <div className="col-span-2">
+          {product.pdfUrl && <PdfViewer pdfUrl={product.pdfUrl}/>}
         </div>
 
         {/* Opis produktu */}

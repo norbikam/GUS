@@ -10,6 +10,7 @@ type UpdateData = {
   category?: string | null;
   tags?: string;
   youtubeUrl?: string | null;
+  pdfUrl?: string | null;
   featured?: boolean;
   active?: boolean;
   image?: string | null;
@@ -102,6 +103,9 @@ export async function PUT(
     }
     if (body.youtubeUrl !== undefined) {
       updateData.youtubeUrl = body.youtubeUrl ? String(body.youtubeUrl) : '';
+    }
+    if( body.pdfUrl !== undefined) {
+      updateData.pdfUrl = body.pdfUrl ? String(body.pdfUrl) : '';
     }
     // ✅ Boolean fields
     if (body.featured !== undefined) {
