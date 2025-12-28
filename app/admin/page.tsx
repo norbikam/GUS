@@ -18,7 +18,6 @@ import type { ImageItem } from './components/MultiImageUpload';
 type Category = {
   key: string;
   label: string;
-  icon: string;
   count?: number;
 };
 
@@ -69,7 +68,7 @@ useEffect(() => {
   };
 
   // ✅ Handler dla nowej kategorii
-  const handleCategoryCreated = (newCategory: { key: string; label: string; icon: string }) => {
+  const handleCategoryCreated = (newCategory: { key: string; label: string }) => {
     setAvailableCategories(prev => [...prev, newCategory]);
     // Ustaw nową kategorię w formularzu
     setProductData(prev => ({ ...prev, category: newCategory.key }));
@@ -415,7 +414,7 @@ const categories = Array.isArray(products) ? new Set(products.map(p => p.categor
                       <option value="">Wybierz kategorię</option>
                       {availableCategories.map(cat => (
                         <option key={cat.key} value={cat.key}>
-                          {cat.icon} {cat.label}
+                          {cat.label}
                         </option>
                       ))}
                     </select>
