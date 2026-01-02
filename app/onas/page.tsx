@@ -212,6 +212,48 @@ export default function OnasPage() {
         </div>
       </div>
 
+      {/* Współpraca - Tomasz Kwiatkowski */}
+      <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
+        <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
+          <div>
+            <h2 className="text-3xl text-center">Tomasz Kwiatkowski</h2>
+            <Image 
+              src="/cooperations/tomasz-kwiatkowski.png" 
+              alt="Tomasz Kwiatkowski" 
+              width={400} 
+              height={400} 
+              className="mx-auto rounded-lg mt-4" 
+            />
+            <p className="text-center text-gray-300">
+              <br />
+              Specjalista Hi-Tech<br />
+              Szkoleniowiec i Konsultant Technologii Medycznych<br />
+              Ekspert Medycyny Estetycznej
+            </p>
+          </div>
+          <div className="flex justify-center align-middle content-center">
+            <p className="mt-4 text-lg md:text-2xl font-light text-center">
+              Tomasz Kwiatkowski to specjalista Hi-Tech z ponad 20-letnim doświadczeniem 
+              w medycynie, a od 5 lat aktywnie działający w obszarze medycyny estetycznej 
+              jako szkoleniowiec i konsultant technologii medycznych.
+              <br />
+              <br />
+              Na co dzień współpracuje z gabinetami kosmetologicznymi oraz klinikami 
+              medycyny estetycznej, wspierając ich zespoły w podnoszeniu kwalifikacji 
+              i maksymalnym wykorzystaniu nowoczesnych technologii w pracy z pacjentem. 
+              Jego szkolenia łączą solidne podstawy teoretyczne z praktycznym podejściem, 
+              z naciskiem na bezpieczeństwo pacjenta, skuteczność terapii i świadomą 
+              pracę na zaawansowanym sprzęcie.
+              <br />
+              <br />
+              Prywatnie – mąż z dwudziestoletnim stażem, tata dziewiętnastoletniego syna. 
+              Pasjonat fotografii przyrodniczej, off-roadu oraz motoryzacji – od wielu 
+              lat zafascynowany markami Jeep i Porsche.
+            </p>
+          </div>
+        </div>
+      </div>
+
         <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
         <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
           <div>
