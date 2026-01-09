@@ -68,6 +68,10 @@ export default function KatalogPage() {
               <li>Telefon: +48 510 255 279</li>
               <li>E-mail: kontakt@gus-medic.pl</li>
               <li>WhatsApp: +48 510 255 279</li>
+              <li><br/></li>
+              <li><b>Tomasz Kwiatkowski - specjalista</b></li>
+              <li>WhatsApp: +48 512 667 434</li>
+              <li>E-mail: t.kwiatkowski@gus-medic.pl</li>
               <div className="my-10 w-full">
                 <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
               </div>
