@@ -110,8 +110,9 @@ export default async function ProductPage({ params }: Props) {
 
         {/* PDF Viewer*/}
         <div className="col-span-2 w-full max-w-full md:max-w-6xl mx-auto px-0 md:px-40">
-          {product.pdfUrl && <PdfViewer pdfUrl={product.pdfUrl}/>}
+          {product.pdfUrl && <PdfViewer pdfUrl={product.pdfUrl} />}
         </div>
+          {product.pdfUrl && <p className="hidden">{product.description}</p>}
 
         {/* Opis produktu */}
         {!product.pdfUrl && <div className="md:col-span-2 px-6">
