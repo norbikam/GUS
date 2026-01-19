@@ -1,84 +1,35 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import { Product } from '@/app/types/product';
 import { parseImages } from './components/prisma-helpers';
-import Image from 'next/image';
-import dynamic from 'next/dynamic';
-const PdfUpload = dynamic(() => import('../components/PdfUpload'), { 
-  ssr: false, 
-  loading: () => <div className="h-[100px] bg-gray-100 animate-pulse rounded-lg"></div> 
-});
-
-
-// Dynamiczne importy komponentów
-const MarkdownEditor = dynamic(() => import('./components/MarkdownEditor'), { ssr: false, loading: () => <div className="h-[400px] bg-gray-100 animate-pulse rounded-lg flex items-center justify-center"><span className="text-gray-500">Ładowanie edytora...</span></div> });
-const MarkdownViewer = dynamic(() => import('./components/MarkdownViewer'), { ssr: false, loading: () => <div className="animate-pulse bg-gray-100 rounded p-4"><span className="text-gray-500">Ładowanie podglądu...</span></div> });
-const MultiImageUpload = dynamic(() => import('./components/MultiImageUpload'), { ssr: false, loading: () => <div className="h-[200px] bg-gray-100 animate-pulse rounded-lg flex items-center justify-center"><span className="text-gray-500">Ładowanie galerii...</span></div> });
-const CategoryModal = dynamic(() => import('@/app/components/CategoryModal'), { ssr: false });
-
-import type { EditorContentChanged } from './components/MarkdownEditor';
-import type { ImageItem } from './components/MultiImageUpload';
-
-// Typ dla kategorii
-type Category = {
-  key: string;
-  label: string;
-  count?: number;
-};
 
 export default function AdminPage(): React.ReactElement {
+  // --- STATE: Autoryzacja ---
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
+
+  // --- STATE: Dane ---
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [showPreview, setShowPreview] = useState<boolean>(false);
-  const [productData, setProductData] = useState({
-    title: '', description: '', price: '', category: '', image: '', images: [] as ImageItem[], tags: '', youtubeUrl: '', pdfUrl: '', featured: false, active: true
-  });
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
-useEffect(() => {
-  if (isModalOpen) {
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = 'unset';
-  }
-  return () => {
-    document.body.style.overflow = 'unset';
-  };
-}, [isModalOpen]);
-  
-  // ✅ Nowe state dla kategorii
-  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState<boolean>(false);
-  const [availableCategories, setAvailableCategories] = useState<Category[]>([]);
+  // --- EFFECT: Inicjalizacja ---
+  useEffect(() => { 
+    setIsMounted(true); 
+    const savedAuth = localStorage.getItem('admin_authenticated'); 
+    if (savedAuth === 'true') setIsAuthenticated(true); 
+  }, []);
 
-  useEffect(() => { setIsMounted(true); const savedAuth = localStorage.getItem('admin_authenticated'); if (savedAuth === 'true') setIsAuthenticated(true); }, []);
-  useEffect(() => { if (isAuthenticated) { fetchProducts(); fetchCategories(); } }, [isAuthenticated]);
+  useEffect(() => { 
+    if (isAuthenticated) { 
+      fetchProducts(); 
+    } 
+  }, [isAuthenticated]);
 
-  // ✅ Funkcja do pobierania kategorii
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch('/api/categories');
-      if (response.ok) {
-        const data = await response.json();
-        // Pomiń "Wszystkie kategorie"
-        setAvailableCategories(data.filter((cat: Category) => cat.key !== 'all'));
-      }
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    }
-  };
-
-  // ✅ Handler dla nowej kategorii
-  const handleCategoryCreated = (newCategory: { key: string; label: string }) => {
-    setAvailableCategories(prev => [...prev, newCategory]);
-    // Ustaw nową kategorię w formularzu
-    setProductData(prev => ({ ...prev, category: newCategory.key }));
-  };
-
+  // --- FUNKCJE: Logowanie ---
   const handleLogin = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setLoginError('');
@@ -92,6 +43,83 @@ useEffect(() => {
 
   const handleLogout = (): void => { setIsAuthenticated(false); localStorage.removeItem('admin_authenticated'); setPassword(''); };
 
+  // --- FUNKCJE: Dane ---
+  const fetchProducts = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/products?active=all');
+      if (!response.ok) {
+        console.error('Failed to fetch products:', response.status);
+        setProducts([]);
+        return;
+      }
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        setProducts(data);
+      } else {
+        setProducts([]);
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteProduct = async (id: string): Promise<void> => {
+    if (confirm('Czy na pewno chcesz usunąć ten produkt?')) {
+      try { 
+        setLoading(true); 
+        const response = await fetch(`/api/products/${id}`, { method: 'DELETE' }); 
+        if (response.ok) { 
+          await fetchProducts(); 
+          alert('Produkt usunięty!'); 
+        } else { 
+          alert('Błąd podczas usuwania'); 
+        } 
+      } catch (error) { 
+        console.error('Błąd podczas usuwania:', error); 
+        alert('Wystąpił błąd podczas usuwania'); 
+      } finally { 
+        setLoading(false); 
+      }
+    }
+  };
+
+  const toggleProductActive = async (id: string, currentStatus: boolean): Promise<void> => {
+    try { 
+      // Nie włączamy pełnego loading, żeby nie migać całą tabelą
+      const response = await fetch(`/api/products/${id}`, { 
+        method: 'PUT', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ active: !currentStatus }) 
+      }); 
+      if (response.ok) { 
+        fetchProducts(); // Odśwież listę w tle
+      } else { 
+        alert('Błąd podczas zmiany statusu'); 
+      } 
+    } catch (error) { 
+      console.error('Błąd podczas zmiany statusu:', error); 
+      alert('Wystąpił błąd podczas zmiany statusu'); 
+    }
+  };
+
+  // --- HELPER: Zdjęcia ---
+  const getPrimaryImage = (product: Product): string => {
+    if (product.image && typeof product.image === 'string') {
+      return product.image;
+    }
+    const parsedImages = parseImages(product.images);
+    if (parsedImages && parsedImages.length > 0) {
+      const primary = parsedImages.find(img => img.isPrimary);
+      return primary ? primary.url : parsedImages[0].url;
+    }
+    return '/placeholder-product.jpg';
+  };
+
+  // --- RENDER: Widok logowania ---
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
@@ -108,179 +136,50 @@ useEffect(() => {
             {loginError && (<div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center"><svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" /></svg>{loginError}</div>)}
             <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 transform hover:scale-[1.02]">Zaloguj się</button>
           </form>
-          <div className="mt-8 text-center"><div className="bg-gray-50 rounded-lg p-4"><p className="text-xs text-gray-500 flex items-center justify-center"><svg className="h-4 w-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" /></svg>Panel administracyjny jest chroniony hasłem</p></div></div>
         </div>
       </div>
     );
   }
 
-const fetchProducts = async () => {
-  try {
-    const response = await fetch('/api/products?active=all');
-    
-    if (!response.ok) {
-      console.error('Failed to fetch products:', response.status);
-      setProducts([]);
-      return;
-    }
-    
-    const data = await response.json();
-    
-    if (Array.isArray(data)) {
-      setProducts(data);
-    } else {
-      console.error('Products data is not an array:', data);
-      setProducts([]);
-    }
-  } catch (error) {
-    console.error('Error fetching products:', error);
-    setProducts([]);
-  }
-};
+  // Obliczenia statystyk
+  const activeProducts = Array.isArray(products) ? products.filter(p => p.active !== false) : [];
+  const featuredProducts = Array.isArray(products) ? products.filter(p => p.featured) : [];
+  const categories = Array.isArray(products) ? new Set(products.map(p => p.category).filter(Boolean)) : new Set();
 
-  const getPrimaryImage = (product: Product): string => {
-    if (product.image && typeof product.image === 'string') {
-      return product.image;
-    }
-    
-    const parsedImages = parseImages(product.images);
-    if (parsedImages && parsedImages.length > 0) {
-      const primary = parsedImages.find(img => img.isPrimary);
-      return primary ? primary.url : parsedImages[0].url;
-    }
-    
-    return '/placeholder-product.jpg';
-  };
-
-  const handleDescriptionChange = (changes: EditorContentChanged) => { setProductData({ ...productData, description: changes.markdown }); };
-  const handleImagesChange = (images: ImageItem[]) => { setProductData({ ...productData, images: images, image: images.find(img => img.isPrimary)?.url || images[0]?.url || '' }); };
-
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
-    e.preventDefault();
-    if (!productData.title || !productData.price) { alert('Wypełnij wszystkie wymagane pola'); return; }
-    setLoading(true);
-    try {
-      const method = editingProduct ? 'PUT' : 'POST';
-      const url = editingProduct ? `/api/products/${editingProduct.id}` : '/api/products';
-      const response = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(productData) });
-      if (response.ok) { await fetchProducts(); closeModal(); alert(editingProduct ? 'Produkt zaktualizowany!' : 'Produkt dodany!'); } 
-      else { const error = await response.json(); alert(`Błąd: ${error.error}`); }
-    } catch (error) { console.error('Błąd podczas zapisywania:', error); alert('Wystąpił błąd podczas zapisywania'); } 
-    finally { setLoading(false); }
-  };
-
-  const deleteProduct = async (id: string): Promise<void> => {
-    if (confirm('Czy na pewno chcesz usunąć ten produkt?')) {
-      try { setLoading(true); const response = await fetch(`/api/products/${id}`, { method: 'DELETE' }); if (response.ok) { await fetchProducts(); alert('Produkt usunięty!'); } else { alert('Błąd podczas usuwania'); } } 
-      catch (error) { console.error('Błąd podczas usuwania:', error); alert('Wystąpił błąd podczas usuwania'); } 
-      finally { setLoading(false); }
-    }
-  };
-
-  const toggleProductActive = async (id: string, currentStatus: boolean): Promise<void> => {
-    try { setLoading(true); const response = await fetch(`/api/products/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ active: !currentStatus }) }); if (response.ok) { await fetchProducts(); alert(`Produkt ${!currentStatus ? 'aktywowany' : 'dezaktywowany'}!`); } else { alert('Błąd podczas zmiany statusu'); } } 
-    catch (error) { console.error('Błąd podczas zmiany statusu:', error); alert('Wystąpił błąd podczas zmiany statusu'); } 
-    finally { setLoading(false); }
-  };
-
-  const openModal = (product?: Product): void => {
-    if (product) {
-      setEditingProduct(product);
-      
-      console.log('🔍 Loading product for edit:', product.id);
-      console.log('📦 Product data from DB:', {
-        image: product.image,
-        images: product.images,
-        imagesType: typeof product.images
-      });
-      
-      const allImages: ImageItem[] = [];
-      
-      if (product.image && typeof product.image === 'string') {
-        allImages.push({
-          id: 'primary-image',
-          url: product.image,
-          isPrimary: true
-        });
-        console.log('✅ Added primary image from "image" field:', product.image);
-      }
-      
-      if (product.images) {
-        const additionalImages = parseImages(product.images);
-        
-        if (additionalImages && additionalImages.length > 0) {
-          additionalImages.forEach(img => {
-            allImages.push({
-              id: img.id,
-              url: img.url,
-              isPrimary: false
-            });
-          });
-          console.log('✅ Added', additionalImages.length, 'additional images from "images" field');
-        }
-      }
-      
-      console.log('✅ Total images loaded:', allImages.length);
-      console.log('📋 All images:', allImages);
-      
-      setProductData({
-        title: product.title,
-        description: product.description || '',
-        price: product.price,
-        category: product.category || '',
-        image: product.image || '',
-        images: allImages,
-        tags: product.tags || '',
-        youtubeUrl: product.youtubeUrl || '',
-        pdfUrl: product.pdfUrl || '',
-        featured: product.featured,
-        active: product.active ?? true
-      });
-      
-      console.log('📝 Product data set with', allImages.length, 'images');
-    } else {
-      console.log('📝 Opening modal for new product');
-      setEditingProduct(null);
-      setProductData({
-        title: '',
-        description: '',
-        price: '',
-        category: '',
-        image: '',
-        images: [],
-        tags: '',
-        youtubeUrl: '',
-        pdfUrl: '',
-        featured: false,
-        active: true
-      });
-    }
-    
-    setShowPreview(false);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = (): void => { setIsModalOpen(false); setEditingProduct(null); setShowPreview(false); };
-
-const activeProducts = Array.isArray(products) ? products.filter(p => p.active !== false) : [];
-const featuredProducts = Array.isArray(products) ? products.filter(p => p.featured) : [];
-const categories = Array.isArray(products) ? new Set(products.map(p => p.category).filter(Boolean)) : new Set();
-
+  // --- RENDER: Główny Panel ---
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* HEADER */}
       <div className="bg-white shadow-sm border-b sticky top-0 z-40 pt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
-            <div><h1 className="text-3xl font-bold text-gray-900 flex items-center"><svg className="h-8 w-8 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>Panel Administracyjny</h1><p className="text-gray-600 mt-1">Zarządzaj produktami w swoim sklepie</p></div>
+            <div>
+                <h1 className="text-3xl font-bold text-gray-900 flex items-center">
+                    <svg className="h-8 w-8 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                    Panel Administracyjny
+                </h1>
+                <p className="text-gray-600 mt-1">Zarządzaj produktami w swoim sklepie</p>
+            </div>
             <div className="flex items-center gap-4">
-              <button onClick={() => openModal()} className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-5 rounded-lg transition duration-200 flex items-center shadow-sm"><svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>Dodaj Produkt</button>
-              <button onClick={handleLogout} className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-5 rounded-lg transition duration-200 flex items-center shadow-sm"><svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>Wyloguj</button>
+              {/* LINK DO DODAWANIA NOWEGO PRODUKTU */}
+              <Link 
+                href="/admin/products/new" 
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-5 rounded-lg transition duration-200 flex items-center shadow-sm"
+              >
+                <svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                Dodaj Produkt
+              </Link>
+              <button onClick={handleLogout} className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-5 rounded-lg transition duration-200 flex items-center shadow-sm">
+                <svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                Wyloguj
+              </button>
             </div>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* STATYSTYKI */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"><div className="flex items-center"><div className="p-2 bg-blue-100 rounded-lg"><svg className="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg></div><div className="ml-4"><p className="text-sm font-medium text-gray-500">Wszystkie produkty</p><p className="text-2xl font-bold text-gray-900">{products.length}</p></div></div></div>
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"><div className="flex items-center"><div className="p-2 bg-green-100 rounded-lg"><svg className="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><div className="ml-4"><p className="text-sm font-medium text-gray-500">Aktywne produkty</p><p className="text-2xl font-bold text-gray-900">{activeProducts.length}</p></div></div></div>
@@ -288,9 +187,10 @@ const categories = Array.isArray(products) ? new Set(products.map(p => p.categor
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"><div className="flex items-center"><div className="p-2 bg-purple-100 rounded-lg"><svg className="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg></div><div className="ml-4"><p className="text-sm font-medium text-gray-500">Kategorie</p><p className="text-2xl font-bold text-gray-900">{categories.size}</p></div></div></div>
         </div>
 
+        {/* LISTA PRODUKTÓW */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-100 bg-gray-50"><h2 className="text-xl font-semibold text-gray-900 flex items-center"><svg className="h-6 w-6 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>Lista Produktów</h2></div>
-          {loading ? (
+          {loading && products.length === 0 ? (
             <div className="p-8 text-center"><div className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-blue-500 transition ease-in-out duration-150"><svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Ładowanie...</div></div>
           ) : (
             <div className="overflow-x-auto">
@@ -302,9 +202,7 @@ const categories = Array.isArray(products) ? new Set(products.map(p => p.categor
                   ) : (
                     products.map((product) => {
                       let totalImages = 0;
-                      
                       if (product.image) totalImages++;
-                      
                       const additionalImages = parseImages(product.images);
                       if (additionalImages && additionalImages.length > 0) {
                         totalImages += additionalImages.length;
@@ -320,13 +218,25 @@ const categories = Array.isArray(products) ? new Set(products.map(p => p.categor
                                   <div className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">{totalImages}</div>
                                 )}
                               </div>
-                              <div className="ml-4"><div className="text-sm font-medium text-gray-900 max-w-xs truncate">{product.title}</div><div className="text-sm text-gray-500">ID: {product.id.slice(0, 8)}...</div></div>
+                              <div className="ml-4">
+                                <div className="text-sm font-medium text-gray-900 max-w-xs truncate" title={product.title}>{product.title}</div>
+                                <div className="text-sm text-gray-500">ID: {product.id.slice(0, 8)}...</div>
+                              </div>
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap"><span className="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">{product.category || 'Brak kategorii'}</span></td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.price}</td>
-                          <td className="px-6 py-4 whitespace-nowrap"><div className="flex flex-col gap-1">{product.featured && (<span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">⭐ Polecane</span>)}<span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${product.active !== false ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>{product.active !== false ? '✅ Aktywny' : '❌ Nieaktywny'}</span></div></td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium"><div className="flex gap-2"><button onClick={() => openModal(product)} className="text-blue-600 hover:text-blue-900 transition duration-200 font-medium">✏️ Edytuj</button><button onClick={() => toggleProductActive(product.id, product.active !== false)} className={`transition duration-200 font-medium ${product.active !== false ? 'text-orange-600 hover:text-orange-900' : 'text-green-600 hover:text-green-900'}`}>{product.active !== false ? '⏸️ Dezaktywuj' : '▶️ Aktywuj'}</button><button onClick={() => deleteProduct(product.id)} className="text-red-600 hover:text-red-900 transition duration-200 font-medium">🗑️ Usuń</button></div></td>
+                          <td className="px-6 py-4 whitespace-nowrap"><div className="flex flex-col gap-1">{product.featured && (<span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800 w-fit">⭐ Polecane</span>)}<span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full w-fit ${product.active !== false ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>{product.active !== false ? '✅ Aktywny' : '❌ Nieaktywny'}</span></div></td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <div className="flex gap-2">
+                                {/* LINK DO EDYCJI ZAMIAST MODALA */}
+                                <Link href={`/admin/products/${product.id}`} className="text-blue-600 hover:text-blue-900 transition duration-200 font-medium flex items-center">
+                                    ✏️ Edytuj
+                                </Link>
+                                <button onClick={() => toggleProductActive(product.id, product.active !== false)} className={`transition duration-200 font-medium ${product.active !== false ? 'text-orange-600 hover:text-orange-900' : 'text-green-600 hover:text-green-900'}`}>{product.active !== false ? '⏸️ Dezaktywuj' : '▶️ Aktywuj'}</button>
+                                <button onClick={() => deleteProduct(product.id)} className="text-red-600 hover:text-red-900 transition duration-200 font-medium">🗑️ Usuń</button>
+                            </div>
+                          </td>
                         </tr>
                       );
                     })
@@ -337,228 +247,6 @@ const categories = Array.isArray(products) ? new Set(products.map(p => p.categor
           )}
         </div>
       </div>
-
-{isModalOpen && isMounted && (
-  <>
-    {/* Backdrop */}
-    <div 
-      className="fixed inset-0 bg-black bg-opacity-50 z-40"
-      onClick={closeModal}
-    />
-    
-    {/* Scrollable Wrapper */}
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="min-h-screen px-4 py-8 flex items-start justify-center">
-        
-        {/* Modal Box */}
-        <div 
-          className="bg-white rounded-xl shadow-2xl w-full max-w-6xl my-8 relative"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Header */}
-          <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center rounded-t-xl">
-            <h3 className="text-xl font-semibold text-gray-900 flex items-center">
-              <svg className="h-6 w-6 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-              </svg>
-              {editingProduct ? 'Edytuj Produkt' : 'Dodaj Nowy Produkt'}
-            </h3>
-            <button 
-              onClick={closeModal} 
-              className="text-gray-400 hover:text-gray-600 transition-colors"
-              type="button"
-            >
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-          
-          {/* Form Content */}
-          <form onSubmit={handleSubmit} className="p-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Nazwa produktu *</label>
-                  <input 
-                    type="text" 
-                    value={productData.title} 
-                    onChange={(e) => setProductData({...productData, title: e.target.value})} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors" 
-                    placeholder="np. LUMIGLAM PRO Laser System" 
-                    required 
-                  />
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Cena *</label>
-                    <input 
-                      type="text" 
-                      value={productData.price} 
-                      onChange={(e) => setProductData({...productData, price: e.target.value})} 
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors" 
-                      placeholder="np. 29 900 zł" 
-                      required 
-                    />
-                  </div>
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="block text-sm font-medium text-gray-700">Kategoria</label>
-                      <button
-                        type="button"
-                        onClick={() => setIsCategoryModalOpen(true)}
-                        className="text-sm text-blue-600 hover:text-blue-800 font-medium"
-                      >
-                        + Nowa
-                      </button>
-                    </div>
-                    <select 
-                      value={productData.category} 
-                      onChange={(e) => setProductData({...productData, category: e.target.value})} 
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors"
-                    >
-                      <option value="">Wybierz kategorię</option>
-                      {availableCategories.map(cat => (
-                        <option key={cat.key} value={cat.key}>
-                          {cat.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Galeria zdjęć produktu</label>
-                  <MultiImageUpload images={productData.images} onChange={handleImagesChange} maxImages={10} />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Tagi (oddzielone przecinkami)</label>
-                  <input 
-                    type="text" 
-                    value={productData.tags} 
-                    onChange={(e) => setProductData({...productData, tags: e.target.value})} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors" 
-                    placeholder="laser, odmładzanie, skóra, profesjonalny" 
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Link do YouTube (opcjonalny)
-                  </label>
-                  <input
-                    type="url"
-                    value={productData.youtubeUrl}
-                    onChange={(e) => setProductData({...productData, youtubeUrl: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-colors"
-                    placeholder="https://www.youtube.com/watch?v=..."
-                  />
-                  <p className="text-xs text-gray-500 mt-1">
-                    Wklej pełny URL filmu z YouTube
-                  </p>
-                </div>
-
-                <div>
-                  <PdfUpload
-                    pdfUrl={productData.pdfUrl}
-                    onChange={(url) => setProductData({...productData, pdfUrl: url})}
-                  />
-                </div>
-                
-                <div className="space-y-4">
-                  <label className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      checked={productData.featured} 
-                      onChange={(e) => setProductData({...productData, featured: e.target.checked})} 
-                      className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" 
-                    />
-                    <span className="ml-3 text-sm font-medium text-gray-700">⭐ Produkt polecany</span>
-                  </label>
-                  <label className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      checked={productData.active} 
-                      onChange={(e) => setProductData({...productData, active: e.target.checked})} 
-                      className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" 
-                    />
-                    <span className="ml-3 text-sm font-medium text-gray-700">✅ Produkt aktywny</span>
-                  </label>
-                </div>
-              </div>
-              
-              <div className="space-y-6">
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <label className="block text-sm font-medium text-gray-700">Opis produktu</label>
-                    {productData.description && (
-                      <button 
-                        type="button" 
-                        onClick={() => setShowPreview(!showPreview)} 
-                        className="text-sm text-blue-600 hover:text-blue-700 font-medium"
-                      >
-                        {showPreview ? '✏️ Edytuj' : '👁️ Podgląd'}
-                      </button>
-                    )}
-                  </div>
-                  {!showPreview ? (
-                    <MarkdownEditor 
-                      value={productData.description} 
-                      onChange={handleDescriptionChange} 
-                      placeholder="Wprowadź szczegółowy opis produktu..." 
-                    />
-                  ) : (
-                    <div className="border border-gray-200 rounded-lg p-6 bg-gray-50 min-h-[400px] max-h-[400px] overflow-y-auto">
-                      <MarkdownViewer value={productData.description} />
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex justify-end gap-4 pt-6 border-t border-gray-200 mt-8">
-              <button 
-                type="button" 
-                onClick={closeModal} 
-                className="px-6 py-3 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition duration-200 font-medium"
-              >
-                Anuluj
-              </button>
-              <button 
-                type="submit" 
-                disabled={loading} 
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-200 disabled:opacity-50 font-medium flex items-center"
-              >
-                {loading ? (
-                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                ) : null}
-                {loading ? 'Zapisywanie...' : (editingProduct ? 'Zapisz zmiany' : 'Dodaj produkt')}
-              </button>
-            </div>
-          </form>
-        </div>
-        
-      </div>
-    </div>
-  </>
-)}
-
-
-
-
-      {/* ✅ Modal dla kategorii */}
-      {isCategoryModalOpen && isMounted && (
-        <CategoryModal
-          isOpen={isCategoryModalOpen}
-          onClose={() => setIsCategoryModalOpen(false)}
-          onCategoryCreated={handleCategoryCreated}
-        />
-      )}
     </div>
   );
 }
