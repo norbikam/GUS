@@ -106,9 +106,7 @@ export default function ProductCarousel({
                     {product.title}
                   </h3>
                   <div className="border-t border-white/20 pt-3 mt-2">
-                    <p className="text-xl font-bold text-yellow-500">
-                      {product.price}
-                    </p>
+                    {/* <p className="text-xl font-bold text-yellow-500">{product.price}</p> */}
                   </div>
                 </div>
               </div>

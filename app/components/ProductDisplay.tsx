@@ -41,9 +41,7 @@ export const ProductsDisplay: React.FC<ProductsDisplayProps> = ({ products = [],
                   <p className="text-sm text-gray-500 mb-2">{product.category}</p>
                 )}
               </div>
-              <p className="text-xl font-semibold text-blue-600 border-t pt-2">
-                {product.price}
-              </p>
+              {/* <p className="text-xl font-semibold text-blue-600 border-t pt-2">{product.price}</p> */}
             </div>
           </div>
         </Link>

@@ -179,7 +179,7 @@ export default function Home(): React.ReactElement {
                   />
                   <div className="flex flex-col justify-between flex-grow p-4">
                     <h2 className="text-xl font-bold min-h-[56px]">{product.title}</h2>
-                    <p className="text-gray-600 border-t pt-2">{product.price}</p>
+                    {/* <p className="text-gray-600 border-t pt-2">{product.price}</p> */}
                   </div>
                 </div>
               </Link>

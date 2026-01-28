@@ -89,7 +89,7 @@ export default async function ProductPage({ params }: Props) {
           <h1 className="text-3xl md:text-5xl font-bold">{product.title}</h1>
           
           {/* 2) Cena */}
-          <p className="text-2xl text-yellow-600 mt-4">{product.price}</p>
+          {/* <p className="text-2xl text-yellow-600 mt-4">{product.price}</p> */}
           
           {/* 3) Przyciski */}
           <div className="mt-6 flex flex-col sm:flex-row gap-4">
@@ -149,7 +149,7 @@ export default async function ProductPage({ params }: Props) {
                     />
                     <div className="flex flex-col justify-between flex-grow p-4">
                       <h2 className="text-xl font-bold min-h-[56px]">{relatedProduct.title}</h2>
-                      <p className="text-yellow-600 border-t border-white/20 pt-2 mt-2">{relatedProduct.price}</p>
+                      {/* <p className="text-yellow-600 border-t border-white/20 pt-2 mt-2">{relatedProduct.price}</p> */}
                     </div>
                   </div>
                 </Link>
