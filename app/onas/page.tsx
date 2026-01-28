@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Particles from "../components/Particles";
+import FinancingPartner from "../components/FinancingPartner";
 
 export default function OnasPage() {
   return (
@@ -64,6 +65,8 @@ export default function OnasPage() {
             </div>
           </div>
         </section>
+
+        <FinancingPartner />
 
         {/* Separator */}
         <div className="mt-8 w-full">
@@ -287,7 +290,7 @@ export default function OnasPage() {
         </div>
       </div>
 
-      <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
+      {/* <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
       <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
         <div>
           <h2 className="text-3xl text-center">Jacek Olszewski</h2>
@@ -309,7 +312,7 @@ export default function OnasPage() {
           </p>
         </div>
       </div>
-    </div>
+    </div> */}
 
     
     {/* <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">

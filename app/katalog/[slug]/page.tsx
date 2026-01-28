@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Product } from "@prisma/client";
 import YouTubeEmbed from "@/app/components/YouTubeEmbed";
 import PdfViewer from "@/app/components/PdfViewer";
+import FinancingPartner from "@/app/components/FinancingPartner";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -130,6 +131,9 @@ export default async function ProductPage({ params }: Props) {
             </div>
           </div>
         )}  
+        <div className="md:col-span-2">
+        <FinancingPartner />
+        </div>
 
         {/* Inne produkty */}
         <div className="col-span-2">
