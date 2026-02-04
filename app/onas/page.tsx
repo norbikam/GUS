@@ -98,7 +98,7 @@ export default function OnasPage() {
                   />
                 </div>
                 <p className="text-center text-gray-300 mt-4">
-                  Współwłaściciel GUS Medic <br/> Ekspert laseroterapii <br /> Wykształcenie i kwalifikacje akademickie <br /> Szkolenia
+                  Właściciel placówki szkoleniowej <br/> Ekspert laseroterapii <br /> Wykształcenie i kwalifikacje akademickie <br /> Szkolenia
                 </p>
               </div>
               <div className="flex justify-center items-center">
