@@ -23,7 +23,7 @@ type Category = {
 };
 
 interface ProductFormProps {
-  initialData?: Product | null; // Jeśli null, to tryb dodawania
+  initialData?: Product | null;
 }
 
 export default function ProductForm({ initialData }: ProductFormProps) {
@@ -89,8 +89,8 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     setProductData(prev => ({ ...prev, category: newCategory.key }));
   };
 
-  const handleDescriptionChange = (changes: EditorContentChanged) => { setProductData({ ...productData, description: changes.markdown }); };
-  const handleImagesChange = (images: ImageItem[]) => { setProductData({ ...productData, images: images, image: images.find(img => img.isPrimary)?.url || images[0]?.url || '' }); };
+const handleDescriptionChange = (changes: EditorContentChanged) => {setProductData(prev => ({ ...prev, description: changes.markdown }));
+};  const handleImagesChange = (images: ImageItem[]) => { setProductData({ ...productData, images: images, image: images.find(img => img.isPrimary)?.url || images[0]?.url || '' }); };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -166,7 +166,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
               <input type="url" value={productData.youtubeUrl} onChange={(e) => setProductData({...productData, youtubeUrl: e.target.value})} className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
             </div>
 
-            <div><PdfUpload pdfUrl={productData.pdfUrl} onChange={(url) => setProductData({...productData, pdfUrl: url})} /></div>
+            <div><PdfUpload pdfUrl={productData.pdfUrl} onChange={(url) => setProductData(prev => ({ ...prev, pdfUrl: url }))} /></div>
             
             <div className="space-y-4">
               <label className="flex items-center"><input type="checkbox" checked={productData.featured} onChange={(e) => setProductData({...productData, featured: e.target.checked})} className="h-4 w-4 text-blue-600 border-gray-300 rounded" /><span className="ml-3 text-sm font-medium text-gray-700">⭐ Polecany</span></label>
