@@ -72,7 +72,7 @@ const FinancingPartner = () => {
             <p className="text-lg font-bold">Anna Zalewska</p>
             
             <div className="mt-3 flex flex-col gap-1 items-center lg:items-end">
-              <a href="tel:+48697902113" className="text-lg font-medium text-blue-600 hover:text-blue-800 transition-colors">
+              <a href="tel:+48697902113" className="text-lg font-medium text-blue-600 hover:text-blue-400 transition-colors">
                 +48 697 902 113
               </a>
               <a href="mailto:anna.zalewska@mleasing.pl" className="text-sm text-gray-100 hover:text-gray-900 transition-colors border-b border-transparent hover:border-gray-300">
