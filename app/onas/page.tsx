@@ -1,11 +1,109 @@
+"use client";
+
+import React from "react";
 import Image from "next/image";
 import Particles from "../components/Particles";
 import FinancingPartner from "../components/FinancingPartner";
 
+// --- DANE EKSPERTÓW ---
+// Tutaj możesz łatwo dodawać, usuwać lub odkomentowywać osoby.
+const expertsData = [
+  {
+    name: "Dr n. med. Michał Ekkert",
+    image: "/cooperations/michal-ekkert.jpeg",
+    role: (
+      <>
+        Właściciel placówki szkoleniowej <br /> Ekspert laseroterapii <br /> Wykształcenie i kwalifikacje akademickie <br /> Szkolenia
+      </>
+    ),
+    description: (
+      <>
+        Dr Michał Ekkert, absolwent Śląskiej Akademii Medycznej i doktor nauk medycznych, od ponad 25 lat łączy praktykę kliniczną z działalnością naukową i dydaktyczną. Kierownik studiów podyplomowych z zakresu medycyny estetycznej dla lekarzy. Jest założycielem Instytutu Kosmetologii i Badań Leków, gdzie prowadzi szkolenia i projekty badawcze w zakresie medycyny estetycznej i laseroterapii.
+        <br /><br />
+        Jako główny ekspert szkoleniowy Glowupskin, realizuje autorskie programy edukacyjne dla lekarzy i kosmetologów, obejmujące m.in. laseroterapię frakcyjną, pikosekundową oraz terapie z wykorzystaniem technologii INDIBA® 448 kHz. Łącząc wiedzę akademicką z praktyką kliniczną, dr Ekkert promuje bezpieczne i świadome podejście do medycyny estetycznej.
+      </>
+    ),
+    extraImage: "/cooperations/michal-ekkert-qr.webp", // Opcjonalny QR kod
+  },
+  {
+    name: "Edyta Babula-Frątczak",
+    image: "/cooperations/edyta-babula-fratczak.jpeg",
+    role: (
+      <>
+        Ekspert, dydaktyk, założycielka Warszawskiej Szkoły Medycyny Estetycznej i Kosmetologii<br />Ekspert, Szkolenia
+      </>
+    ),
+    description: (
+      <>
+        Edyta Babula-Frątczak to ceniony autorytet w branży kosmetologicznej i medycyny estetycznej. Posiada unikalne, interdyscyplinarne wykształcenie, łączące specjalizację w marketingu z zaawansowaną kosmetologią.
+        <br /><br />
+        Jako właściciel i główny dydaktyk Warszawskiej Szkoły Medycyny Estetycznej i Kosmetologii, Edyta jest pionierem w kreowaniu innowacyjnych programów edukacyjnych. Jej misją jest nie tylko przekazywanie wiedzy, ale i wdrażanie najwyższych standardów zawodowych.
+      </>
+    ),
+  },
+  {
+    name: "Anna Goc",
+    image: "/cooperations/anna-goc.jpg",
+    role: "Absolwentka Śląskiego Uniwersytetu Medycznego w Katowicach na kierunku Kosmetologia",
+    description: (
+      <>
+        Doświadczenie zawodowe zdobywała, pracując w wiodących firmach branży kosmetycznej i medycyny estetycznej. Specjalizuje się w peelingach chemicznych oraz terapiach anti-aging, łącząc wiedzę naukową z doświadczeniem praktycznym.
+        <br /><br />
+        Nieustannie poszerza swoją wiedzę, uczestnicząc w szkoleniach i konferencjach branżowych. Z pasją łączy nowoczesne technologie z klasycznymi metodami pielęgnacji.
+      </>
+    ),
+  },
+  {
+    name: "Tomasz Kwiatkowski",
+    image: "/cooperations/tomasz-kwiatkowski.png",
+    role: (
+      <>
+        Specjalista Hi-Tech<br />
+        Szkoleniowiec i Konsultant Technologii Medycznych<br />
+        Ekspert Medycyny Estetycznej
+      </>
+    ),
+    description: (
+      <>
+        Tomasz Kwiatkowski to specjalista Hi-Tech z ponad 20-letnim doświadczeniem w medycynie. Na co dzień współpracuje z gabinetami kosmetologicznymi oraz klinikami medycyny estetycznej, wspierając ich zespoły w podnoszeniu kwalifikacji.
+        <br /><br />
+        Prywatnie – pasjonat fotografii przyrodniczej, off-roadu oraz motoryzacji.
+      </>
+    ),
+  },
+  {
+    name: "Alan Dąbrowski",
+    image: "/cooperations/alan-dabrowski.png",
+    role: "Założyciel Alan Dąbrowski Academy, jedyny polski trener akredytowany w brytyjskiej organizacji Beauty ITEC",
+    description: (
+      <>
+        Alan Dąbrowski to uznany ekspert i wizjoner w dziedzinie edukacji kosmetologicznej. Jako założyciel Alan Dąbrowski Academy, stworzył miejsce oferujące edukację zawodową na najwyższym poziomie.
+        <br /><br />
+        Jest jedynym polskim trenerem zrzeszonym i akredytowanym w brytyjskiej rządowej organizacji Beauty ITEC, co gwarantuje międzynarodowe standardy edukacji.
+      </>
+    ),
+  },
+  // --- ZAKOMENTOWANI EKSPERCI (Odkomentuj aby pokazać) ---
+  /*
+  {
+    name: "Sławomir Sobusiak",
+    image: "/cooperations/slawomir-sobusiak.jpg",
+    role: "Ekspert w dziedzinie medycyny estetycznej, wykładowca, prelegent",
+    description: "Sławomir Sobusiak to uznany ekspert..."
+  },
+  {
+    name: "Magda Batraniec",
+    image: "/cooperations/magda-batraniec.jpeg",
+    role: "Specjalistka ds. Strategii i Komunikacji GUS Medic",
+    description: "Magda Batraniec to jedna z kluczowych ekspertek..."
+  },
+  */
+];
+
 export default function OnasPage() {
   return (
-    <div className="relative w-full pt-24">
-      {/* Subtelne gwiazdy w tle jak na stronie głównej */}
+    <div className="relative w-full pt-24 min-h-screen bg-[#050505] text-gray-200">
+      {/* Tło Particle */}
       <div className="pointer-events-none absolute inset-0 z-[1] opacity-45 md:opacity-55">
         <Particles
           className="w-full h-full"
@@ -21,47 +119,55 @@ export default function OnasPage() {
         />
       </div>
 
-      {/* Treść strony */}
-      <main className="relative z-10 max-w-6xl mx-auto px-8 md:px-10 py-12 md:py-16 flex flex-col gap-10">
-        <h1 className="text-4xl md:text-6xl text-white text-center">O nas</h1>
-
-        {/* Wstęp */}
-        <section className="text-center">
-          <p className="mt-4 text-lg md:text-2xl font-light md:px-10">
-            Jesteśmy firmą zajmującą się sprzedażą najwyższej klasy urządzeń dla salonów medycyny estetycznej. Nasza oferta obejmuje szeroki zakres asortymentu sprzętu, który pomoże Ci zapewnić najwyższy poziom usług dla Twoich klientów.          </p>
+      <main className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 py-12 md:py-16 flex flex-col gap-16">
+        
+        {/* NAGŁÓWEK GŁÓWNY */}
+        <section className="text-center max-w-4xl mx-auto space-y-6">
+          <h1 className="text-4xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-b from-[#ffedb3] to-[#d4af37] font-light">
+            O nas
+          </h1>
+          <div className="h-[1px] w-24 mx-auto bg-[#d4af37]" />
+          <p className="text-lg md:text-xl font-light text-gray-300 leading-relaxed">
+            Jesteśmy firmą zajmującą się sprzedażą najwyższej klasy urządzeń dla salonów medycyny estetycznej. 
+            Nasza oferta obejmuje szeroki zakres asortymentu sprzętu, który pomoże Ci zapewnić najwyższy poziom usług dla Twoich klientów.
+          </p>
         </section>
 
-      {/* Dwie karty (glassmorphism) jak na wariancie 2 */}
+        {/* FILOZOFIA I OFERTA (GLASS CARDS) */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Karta: misja */}
-          <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
-            <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full">
-              <h2 className="text-3xl">Nasza filozofia</h2>
-              <p className="mt-4 text-lg md:text-2xl font-light">
-                W <b>GlowUpSkin</b> łączymy jakość z dostępnością. Oferujemy urządzenia w różnych klasach cenowych, tak by zarówno profesjonaliści oczekujący <b>najwyższej precyzji</b>, jak i osoby poszukujące rozsądnych cen, mogły znaleźć u nas <b>idealne rozwiązanie</b>.
-                <br />
-                <br />
-                Nieustannie dostosowujemy ofertę do dynamicznych potrzeb rynku, wprowadzając produkty i formuły, które stanowią odpowiedź na najnowsze osiągnięcia branży.
-                <br />
-                <br />
-                Naszym celem jest, abyś znalazł u nas wszystko, co sprawi, że Twój salon będzie <b>nowoczesny, ekskluzywny i profesjonalny</b>.
-              </p>
+          {/* Karta: Filozofia */}
+          <div className="group p-[1px] rounded-2xl bg-gradient-to-br from-white/10 via-white/5 to-transparent hover:via-[#d4af37]/20 transition-all duration-500">
+            <div className="rounded-2xl bg-[#0a0a0a]/90 backdrop-blur-md p-8 h-full border border-white/5">
+              <h2 className="text-3xl text-[#d4af37] mb-6 font-light">Nasza filozofia</h2>
+              <div className="text-gray-300 font-light leading-relaxed space-y-4">
+                <p>
+                  W <b className="text-white">GlowUpSkin</b> łączymy jakość z dostępnością. Oferujemy urządzenia w różnych klasach cenowych, tak by zarówno profesjonaliści oczekujący <b className="text-white">najwyższej precyzji</b>, jak i osoby poszukujące rozsądnych cen, mogły znaleźć u nas idealne rozwiązanie.
+                </p>
+                <p>
+                  Nieustannie dostosowujemy ofertę do dynamicznych potrzeb rynku, wprowadzając produkty i formuły, które stanowią odpowiedź na najnowsze osiągnięcia branży.
+                </p>
+                <p>
+                  Naszym celem jest, abyś znalazł u nas wszystko, co sprawi, że Twój salon będzie <b className="text-white">nowoczesny, ekskluzywny i profesjonalny</b>.
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Karta: oferta */}
-          <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
-            <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full">
-              <h2 className="text-3xl">Nasza oferta</h2>
-              <p className="mt-4 text-lg md:text-2xl font-light">
-                Zapewniamy starannie wyselekcjonowane, najwyższej jakości urządzenia, które gwarantują skuteczność i niezawodność w Twoim salonie.
-                <br />
-                <br />
-                Każda zakupiona u nas aparatura objęta jest <b>3-letnią gwarancją serwisową</b>, co daje Ci spokój i bezpieczeństwo. Dostarczamy sprzęt bezpośrednio do Twojego salonu.
-                <br />
-                <br />
-                Dodatkowo, oferujemy szkolenia z obsługi prowadzone <b>na miejscu</b>, abyś Ty i Twój zespół mogli w pełni wykorzystać potencjał urządzeń od pierwszego dnia. To kompleksowe wsparcie zapewnia pełny komfort użytkowania.
-              </p>
+          {/* Karta: Oferta */}
+          <div className="group p-[1px] rounded-2xl bg-gradient-to-br from-white/10 via-white/5 to-transparent hover:via-[#d4af37]/20 transition-all duration-500">
+            <div className="rounded-2xl bg-[#0a0a0a]/90 backdrop-blur-md p-8 h-full border border-white/5">
+              <h2 className="text-3xl text-[#d4af37] mb-6 font-light">Nasza oferta</h2>
+              <div className="text-gray-300 font-light leading-relaxed space-y-4">
+                <p>
+                  Zapewniamy starannie wyselekcjonowane, najwyższej jakości urządzenia, które gwarantują skuteczność i niezawodność w Twoim salonie.
+                </p>
+                <p>
+                  Każda zakupiona u nas aparatura objęta jest <b className="text-white">3-letnią gwarancją serwisową</b>, co daje Ci spokój i bezpieczeństwo. Dostarczamy sprzęt bezpośrednio do Twojego salonu.
+                </p>
+                <p>
+                  Dodatkowo, oferujemy szkolenia z obsługi prowadzone <b className="text-white">na miejscu</b>, abyś Ty i Twój zespół mogli w pełni wykorzystać potencjał urządzeń od pierwszego dnia.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -69,299 +175,72 @@ export default function OnasPage() {
         <FinancingPartner />
 
         {/* Separator */}
-        <div className="mt-8 w-full">
-          <div className="mx-auto h-[2px] w-2/3 md:w-1/2 bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+        <div className="w-full py-8">
+          <div className="mx-auto h-[1px] w-full max-w-4xl bg-gradient-to-r from-transparent via-[#d4af37]/40 to-transparent" />
         </div>
 
-        <section className="grid grid-cols-1 gap-8">
-          <h1 className="text-5xl text-center">Współprace</h1>
+        {/* SEKCJA WSPÓŁPRACE */}
+        <section className="flex flex-col gap-12">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl md:text-5xl font-light mb-4">Współprace i Eksperci</h1>
+            <p className="text-gray-400">Ludzie, którzy tworzą jakość GlowUpSkin</p>
+          </div>
 
-          {/* Współpraca */}
-          <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
-            <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
-              <div className="relative flex flex-col items-center">
-                <h2 className="text-3xl text-center">Dr n. med. Michał Ekkert</h2>
-                <div className="relative mt-4">
-                  <Image
-                    src="/cooperations/michal-ekkert.jpeg"
-                    alt="Dr n. med. Michał Ekkert"
-                    width={400}
-                    height={400}
-                    className="mx-auto rounded-lg"
-                  />
-                  <Image
-                    src="/cooperations/michal-ekkert-qr.webp"
-                    alt="Kod QR – Dr n. med. Michał Ekkert"
-                    width={100}
-                    height={100}
-                    className="absolute top-2 left-2 rounded-md border border-white/30 shadow-lg"
-                  />
+          <div className="grid grid-cols-1 gap-8">
+            {expertsData.map((expert, index) => (
+              <div key={index} className="p-[1px] rounded-2xl bg-gradient-to-br from-white/10 via-white/5 to-transparent">
+                <div className="rounded-2xl bg-[#0a0a0a]/80 backdrop-blur-md p-6 md:p-10 h-full border border-white/5">
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                    
+                    {/* LEWA STRONA: Zdjęcie + Rola */}
+                    <div className="md:col-span-5 lg:col-span-4 flex flex-col items-center">
+                      <h2 className="text-2xl md:text-3xl text-center mb-6 text-[#d4af37] font-light md:hidden">
+                        {expert.name}
+                      </h2>
+                      
+                      <div className="relative w-full max-w-[300px] aspect-square rounded-xl overflow-hidden shadow-2xl border border-white/10 group">
+                        <Image
+                          src={expert.image}
+                          alt={expert.name}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        {/* QR Code jeśli istnieje */}
+                        {expert.extraImage && (
+                          <div className="absolute top-3 left-3 w-24 h-24 bg-white p-1 rounded-lg shadow-lg">
+                            <Image
+                              src={expert.extraImage}
+                              alt="QR Code"
+                              width={100}
+                              height={100}
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="mt-6 text-center text-sm md:text-base text-gray-400 border-t border-white/10 pt-4 w-full">
+                        {expert.role}
+                      </div>
+                    </div>
+
+                    {/* PRAWA STRONA: Opis */}
+                    <div className="md:col-span-7 lg:col-span-8 flex flex-col justify-center text-center md:text-left">
+                       <h2 className="text-3xl md:text-4xl mb-6 text-[#d4af37] font-light hidden md:block">
+                        {expert.name}
+                      </h2>
+                      <div className="text-gray-300 text-lg font-light leading-relaxed">
+                        {expert.description}
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
-                <p className="text-center text-gray-300 mt-4">
-                  Właściciel placówki szkoleniowej <br/> Ekspert laseroterapii <br /> Wykształcenie i kwalifikacje akademickie <br /> Szkolenia
-                </p>
               </div>
-              <div className="flex justify-center items-center">
-                <p className="mt-4 text-lg md:text-2xl font-light text-center">
-                  Dr Michał Ekkert, absolwent Śląskiej Akademii Medycznej i doktor nauk medycznych, od ponad 25 lat łączy praktykę kliniczną z działalnością naukową i dydaktyczną. Kierownik studiów podyplomowych z zakresu medycyny estetycznej dla lekarzy. Jest założycielem Instytutu Kosmetologii i Badań Leków, gdzie prowadzi szkolenia i projekty badawcze w zakresie medycyny estetycznej i laseroterapii.
-                  <br />
-                  <br />
-                  Jako główny ekspert szkoleniowy Glowupskin, realizuje autorskie programy edukacyjne dla lekarzy i kosmetologów, obejmujące m.in. laseroterapię frakcyjną, pikosekundową oraz terapie z wykorzystaniem technologii INDIBA® 448 kHz. Łącząc wiedzę akademicką z praktyką kliniczną, dr Ekkert promuje bezpieczne i świadome podejście do medycyny estetycznej, kładąc nacisk na indywidualne podejście do pacjenta, nowoczesne technologie i najwyższe standardy etyki zawodowej.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
-
-          {/* Współpraca */}
-          <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
-            <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
-            <div>
-              <h2 className="text-3xl text-center">Edyta Babula-Frątczak</h2>
-              <Image src="/cooperations/edyta-babula-fratczak.jpeg" alt="Edyta Babula-Frątczak" width={400} height={400} className="mx-auto rounded-lg mt-4" />
-              <p className="text-center text-gray-300"><br></br>Ekspert, dydaktyk, założycielka Warszawskiej Szkoły Medycyny Estetycznej i Kosmetologii<br/>Ekspert, Szkolenia</p>
-              </div>
-              <div className="flex justify-center align-middle content-center">
-              <p className="mt-4 text-lg md:text-2xl font-light text-center">
-                Edyta Babula-Frątczak to ceniony autorytet w branży kosmetologicznej i medycyny estetycznej. Posiada unikalne, interdyscyplinarne wykształcenie, łączące specjalizację w marketingu z zaawansowaną kosmetologią, co pozwala jej na holistyczne podejście do rozwoju biznesu i edukacji w sektorze beauty.
-                <br />
-                <br />
-                Jako właściciel i główny dydaktyk Warszawskiej Szkoły Medycyny Estetycznej i Kosmetologii, Edyta jest pionierem w kreowaniu innowacyjnych programów edukacyjnych. Jej misją jest nie tylko przekazywanie wiedzy, ale i wdrażanie najwyższych standardów zawodowych, co czyni ją liderem w kształtowaniu przyszłych pokoleń specjalistów.
-                </p>
-                </div>
-            </div>
-          </div>
-
-          {/* Współpraca */}
-          <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
-            <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
-              <div>
-              <h2 className="text-3xl text-center">Anna Goc</h2>
-              <Image src="/cooperations/anna-goc.jpg" alt="Anna Goc" width={400} height={400} className="mx-auto rounded-lg mt-4" />
-              <p className="text-center text-gray-300"><br></br>Absolwentka Śląskiego Uniwersytetu Medycznego w Katowicach na kierunku Kosmetologia</p>
-              </div>
-              <div className="justify-center align-middle content-center">
-              <p className="mt-4 text-lg md:text-2xl font-light text-center">
-                Doświadczenie zawodowe zdobywała, pracując w wiodących firmach branży kosmetycznej i medycyny estetycznej, ze szczególnym naciskiem na nowoczesne technologie high-tech. Jako szkoleniowiec w firmie specjalizującej się w innowacyjnych urządzeniach do modelowania sylwetki i regeneracji skóry, doskonaliła praktyczne umiejętności w zakresie pracy z zaawansowanymi technologiami.                <br />
-                <br />
-                Specjalizuje się w peelingach chemicznych oraz terapiach anti-aging, łącząc wiedzę naukową z doświadczeniem praktycznym. W pracy stawia na indywidualne podejście do Pacjenta i kompleksowe planowanie terapii, które pozwala uzyskać naturalne i długotrwałe efekty.                
-                <br/>
-                <br/>
-                Nieustannie poszerza swoją wiedzę, uczestnicząc w szkoleniach i konferencjach branżowych. Z pasją łączy nowoczesne technologie z klasycznymi metodami pielęgnacji, tworząc skuteczne, spersonalizowane rozwiązania dla każdego Pacjenta.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
-          <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
-            <div>
-              <h2 className="text-3xl text-center">Sławomir Sobusiak</h2>
-              <Image 
-                src="/cooperations/slawomir-sobusiak.jpg" 
-                alt="Sławomir Sobusiak" 
-                width={400} 
-                height={400} 
-                className="mx-auto rounded-lg mt-4" 
-              />
-              <p className="text-center text-gray-300">
-                <br />
-                Ekspert w dziedzinie medycyny estetycznej, wykładowca na studiach podyplomowych, prelegent kongresów branżowych<br/>Ekspert
-              </p>
-            </div>
-            <div className="flex justify-center align-middle content-center">
-              <p className="mt-4 text-lg md:text-2xl font-light text-center">
-                Sławomir Sobusiak to uznany ekspert w dziedzinie medycyny estetycznej z ponad 20-letnim doświadczeniem w branży sprzętu medycznego. Od 2002 roku dzieli się swoją wiedzą jako wykładowca na studiach podyplomowych oraz prelegent na licznych kongresach i konferencjach branżowych.
-                <br />
-                <br />
-                Jest specjalistą w zakresie aparatów medycznych wykorzystywanych w medycynie estetycznej, ginekologii estetycznej oraz fizjoterapii. Jako praktyk i autorytet w dziedzinie technik łączonych, posiada unikalne kompetencje w zakresie rodzajów i parametrów laserów, umiejętnie łącząc różne metody w celu osiągnięcia optymalnych efektów zabiegowych.
-              </p>
-            </div>
-          </div>
-        </div> */}
-
-        {/* <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
-        <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
-          <div>
-            <h2 className="text-3xl text-center">Joanna Majdaniuk</h2>
-            <Image 
-              src="/cooperations/joanna-majdaniuk.jpeg" 
-              alt="Joanna Majdaniuk Ambasadorka" 
-              width={400} 
-              height={400} 
-              className="mx-auto rounded-lg mt-4" 
-            />
-            <p className="text-center text-gray-300 mt-4">
-              Ambasadorka marki<br />
-              Ekspertka z ogromnym doświadczeniem w medycynie estetycznej<br />
-              Specjalistka od makijażu permanentnego i ceniony szkoleniowiec
-            </p>
-          </div>
-          <div className="flex justify-center align-middle content-center">
-            <p className="mt-4 text-lg md:text-2xl font-light text-center">
-              Joanna Majdaniuk to ekspertka z ogromnym doświadczeniem w medycynie estetycznej, 
-              specjalistka od makijażu permanentnego oraz ceniona szkoleniowiec. Prowadzi 
-              &quot;Permanent make up & Aesthetic by Joanna Majdaniuk&quot; – centrum szkoleniowe 
-              specjalizujące się w medycynie estetycznej i makijażu permanentnym.
-              <br />
-              <br />
-              Jest certyfikowaną linergistką na poziomie Master, która każdego dnia doskonali 
-              swoje umiejętności. Specjalizuje się w zabiegach autologii, radiofrekwencji 
-              mikroigłowej oraz autorskiej technice wypełniania ust. Jej wiedza, precyzja 
-              i indywidualne podejście do każdego klienta sprawiają, że osiąga spektakularne, 
-              naturalne efekty. Jako ambasadorka GlowUpSkin, łączy pasję do nowoczesnych 
-              technologii z najwyższymi standardami jakości.
-            </p>
-          </div>
-        </div>
-      </div> */}
-
-      {/* Współpraca - Tomasz Kwiatkowski */}
-      <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
-        <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
-          <div>
-            <h2 className="text-3xl text-center">Tomasz Kwiatkowski</h2>
-            <Image 
-              src="/cooperations/tomasz-kwiatkowski.png" 
-              alt="Tomasz Kwiatkowski" 
-              width={400} 
-              height={400} 
-              className="mx-auto rounded-lg mt-4" 
-            />
-            <p className="text-center text-gray-300">
-              <br />
-              Specjalista Hi-Tech<br />
-              Szkoleniowiec i Konsultant Technologii Medycznych<br />
-              Ekspert Medycyny Estetycznej
-            </p>
-          </div>
-          <div className="flex justify-center align-middle content-center">
-            <p className="mt-4 text-lg md:text-2xl font-light text-center">
-              Tomasz Kwiatkowski to specjalista Hi-Tech z ponad 20-letnim doświadczeniem 
-              w medycynie, a od 5 lat aktywnie działający w obszarze medycyny estetycznej 
-              jako szkoleniowiec i konsultant technologii medycznych.
-              <br />
-              <br />
-              Na co dzień współpracuje z gabinetami kosmetologicznymi oraz klinikami 
-              medycyny estetycznej, wspierając ich zespoły w podnoszeniu kwalifikacji 
-              i maksymalnym wykorzystaniu nowoczesnych technologii w pracy z pacjentem. 
-              Jego szkolenia łączą solidne podstawy teoretyczne z praktycznym podejściem, 
-              z naciskiem na bezpieczeństwo pacjenta, skuteczność terapii i świadomą 
-              pracę na zaawansowanym sprzęcie.
-              <br />
-              <br />
-              Prywatnie – mąż z dwudziestoletnim stażem, tata dziewiętnastoletniego syna. 
-              Pasjonat fotografii przyrodniczej, off-roadu oraz motoryzacji – od wielu 
-              lat zafascynowany markami Jeep i Porsche.
-            </p>
-          </div>
-        </div>
-      </div>
-
-        <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
-        <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
-          <div>
-            <h2 className="text-3xl text-center">Alan Dąbrowski</h2>
-            <Image 
-              src="/cooperations/alan-dabrowski.png" 
-              alt="Alan Dąbrowski" 
-              width={400} 
-              height={400} 
-              className="mx-auto rounded-lg mt-4" 
-            />
-            <p className="text-center text-gray-300">
-              <br />
-              Założyciel Alan Dąbrowski Academy, jedyny polski trener akredytowany w brytyjskiej organizacji Beauty ITEC <br/> Szkolenia
-            </p>
-          </div>
-          <div className="flex justify-center align-middle content-center">
-            <p className="mt-4 text-lg md:text-2xl font-light text-center">
-              Alan Dąbrowski to uznany ekspert i wizjoner w dziedzinie edukacji kosmetologicznej. 
-              Jako założyciel Alan Dąbrowski Academy, stworzył miejsce oferujące edukację zawodową 
-              na najwyższym poziomie w Polsce i na świecie.
-              <br />
-              <br />
-              Jest jedynym polskim trenerem zrzeszonym i akredytowanym w brytyjskiej rządowej 
-              organizacji Beauty ITEC, co gwarantuje międzynarodowe standardy edukacji oraz dyplomy 
-              akceptowane w 39 krajach świata. W swojej Akademii łączy nowoczesne technologie 
-              stosowane w Galligan Beauty College oraz Greas Point Studio z unikalnym podejściem 
-              opartym na misji &quot;być Mistrzem&quot;.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
-      <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
-        <div>
-          <h2 className="text-3xl text-center">Jacek Olszewski</h2>
-          <Image 
-            src="/cooperations/jacek-olszewski.jpg" 
-            alt="Jacek Olszewski" 
-            width={400} 
-            height={400} 
-            className="mx-auto rounded-lg mt-4" 
-          />
-          <p className="text-center text-gray-300">
-            <br />
-            Serwis
-          </p>
-        </div>
-        <div className="flex justify-center align-middle content-center">
-          <p className="mt-4 text-lg md:text-2xl font-light text-center">
-            
-          </p>
-        </div>
-      </div>
-    </div> */}
-
-    
-    {/* <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
-  <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
-    <div>
-  <h2 className="text-3xl text-center">Magda Batraniec</h2>
-  <Image 
-    src="/cooperations/magda-batraniec.jpeg" 
-    alt="Magda Batraniec" 
-    width={400} 
-    height={400} 
-    className="mx-auto rounded-lg mt-4" 
-  />
-  <p className="text-center text-gray-300">
-    <br />
-    Specjalistka ds. Strategii i Komunikacji GUS Medic<br />
-    Ekspertka Kosmetologii Zaawansowanej<br />
-    Manager ds. Programu Ambasadorskiego
-  </p>
-</div>
-<div className="flex justify-center align-middle content-center">
-  <p className="mt-4 text-lg md:text-2xl font-light text-center">
-    Magda Batraniec to jedna z kluczowych ekspertek współtworzących profesjonalny 
-    wizerunek GUS Medic. Łączy zaawansowaną wiedzę kosmetologiczną z wyczuciem 
-    strategii marketingowej, tworząc kierunek komunikacji marki o wysokiej 
-    spójności, jakości i merytoryce.
-    <br />
-    <br />
-    Prowadzi dwa gabinety – w Niemczech i w Polsce – gdzie jako czynny praktyk 
-    pracuje w oparciu o świadome, bezpieczne terapie skóry, nowoczesne technologie 
-    i indywidualny dobór procedur. Jest autorką publikacji w specjalistycznych 
-    czasopismach kosmetologicznych oraz uczestniczką prestiżowych konferencji 
-    branżowych, zarówno w Polsce, jak i za granicą.
-    <br />
-    <br />
-    W GUS Medic odpowiada za strategiczną komunikację, rozwój wizerunku i kompleksowe 
-    zarządzanie programem ambasadorek. Tworzy koncepcje marketingowe, nadzoruje 
-    działania kreatywne i dba o to, aby przekaz marki był nie tylko estetyczny, 
-    lecz przede wszystkim ekspercki i wartościowy. Jej praca łączy naukę, praktykę 
-    i wizję rozwoju – dzięki czemu GUS Medic konsekwentnie buduje pozycję marki 
-    premium w branży beauty.
-  </p>
-</div>
-
-  </div>
-</div> */}
-
-
         </section>
+
       </main>
     </div>
   );
