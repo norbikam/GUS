@@ -8,11 +8,23 @@ import { Product } from './types/product';
 import Particles from "./components/Particles";
 import ProductCarousel from "./components/ProductCarousel";
 import FinancingPartner from "./components/FinancingPartner";
-// import AmbasadorzySection from "./components/CooperationsSection";
+
+// Mapa ładnych nazw dla kategorii (jeśli kategoria z bazy pasuje do klucza, wyświetli ładną nazwę)
+const CATEGORY_LABELS: Record<string, string> = {
+  "Lasery": "Lasery",
+  "HIFU": "Urządzenia HIFU",
+  "Radiofrekwencja": "Radiofrekwencja",
+  "Plazma": "Urządzenia plazmowe",
+  "IPL": "Technologia IPL",
+  "Kriolipoliza": "Kriolipoliza",
+  "Mezoterapia": "Mezoterapia",
+  "Inne": "Pozostałe urządzenia"
+};
 
 export default function Home(): React.ReactElement {
   const [products, setProducts] = useState<Product[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const financingRef = useRef<HTMLDivElement>(null); // Ref do sekcji finansowania
 
   // Pobierz produkty z bazy danych
   useEffect(() => {
@@ -31,7 +43,14 @@ export default function Home(): React.ReactElement {
     fetchProducts();
   }, []);
 
-  // Grupowanie produktów według kategorii
+  // 1. Logika dynamicznych kategorii
+  // Pobieramy unikalne kategorie, które mają przypisane aktywne produkty
+  const activeCategories = Array.from(new Set(products
+    .filter(p => p.active)
+    .map(p => p.category)
+  )).filter(Boolean);
+
+  // Funkcja pomocnicza do pobierania produktów danej kategorii
   const getProductsByCategory = (category: string) => {
     return products.filter(p => p.category === category && p.active);
   };
@@ -46,12 +65,24 @@ export default function Home(): React.ReactElement {
     }
   }
 
+  const scrollToFinancing = (): void => {
+    if (financingRef.current) {
+      financingRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+
+  // Wspólny styl dla przycisków (Premium Gold)
+  const buttonBaseClass = "inline-block px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f7e199] text-gray-900 font-bold rounded shadow-[0_4px_14px_0_rgba(212,175,55,0.39)] hover:shadow-[0_6px_20px_rgba(212,175,55,0.23)] hover:scale-105 transition-all duration-300 transform text-center cursor-pointer";
+  
+  // Wspólny styl dla kart (Leasing, Szkolenia itd.) - ujednolicony background
+  const cardClass = "group flex flex-col items-center justify-between p-6 md:p-8 rounded-xl bg-gradient-to-br from-gray-900 via-[#111] to-gray-900 border border-white/10 text-center hover:border-[#d4af37]/50 transition duration-300 h-full min-h-[240px] shadow-lg";
+
   return (
-    <div className="">
+    <div className="bg-[#050505] text-gray-200 selection:bg-[#d4af37] selection:text-black">
       <HeroSection/>
 
       <div className="relative w-full">
-        {/* Gwiazdy — mniej cząstek, większy rozmiar, prosty shader */}
+        {/* Gwiazdy — tło */}
         <div className="pointer-events-none absolute inset-0 z-[1] opacity-45 md:opacity-55">
           <Particles
             className="w-full h-full"
@@ -67,33 +98,45 @@ export default function Home(): React.ReactElement {
           />
         </div>
 
-        <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+        <main className="flex flex-col gap-[48px] md:gap-[64px] relative z-10 items-center w-full">
         
-
-        <div className="mt-10 w-full">
-          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        {/* SEPARATOR */}
+        <div className="mt-10 w-full max-w-7xl mx-auto px-4">
+          <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center px-0">
-          <div className="p-2 md:p-6 md:pl-2 md:pb-0">
-            <div className="relative w-full pt-[56.25%] md:min-h-[420px] rounded-lg overflow-hidden bg-black/10">
-              <Image src="/images/venusglow_black.png" alt="VenusGlow Pro" fill className="object-contain scale-x-[-1]"/>
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent"/>
+        {/* HERO PRODUKTU - VENUSGLOW */}
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-7xl mx-auto justify-center items-center px-6 md:px-12 gap-8 md:gap-0">
+          <div className="p-2 md:p-6 w-full">
+            <div className="relative w-full pt-[56.25%] md:min-h-[420px] rounded-2xl overflow-hidden bg-white/5 border border-white/10 shadow-2xl shadow-black/50">
+              <Image 
+                src="/images/venusglow_black.png" 
+                alt="VenusGlow Pro" 
+                fill 
+                className="object-contain scale-x-[-1] p-4 drop-shadow-2xl"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-white/5"/>
             </div>
           </div>
-          <div className="relative h-full flex flex-col justify-center items-center text-left p-10 md:pl-10">
-            <span aria-hidden className="hidden md:block absolute left-0 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
-            <h1 className="text-7xl pb-2">VenusGlow Pro</h1>
-            <p>Zainspiruj się możliwościami i odkryj zupełnie nową jakość pracy.</p>
-            <Link href="/katalog"><button  
-              className="bg-yellow-500 text-gray-900 md:w-1/3 sm:w-full text-xl py-3 px-6 rounded mt-4 font-bold min-w-full hover:bg-yellow-600 transition"
-            >
-              Sprawdź teraz
-            </button></Link>
+          
+          <div className="relative h-full flex flex-col justify-center items-center md:items-start text-center md:text-left p-4 md:pl-12 space-y-6">
+            <span aria-hidden className="hidden md:block absolute left-0 top-10 bottom-10 w-[1px] bg-gradient-to-b from-transparent via-[#d4af37]/40 to-transparent" />
+            
+            <h1 className="text-5xl md:text-7xl font-extralight text-transparent bg-clip-text bg-gradient-to-b from-[#ffedb3] to-[#d4af37]">
+              VenusGlow Pro
+            </h1>
+            <p className="text-lg md:text-xl text-gray-300 font-light max-w-md">
+              Zainspiruj się możliwościami i odkryj zupełnie nową jakość pracy w Twoim salonie.
+            </p>
+            <Link href="/katalog" className="w-full md:w-auto">
+              <button className={`${buttonBaseClass} w-full md:w-auto min-w-[200px]`}>
+                Sprawdź teraz
+              </button>
+            </Link>
           </div>
         </div>
 
-          {/* SEKCJA KARUZELI - Polecane produkty */}
+        {/* SEKCJA KARUZELI - Polecane produkty */}
         <div ref={scrollRef} id="produkty" className="w-full">
           {featuredProducts.length > 0 && (
             <ProductCarousel
@@ -103,185 +146,148 @@ export default function Home(): React.ReactElement {
           )}
         </div>
 
-          {/*<div className="grid grid-cols-1 md:grid-cols-2 w-full justify-center items-stretch font-light text-center gap-6 -mt-[32px]">
-            <div className="relative h-full flex flex-col justify-center text-left py-10 pr-10 pl-0">
-              <span aria-hidden className="hidden md:block absolute left-3 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
-              <h1 className="text-7xl pb-2 pl-10">Lasery</h1>
-              <p className="pl-10">Odkryj linię laserów nowej generacji – stworzoną, by zapewnić Twoim klientom naturalne odmłodzenie i długotrwałe efekty.</p>
-            </div>
-            <div className="w-full flex justify-center items-center md:p-6 md:pr-2 md:pt-0 p-2">
-              <div className="relative w-full pt-[56.25%] md:min-h-[420px] rounded-lg overflow-hidden bg-black/10">
-                <Image src="/images/gus_machine.png" alt="Maszyna kosmetyczna" fill className="object-contain" />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent"/>
+        {/* SEKCJA NAWIGACYJNA - KAFELKI (Leasing, Szkolenia, etc.) */}
+        <div className="w-full max-w-7xl mx-auto px-4 md:px-6 py-10">
+           {/* Grid: 2 kolumny na mobile, 4 na desktopie */}
+           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+              
+              {/* Karta 1: Leasing */}
+              <div className={cardClass}>
+                 <div className="flex flex-col items-center">
+                    <h2 className="text-xl md:text-2xl font-semibold text-[#d4af37] mb-2">LEASING</h2>
+                    <p className="text-gray-300 text-xs md:text-sm mb-4">Wygodne raty dla Twojego biznesu</p>
+                 </div>
+                 {/* Przycisk przewijający do sekcji finansowania */}
+                 <button onClick={scrollToFinancing} className={buttonBaseClass + " text-xs md:text-sm px-4 md:px-6 py-2 w-full mt-auto"}>
+                    Finansowanie
+                 </button>
               </div>
-            </div>
-        </div>*/}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 w-full md:px-10 px-8 justify-center items-center font-light">
-          <div className="grid grid-cols-2 w-full gap-4 text-gray-200 rounded text-center sm:aspect-square md:aspect-auto">
-            <div className="py-10"><h2 className="text-3xl">LEASING</h2><p>Wszystkie produkty w dogodnych ratach</p></div>
-            <div className="py-10">
-              <Link
-                href="/szkolenia"
-                className="inline-block px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f7e199] text-black font-semibold rounded-lg hover:opacity-90 transition-opacity"
-              >
-                Szkolenia
+              {/* Karta 2: Szkolenia */}
+              <Link href="/szkolenia" className={cardClass}>
+                 <div className="flex flex-col items-center">
+                    <h2 className="text-xl md:text-2xl font-light mb-2 group-hover:text-[#d4af37] transition-colors">Szkolenia</h2>
+                    <p className="text-gray-400 text-xs md:text-sm mb-4">Podnieś kwalifikacje swojego zespołu</p>
+                 </div>
+                 <div className={buttonBaseClass + " text-xs md:text-sm px-4 md:px-6 py-2 w-full mt-auto"}>Oferta</div>
               </Link>
-            </div>
-            <div className="py-10">
-              <Link
-                href="/ambasadorzy"
-                className="inline-block px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f7e199] text-black font-semibold rounded-lg hover:opacity-90 transition-opacity"
-              >
-                Ambasadorzy
-              </Link></div>
-            <div className="py-10"><Link
-                href="/serwis"
-                className="inline-block px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f7e199] text-black font-semibold rounded-lg hover:opacity-90 transition-opacity"
-              >
-                Serwis
-              </Link></div>
-          </div>
-          <div className="w-full text-gray-200 h-full flex flex-col items-center justify-center text-center gap-4">
-            <h1 className="text-4xl font-light">Najlepsza jakość w najlepszej cenie</h1>
-            <p className="text-2xl">Sprawdź nasze polecane urządzenia</p>
-            <button 
-              onClick={scrollToNext} 
-              className="bg-yellow-500 text-gray-900 text-xl py-3 px-8 rounded font-bold hover:bg-yellow-600 transition"
-            >
-              Polecane
-            </button>
-          </div>
+
+              {/* Karta 3: Ambasadorzy */}
+              <Link href="/ambasadorzy" className={cardClass}>
+                 <div className="flex flex-col items-center">
+                    <h2 className="text-xl md:text-2xl font-light mb-2 group-hover:text-[#d4af37] transition-colors">Współpraca</h2>
+                    <p className="text-gray-400 text-xs md:text-sm mb-4">Dołącz do programu Ambasador</p>
+                 </div>
+                 <div className={buttonBaseClass + " text-xs md:text-sm px-4 md:px-6 py-2 w-full mt-auto"}>Dołącz</div>
+              </Link>
+
+              {/* Karta 4: Serwis */}
+              <Link href="/serwis" className={cardClass}>
+                 <div className="flex flex-col items-center">
+                    <h2 className="text-xl md:text-2xl font-light mb-2 group-hover:text-[#d4af37] transition-colors">Serwis</h2>
+                    <p className="text-gray-400 text-xs md:text-sm mb-4">Szybka pomoc i wsparcie techniczne</p>
+                 </div>
+                 <div className={buttonBaseClass + " text-xs md:text-sm px-4 md:px-6 py-2 w-full mt-auto"}>Wsparcie</div>
+              </Link>
+           </div>
         </div>
 
-        <div className="mt-10 w-full">
-          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        {/* CTA "POLECANE" */}
+        <div className="w-full flex flex-col items-center justify-center text-center gap-6 py-10 px-4">
+          <h1 className="text-3xl md:text-5xl font-extralight tracking-tight">Najlepsza jakość w najlepszej cenie</h1>
+          <p className="text-xl text-gray-400">Sprawdź nasze polecane urządzenia</p>
+          <button 
+            onClick={scrollToNext} 
+            className={buttonBaseClass}
+          >
+            Zobacz Polecane
+          </button>
         </div>
 
-        <FinancingPartner />
-
-        
-        <div className="mt-10 w-full">
-          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <div className="w-full max-w-7xl mx-auto px-4">
+          <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent" />
         </div>
 
-                  <div>
-        <section ref={scrollRef} id="produkty" className="w-full px-8 md:px-10 pt-0">
-          <div className="w-full max-w-6xl mx-auto">
-            <div className="text-left p-10">
-              <h1 className="text-4xl md:text-5xl pb-2">Odkryj najnowsze urządzenia</h1>
-              <p>Z nami zawsze znajdziesz to, czego szukasz.</p>
-            </div>
+        {/* Sekcja Finansowania z referencją do scrollowania */}
+        <div ref={financingRef} className="w-full">
+            <FinancingPartner />
+        </div>
+
+        <div className="w-full max-w-7xl mx-auto px-4">
+          <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent" />
+        </div>
+
+        {/* ODKRYJ NAJNOWSZE - GRID PRODUKTÓW */}
+        <section className="w-full px-4 md:px-10 max-w-[1400px]">
+          <div className="text-left py-10">
+            <h1 className="text-3xl md:text-5xl font-light pb-2 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
+              Odkryj najnowsze urządzenia
+            </h1>
+            <p className="text-gray-400 mt-2">Z nami zawsze znajdziesz to, czego szukasz.</p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 pt-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
             {products.slice(0, 6).map((product) => (
-              <Link key={product.id} href={`/katalog/${product.slug}`}>
-                <div className="overflow-hidden transition flex flex-col text-center h-full">
-                  <Image
-                    src={product.image}
-                    alt={product.title}
-                    height={400}
-                    width={300}
-                    className="object-cover w-full"
-                  />
-                  <div className="flex flex-col justify-between flex-grow p-4">
-                    <h2 className="text-xl font-bold min-h-[56px]">{product.title}</h2>
-                    {/* <p className="text-gray-600 border-t pt-2">{product.price}</p> */}
+              <Link key={product.id} href={`/katalog/${product.slug}`} className="group">
+                <div className="flex flex-col h-full bg-white/5 border border-white/10 rounded-lg overflow-hidden transition-all duration-300 hover:border-[#d4af37]/40 hover:-translate-y-2 hover:shadow-xl hover:shadow-[#d4af37]/10">
+                  <div className="relative aspect-[3/4] w-full bg-black/20 overflow-hidden">
+                     <Image
+                      src={product.image}
+                      alt={product.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="flex flex-col flex-grow p-4 bg-gradient-to-b from-transparent to-black/40">
+                    <h2 className="text-sm md:text-base font-semibold text-gray-200 group-hover:text-[#d4af37] transition-colors line-clamp-2">
+                      {product.title}
+                    </h2>
                   </div>
                 </div>
               </Link>
             ))}
           </div>
-
         </section>
+
+        {/* DYNAMICZNE KARUZELE DLA RÓŻNYCH KATEGORII */}
+        <div className="w-full space-y-12 pb-10">
+          {activeCategories.map((categoryKey) => {
+             const categoryProducts = getProductsByCategory(categoryKey);
+             
+             // Użyj ładnej nazwy z mapy lub surowej nazwy z bazy, jeśli brak w mapie
+             const displayTitle = CATEGORY_LABELS[categoryKey] || categoryKey;
+
+             return (
+               <ProductCarousel
+                 key={categoryKey}
+                 title={displayTitle}
+                 products={categoryProducts}
+                 categorySlug={categoryKey.toLowerCase()} // Zakładam, że slug to lowercase nazwy kategorii
+               />
+             );
+          })}
         </div>
 
-        
-
-        {/* KARUZELE DLA RÓŻNYCH KATEGORII */}
-        <div className="w-full space-y-8">
-          {getProductsByCategory("Lasery").length > 0 && (
-            <ProductCarousel
-              title="Lasery"
-              products={getProductsByCategory("Lasery")}
-              categorySlug="laserr"
-            />
-          )}
-
-          {getProductsByCategory("HIFU").length > 0 && (
-            <ProductCarousel
-              title="Urządzenia HIFU"
-              products={getProductsByCategory("HIFU")}
-              categorySlug="hifu"
-            />
-          )}
-
-          {getProductsByCategory("Radiofrekwencja").length > 0 && (
-            <ProductCarousel
-              title="Radiofrekwencja"
-              products={getProductsByCategory("Radiofrekwencja")}
-              categorySlug="Radiofrekwencja"
-            />
-          )}
-
-          {getProductsByCategory("Plazma").length > 0 && (
-            <ProductCarousel
-              title="Urządzenia plazmowe"
-              products={getProductsByCategory("Plazma")}
-              categorySlug="Plazma"
-            />
-          )}
-
-          {getProductsByCategory("IPL").length > 0 && (
-            <ProductCarousel
-              title="IPL"
-              products={getProductsByCategory("IPL")}
-              categorySlug="IPL"
-            />
-          )}
-
-          {getProductsByCategory("Kriolipoliza").length > 0 && (
-            <ProductCarousel
-              title="Kriolipoliza"
-              products={getProductsByCategory("Kriolipoliza")}
-              categorySlug="kriolipoliza"
-            />
-          )}
-
-          {getProductsByCategory("Mezoterapia").length > 0 && (
-            <ProductCarousel
-              title="mezoterapia"
-              products={getProductsByCategory("mezoterapia")}
-              categorySlug="mezoterapia"
-            />
-          )}
-
-          {getProductsByCategory("Inne").length > 0 && (
-            <ProductCarousel
-              title="Inne"
-              products={getProductsByCategory("Inne")}
-              categorySlug="Inne"
-            />
-          )}
+        <div className="w-full max-w-7xl mx-auto px-4">
+          <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent" />
         </div>
 
-        <div className="mt-10 w-full">
-          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-        </div>
-
-        {/* <AmbasadorzySection /> */}
-
-        <div className="flex flex-col w-full justify-center items-center font-light text-center gap-4 py-6 px-6">
-          <h2 className="text-3xl md:text-5xl">Zapraszamy do współpracy</h2>
-          <p className="text-lg">Pomożemy Ci z wyborem odpowiedniego wyposażenia dla twojego salonu</p>
-          <a
-              href="/kontakt"
-              className="inline-block bg-yellow-500/90 text-gray-900 px-10 py-3 rounded-lg hover:bg-yellow-600 transition text-center w-full md:w-auto font-bold"
-            >
+        {/* SEKCJA KONTAKTOWA - BOTTOM CTA */}
+        <div className="flex flex-col w-full justify-center items-center text-center gap-6 py-16 px-6 bg-gradient-to-b from-transparent to-[#d4af37]/5">
+          <h2 className="text-3xl md:text-6xl font-extralight">Zapraszamy do współpracy</h2>
+          <p className="text-lg md:text-xl text-gray-300 max-w-2xl">
+            Pomożemy Ci z wyborem odpowiedniego wyposażenia dla twojego salonu.
+          </p>
+          
+          <Link href="/kontakt">
+            <button className={`${buttonBaseClass} px-12 py-4 text-xl`}>
               Skontaktuj się już dziś
-            </a>
-            <p className="pt-4">Zapraszamy do zapoznania się z naszą ofertą. Jesteśmy pewni, że znajdziesz coś dla siebie.</p>
+            </button>
+          </Link>
+          
+          <p className="pt-4 text-sm text-gray-500">
+            Zapraszamy do zapoznania się z naszą ofertą. Jesteśmy pewni, że znajdziesz coś dla siebie.
+          </p>
         </div>
         
       </main>
