@@ -25,6 +25,10 @@ export default function Navbar() {
     { href: "/kontakt", label: "KONTAKT" },
   ];
 
+  // Rozdzielamy linki na lewą i prawą stronę
+  const leftLinks = navLinks.filter(link => ["/", "/katalog"].includes(link.href));
+  const rightLinks = navLinks.filter(link => ["/onas", "/kontakt"].includes(link.href));
+
   return (
     <header className="navbar">
       <motion.nav
@@ -35,41 +39,53 @@ export default function Navbar() {
         animate={{ opacity: 1 }}
       >
         <div className="lg:max-w-[90vw] md:max-w-full mx-auto px-6 py-4 grid grid-cols-3 items-center">
-          {/* Left - Desktop Navigation Links */}
-          <div className="flex items-center space-x-8">
-            <div className="hidden lg:flex gap-4 lg:text-nowrap md:grid md:grid-cols-2 items-center">
-              {navLinks.map(({ href, label }) => (
+          
+          {/* LEWA STRONA - Home, Sklep, Kategorie */}
+          <div className="flex items-center">
+            <div className="hidden lg:flex gap-6 items-center">
+              {leftLinks.map(({ href, label }) => (
                 <Link
                   key={href}
                   href={href}
-                  className={`transition-colors duration-300 text-white hover:text-gray-300`}
+                  className="transition-colors duration-300 text-white hover:text-gray-300 text-nowrap"
                 >
                   {label}
                 </Link>
               ))}
-              {/* Menu kategorii dla desktop */}
               <CategoryMenu />
             </div>
           </div>
 
-          {/* Center Logo */}
+          {/* ŚRODEK - Logo */}
           <div className="flex justify-center z-100">
             <Link
               href="/"
-              className={`font-semibold text-3xl transition-colors duration-300  ${
+              className={`font-semibold text-3xl transition-colors duration-300 ${
                 scrolled ? "text-yellow-500" : "text-white"
               }`}
             >
-              <Image width={50} height={50} src={`/images/guslogo.png`} alt="GUS"></Image>
+              <Image width={50} height={50} src={`/images/guslogo.png`} alt="GUS" />
             </Link>
           </div>
 
-          {/* Right Section: hamburger (mobile) */}
-          <div className="flex justify-end items-center space-x-4">
+          {/* PRAWA STRONA - O nas, Kontakt oraz Mobile Hamburger */}
+          <div className="flex justify-end items-center">
+            <div className="hidden lg:flex gap-6 items-center mr-4">
+              {rightLinks.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="transition-colors duration-300 text-white hover:text-gray-300 text-nowrap"
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+
             {/* Mobile Hamburger */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className={`md:hidden transition-colors duration-300 focus:outline-none text-white`}
+              className="lg:hidden transition-colors duration-300 focus:outline-none text-white"
             >
               {menuOpen ? <HiX className="h-6 w-6" /> : <HiMenu className="h-6 w-6" />}
             </button>
@@ -77,17 +93,17 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu (pozostaje bez zmian, wyświetla wszystko) */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className={`md:hidden fixed inset-0 z-[45] transition-colors duration-300 bg-black/90`}
-            initial={{ opacity: 0}}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0,}}
+            className="lg:hidden fixed inset-0 z-[45] bg-black/90 flex flex-col items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="flex flex-col items-center justify-center h-full space-y-4 px-6 text-xl">
+            <div className="flex flex-col items-center space-y-4 px-6 text-xl">
               <div className="flex justify-center gap-10 mb-4 pb-4">
                 <FacebookColor />
                 <InstagramColor />
@@ -103,7 +119,6 @@ export default function Navbar() {
                   {label}
                 </Link>
               ))}
-              {/* Menu kategorii dla mobile */}
               <CategoryMenu isMobile={true} onLinkClick={() => setMenuOpen(false)} />
             </div>
           </motion.div>
