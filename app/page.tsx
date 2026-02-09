@@ -9,7 +9,7 @@ import Particles from "./components/Particles";
 import ProductCarousel from "./components/ProductCarousel";
 import FinancingPartner from "./components/FinancingPartner";
 
-// Mapa ładnych nazw dla kategorii (jeśli kategoria z bazy pasuje do klucza, wyświetli ładną nazwę)
+// Mapa ładnych nazw dla kategorii
 const CATEGORY_LABELS: Record<string, string> = {
   "Lasery": "Lasery",
   "HIFU": "Urządzenia HIFU",
@@ -24,7 +24,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 export default function Home(): React.ReactElement {
   const [products, setProducts] = useState<Product[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const financingRef = useRef<HTMLDivElement>(null); // Ref do sekcji finansowania
+  const financingRef = useRef<HTMLDivElement>(null);
 
   // Pobierz produkty z bazy danych
   useEffect(() => {
@@ -43,12 +43,12 @@ export default function Home(): React.ReactElement {
     fetchProducts();
   }, []);
 
-  // 1. Logika dynamicznych kategorii
-  // Pobieramy unikalne kategorie, które mają przypisane aktywne produkty
+  // --- POPRAWKA TUTAJ ---
+  // Używamy predykatu typu (c is string), aby TS był pewien, że nie ma nulli
   const activeCategories = Array.from(new Set(products
     .filter(p => p.active)
     .map(p => p.category)
-  )).filter(Boolean);
+  )).filter((c): c is string => typeof c === 'string' && c.length > 0);
 
   // Funkcja pomocnicza do pobierania produktów danej kategorii
   const getProductsByCategory = (category: string) => {
@@ -74,7 +74,7 @@ export default function Home(): React.ReactElement {
   // Wspólny styl dla przycisków (Premium Gold)
   const buttonBaseClass = "inline-block px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f7e199] text-gray-900 font-bold rounded shadow-[0_4px_14px_0_rgba(212,175,55,0.39)] hover:shadow-[0_6px_20px_rgba(212,175,55,0.23)] hover:scale-105 transition-all duration-300 transform text-center cursor-pointer";
   
-  // Wspólny styl dla kart (Leasing, Szkolenia itd.) - ujednolicony background
+  // Wspólny styl dla kart
   const cardClass = "group flex flex-col items-center justify-between p-6 md:p-8 rounded-xl bg-gradient-to-br from-gray-900 via-[#111] to-gray-900 border border-white/10 text-center hover:border-[#d4af37]/50 transition duration-300 h-full min-h-[240px] shadow-lg";
 
   return (
@@ -146,9 +146,8 @@ export default function Home(): React.ReactElement {
           )}
         </div>
 
-        {/* SEKCJA NAWIGACYJNA - KAFELKI (Leasing, Szkolenia, etc.) */}
+        {/* SEKCJA NAWIGACYJNA - KAFELKI */}
         <div className="w-full max-w-7xl mx-auto px-4 md:px-6 py-10">
-           {/* Grid: 2 kolumny na mobile, 4 na desktopie */}
            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
               
               {/* Karta 1: Leasing */}
@@ -157,9 +156,8 @@ export default function Home(): React.ReactElement {
                     <h2 className="text-xl md:text-2xl font-semibold text-[#d4af37] mb-2">LEASING</h2>
                     <p className="text-gray-300 text-xs md:text-sm mb-4">Wygodne raty dla Twojego biznesu</p>
                  </div>
-                 {/* Przycisk przewijający do sekcji finansowania */}
                  <button onClick={scrollToFinancing} className={buttonBaseClass + " text-xs md:text-sm px-4 md:px-6 py-2 w-full mt-auto"}>
-                    Finansowanie
+                    Kalkulator
                  </button>
               </div>
 
@@ -208,7 +206,7 @@ export default function Home(): React.ReactElement {
           <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent" />
         </div>
 
-        {/* Sekcja Finansowania z referencją do scrollowania */}
+        {/* Sekcja Finansowania */}
         <div ref={financingRef} className="w-full">
             <FinancingPartner />
         </div>
@@ -253,8 +251,6 @@ export default function Home(): React.ReactElement {
         <div className="w-full space-y-12 pb-10">
           {activeCategories.map((categoryKey) => {
              const categoryProducts = getProductsByCategory(categoryKey);
-             
-             // Użyj ładnej nazwy z mapy lub surowej nazwy z bazy, jeśli brak w mapie
              const displayTitle = CATEGORY_LABELS[categoryKey] || categoryKey;
 
              return (
@@ -262,7 +258,7 @@ export default function Home(): React.ReactElement {
                  key={categoryKey}
                  title={displayTitle}
                  products={categoryProducts}
-                 categorySlug={categoryKey.toLowerCase()} // Zakładam, że slug to lowercase nazwy kategorii
+                 categorySlug={categoryKey.toLowerCase()}
                />
              );
           })}
@@ -272,7 +268,7 @@ export default function Home(): React.ReactElement {
           <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent" />
         </div>
 
-        {/* SEKCJA KONTAKTOWA - BOTTOM CTA */}
+        {/* SEKCJA KONTAKTOWA */}
         <div className="flex flex-col w-full justify-center items-center text-center gap-6 py-16 px-6 bg-gradient-to-b from-transparent to-[#d4af37]/5">
           <h2 className="text-3xl md:text-6xl font-extralight">Zapraszamy do współpracy</h2>
           <p className="text-lg md:text-xl text-gray-300 max-w-2xl">
