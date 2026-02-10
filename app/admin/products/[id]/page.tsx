@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import ProductForm from '../../components/ProductForm';
 import { Product } from '@/app/types/product';
+import AdminGuard from '../../components/AdminGuard'; // Import Guarda
 
 export default function EditProductPage() {
   const params = useParams();
@@ -12,8 +13,6 @@ export default function EditProductPage() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        // Upewnij się, że masz endpoint API do pobrania pojedynczego produktu
-        // Zazwyczaj jest to /api/products/[id]
         const response = await fetch(`/api/products/${params.id}`);
         if (response.ok) {
           const data = await response.json();
@@ -33,18 +32,25 @@ export default function EditProductPage() {
     }
   }, [params.id]);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Ładowanie...</div>;
-  if (!product) return <div className="min-h-screen flex items-center justify-center">Produkt nie istnieje.</div>;
-
   return (
-    <div className="min-h-screen bg-gray-50 pt-24 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Edycja Produktu</h1>
-          <p className="text-gray-600 mt-1">Edytujesz: {product.title}</p>
+    <AdminGuard>
+      <div className="min-h-screen bg-gray-50 pt-24 pb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {loading ? (
+             <div className="flex justify-center py-10">Ładowanie danych...</div>
+          ) : !product ? (
+             <div className="flex justify-center py-10">Produkt nie istnieje.</div>
+          ) : (
+            <>
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-gray-900">Edycja Produktu</h1>
+                <p className="text-gray-600 mt-1">Edytujesz: {product.title}</p>
+              </div>
+              <ProductForm initialData={product} />
+            </>
+          )}
         </div>
-        <ProductForm initialData={product} />
       </div>
-    </div>
+    </AdminGuard>
   );
 }

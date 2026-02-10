@@ -136,12 +136,12 @@ const handleDescriptionChange = (changes: EditorContentChanged) => {setProductDa
             
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Cena *</label>
+                <label className="block text-sm font-medium text-black mb-2">Cena *</label>
                 <input type="text" value={productData.price} onChange={(e) => setProductData({...productData, price: e.target.value})} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required />
               </div>
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="block text-sm font-medium text-gray-700">Kategoria</label>
+                  <label className="block text-sm font-medium text-black">Kategoria</label>
                   <button type="button" onClick={() => setIsCategoryModalOpen(true)} className="text-sm text-blue-600 hover:text-blue-800 font-medium">+ Nowa</button>
                 </div>
                 <select value={productData.category} onChange={(e) => setProductData({...productData, category: e.target.value})} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
