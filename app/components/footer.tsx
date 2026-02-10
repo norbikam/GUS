@@ -33,6 +33,10 @@ export default function Footer() {
                 </Link>
             </li>
         </ul>
+        <div className="col-span-1 md:col-span-3 text-center mt-10 text-gray-400">
+            &copy; {new Date().getFullYear()} GlowUpSkin Medic. Wszelkie prawa zastrzeżone. <br />
+            Projekt i realizacja: <a href="https://nokdesign.pl" className="text-gray-400 underline" target="_blank" rel="noopener noreferrer">NOK Design</a>
+        </div>
     </footer>
     );
 }
