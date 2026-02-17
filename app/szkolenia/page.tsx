@@ -91,7 +91,7 @@ export default function SzkoleniaPage() {
 
           <div className="grid grid-cols-1 gap-8">
             {/* Dr Michał Ekkert */}
-            <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
+            {/* <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">
               <div className="rounded-xl bg-black/30 backdrop-blur-sm p-8 h-full grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 content-center align-middle">
                 <div className="relative flex flex-col items-center">
                   <h2 className="text-3xl text-center">Dr n. med. Michał Ekkert</h2>
@@ -126,7 +126,7 @@ export default function SzkoleniaPage() {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Edyta Babula-Frątczak */}
             <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent">

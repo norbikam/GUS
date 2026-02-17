@@ -7,15 +7,15 @@ interface CooperationsSectionProps {
 
 export default function CooperationsSection({}: CooperationsSectionProps) {
   const cooperations = [
-    {
-      name: "Dr n. med. Michał Ekkert",
-      role: "Ekspert laseroterapii",
-      subtitle: "Główny ekspert szkoleniowy",
-      description: "Ponad 25 lat doświadczenia w medycynie estetycznej. Założyciel Instytutu Kosmetologii i Badań Leków.",
-      image: "/cooperations/michal-ekkert.jpeg",
-      type: "trainer",
-      isOwner: false,
-    },
+    // {
+    //   name: "Dr n. med. Michał Ekkert",
+    //   role: "Ekspert laseroterapii",
+    //   subtitle: "Główny ekspert szkoleniowy",
+    //   description: "Ponad 25 lat doświadczenia w medycynie estetycznej. Założyciel Instytutu Kosmetologii i Badań Leków.",
+    //   image: "/cooperations/michal-ekkert.jpeg",
+    //   type: "trainer",
+    //   isOwner: false,
+    // },
     {
       name: "Joanna Majdaniuk",
       role: "Ekspertka medycyny estetycznej",

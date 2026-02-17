@@ -8,6 +8,7 @@ import { Product } from './types/product';
 import Particles from "./components/Particles";
 import ProductCarousel from "./components/ProductCarousel";
 import FinancingPartner from "./components/FinancingPartner";
+import MedicalLasersComponent from "./components/MedicalLaserComponent";
 
 // Mapa ładnych nazw dla kategorii
 const CATEGORY_LABELS: Record<string, string> = {
@@ -210,6 +211,8 @@ export default function Home(): React.ReactElement {
         <div ref={financingRef} className="w-full">
             <FinancingPartner />
         </div>
+
+        <MedicalLasersComponent />
 
         <div className="w-full max-w-7xl mx-auto px-4">
           <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent" />

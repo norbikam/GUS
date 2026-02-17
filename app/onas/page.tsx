@@ -8,23 +8,23 @@ import FinancingPartner from "../components/FinancingPartner";
 // --- DANE EKSPERTÓW ---
 // Tutaj możesz łatwo dodawać, usuwać lub odkomentowywać osoby.
 const expertsData = [
-  {
-    name: "Dr n. med. Michał Ekkert",
-    image: "/cooperations/michal-ekkert.jpeg",
-    role: (
-      <>
-        Właściciel placówki szkoleniowej <br /> Ekspert laseroterapii <br /> Wykształcenie i kwalifikacje akademickie <br /> Szkolenia
-      </>
-    ),
-    description: (
-      <>
-        Dr Michał Ekkert, absolwent Śląskiej Akademii Medycznej i doktor nauk medycznych, od ponad 25 lat łączy praktykę kliniczną z działalnością naukową i dydaktyczną. Kierownik studiów podyplomowych z zakresu medycyny estetycznej dla lekarzy. Jest założycielem Instytutu Kosmetologii i Badań Leków, gdzie prowadzi szkolenia i projekty badawcze w zakresie medycyny estetycznej i laseroterapii.
-        <br /><br />
-        Jako główny ekspert szkoleniowy Glowupskin, realizuje autorskie programy edukacyjne dla lekarzy i kosmetologów, obejmujące m.in. laseroterapię frakcyjną, pikosekundową oraz terapie z wykorzystaniem technologii INDIBA® 448 kHz. Łącząc wiedzę akademicką z praktyką kliniczną, dr Ekkert promuje bezpieczne i świadome podejście do medycyny estetycznej.
-      </>
-    ),
-    extraImage: "/cooperations/michal-ekkert-qr.webp", // Opcjonalny QR kod
-  },
+  // {
+  //   name: "Dr n. med. Michał Ekkert",
+  //   image: "/cooperations/michal-ekkert.jpeg",
+  //   role: (
+  //     <>
+  //       Właściciel placówki szkoleniowej <br /> Ekspert laseroterapii <br /> Wykształcenie i kwalifikacje akademickie <br /> Szkolenia
+  //     </>
+  //   ),
+  //   description: (
+  //     <>
+  //       Dr Michał Ekkert, absolwent Śląskiej Akademii Medycznej i doktor nauk medycznych, od ponad 25 lat łączy praktykę kliniczną z działalnością naukową i dydaktyczną. Kierownik studiów podyplomowych z zakresu medycyny estetycznej dla lekarzy. Jest założycielem Instytutu Kosmetologii i Badań Leków, gdzie prowadzi szkolenia i projekty badawcze w zakresie medycyny estetycznej i laseroterapii.
+  //       <br /><br />
+  //       Jako główny ekspert szkoleniowy Glowupskin, realizuje autorskie programy edukacyjne dla lekarzy i kosmetologów, obejmujące m.in. laseroterapię frakcyjną, pikosekundową oraz terapie z wykorzystaniem technologii INDIBA® 448 kHz. Łącząc wiedzę akademicką z praktyką kliniczną, dr Ekkert promuje bezpieczne i świadome podejście do medycyny estetycznej.
+  //     </>
+  //   ),
+  //   extraImage: "/cooperations/michal-ekkert-qr.webp", // Opcjonalny QR kod
+  // },
   {
     name: "Edyta Babula-Frątczak",
     image: "/cooperations/edyta-babula-fratczak.jpeg",
@@ -206,7 +206,7 @@ export default function OnasPage() {
                           className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                         {/* QR Code jeśli istnieje */}
-                        {expert.extraImage && (
+                        {/* {expert.extraImage && (
                           <div className="absolute top-3 left-3 w-24 h-24 bg-white p-1 rounded-lg shadow-lg">
                             <Image
                               src={expert.extraImage}
@@ -216,7 +216,7 @@ export default function OnasPage() {
                               className="w-full h-full object-contain"
                             />
                           </div>
-                        )}
+                        )} */}
                       </div>
                       
                       <div className="mt-6 text-center text-sm md:text-base text-gray-400 border-t border-white/10 pt-4 w-full">
