@@ -41,18 +41,18 @@ const expertsData = [
       </>
     ),
   },
-  {
-    name: "Anna Goc",
-    image: "/cooperations/anna-goc.jpg",
-    role: "Absolwentka Śląskiego Uniwersytetu Medycznego w Katowicach na kierunku Kosmetologia",
-    description: (
-      <>
-        Doświadczenie zawodowe zdobywała, pracując w wiodących firmach branży kosmetycznej i medycyny estetycznej. Specjalizuje się w peelingach chemicznych oraz terapiach anti-aging, łącząc wiedzę naukową z doświadczeniem praktycznym.
-        <br /><br />
-        Nieustannie poszerza swoją wiedzę, uczestnicząc w szkoleniach i konferencjach branżowych. Z pasją łączy nowoczesne technologie z klasycznymi metodami pielęgnacji.
-      </>
-    ),
-  },
+  // {
+  //   name: "Anna Goc",
+  //   image: "/cooperations/anna-goc.jpg",
+  //   role: "Absolwentka Śląskiego Uniwersytetu Medycznego w Katowicach na kierunku Kosmetologia",
+  //   description: (
+  //     <>
+  //       Doświadczenie zawodowe zdobywała, pracując w wiodących firmach branży kosmetycznej i medycyny estetycznej. Specjalizuje się w peelingach chemicznych oraz terapiach anti-aging, łącząc wiedzę naukową z doświadczeniem praktycznym.
+  //       <br /><br />
+  //       Nieustannie poszerza swoją wiedzę, uczestnicząc w szkoleniach i konferencjach branżowych. Z pasją łączy nowoczesne technologie z klasycznymi metodami pielęgnacji.
+  //     </>
+  //   ),
+  // },
   {
     name: "Tomasz Kwiatkowski",
     image: "/cooperations/tomasz-kwiatkowski.png",

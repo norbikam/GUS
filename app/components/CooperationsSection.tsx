@@ -43,15 +43,15 @@ export default function CooperationsSection({}: CooperationsSectionProps) {
       type: "expert",
       isOwner: false,
     },
-    {
-      name: "Anna Goc",
-      role: "Absolwentka ŚUM",
-      subtitle: "Specjalistka anti-aging",
-      description: "Ekspertka w peelingach chemicznych i terapiach anti-aging. Łączy wiedzę naukową z praktyką.",
-      image: "/cooperations/anna-goc.jpg",
-      type: "trainer",
-      isOwner: false,
-    },
+    // {
+    //   name: "Anna Goc",
+    //   role: "Absolwentka ŚUM",
+    //   subtitle: "Specjalistka anti-aging",
+    //   description: "Ekspertka w peelingach chemicznych i terapiach anti-aging. Łączy wiedzę naukową z praktyką.",
+    //   image: "/cooperations/anna-goc.jpg",
+    //   type: "trainer",
+    //   isOwner: false,
+    // },
     
     {
       name: "Alan Dąbrowski",
