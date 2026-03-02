@@ -58,6 +58,21 @@ export default function CategoryMenu({ isMobile = false, onLinkClick }: Category
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isMobile]);
 
+  useEffect(() => {
+    if (isOpen && !isMobile) {
+      document.body.style.overflow = 'hidden';
+      // Wyrównanie szerokości, żeby strona nie skakała po zniknięciu paska scrolla (opcjonalne, ale zalecane)
+      document.body.style.paddingRight = '8px'; 
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, [isOpen, isMobile]);
+
   const handleCategoryClick = () => {
     setIsOpen(false);
     if (onLinkClick) onLinkClick();
@@ -154,8 +169,10 @@ export default function CategoryMenu({ isMobile = false, onLinkClick }: Category
             onMouseLeave={() => setIsOpen(false)}
             className="absolute top-full left-0 mt-2 w-64 bg-[#0a0a0a]/95 backdrop-blur-md border border-white/10 rounded-lg shadow-2xl overflow-hidden z-[100]"
           >
-            <div className="py-2 max-h-[70vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
-              {categories.map((category, index) => (
+        <div 
+          className="py-2 max-h-[70vh] overflow-y-auto overscroll-contain scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent" 
+          style={{ WebkitOverflowScrolling: 'touch' }}>              
+          {categories.map((category, index) => (
                 <motion.div
                   key={category.key}
                   initial={{ opacity: 0, x: -20 }}
