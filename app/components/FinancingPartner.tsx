@@ -29,8 +29,7 @@ const FinancingPartner = () => {
               <p className="text-sm  font-medium uppercase tracking-wider mb-1">Dla Lekarzy</p>
               <p className="text-2xl font-bold  mb-1">do 1,5 mln PLN</p>
               <p className="text-sm leading-snug">
-                Procedura na dyplom. <br/>
-                <span className="text-emerald-600 font-medium">Bez weryfikacji BIK i KRD.</span>
+                Procedura na dyplom.
               </p>
             </div>
 
