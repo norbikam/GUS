@@ -109,14 +109,14 @@ export default function ContactPage() {
                     <div className="space-y-3">
                       <h3 className="text-lg font-semibold text-white">Biuro Obsługi Klienta</h3>
                       <ul className="space-y-3 text-gray-300">
-                        <li className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
+                        {/* <li className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
                           <span className="text-[#d4af37]"><Icons.Phone/></span>
                           <a href="tel:+48510255279">+48 510 255 279</a>
                         </li>
                         <li className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
                           <span className="text-[#d4af37]"><Icons.WhatsApp/></span>
                           <a href="https://wa.me/48510255279">+48 510 255 279</a>
-                        </li>
+                        </li> */}
                         <li className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
                           <span className="text-[#d4af37]"><Icons.Mail/></span>
                           <a href="mailto:kontakt@gus-medic.pl">kontakt@gus-medic.pl</a>
@@ -158,10 +158,10 @@ export default function ContactPage() {
           <section>
              {/* Szybkie przyciski */}
              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-              <a href="tel:+48510255279" className={contactBtnClass}>
+              <a href="tel:+4812667434" className={contactBtnClass}>
                 <Icons.Phone /> <span className="font-medium">Zadzwoń</span>
               </a>
-              <a href="https://wa.me/48510255279" className={contactBtnClass}>
+              <a href="https://wa.me/48512667434" className={contactBtnClass}>
                 <Icons.WhatsApp /> <span className="font-medium">WhatsApp</span>
               </a>
               <a href="mailto:kontakt@gus-medic.pl" className={contactBtnClass}>

@@ -36,7 +36,7 @@ export default function RootLayout({
         <Footer />
         <div className="pointer-events-none fixed bottom-6 right-4 z-[60] sm:bottom-10 sm:right-8">
           <Link
-            href="https://wa.me/48510255279"
+            href="https://wa.me/4812667434"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat on WhatsApp"
