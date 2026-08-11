@@ -1,7 +1,7 @@
 const FinancingPartner = () => {
   return (
 
-    <div className="overflow-hidden m-0 my-10 font-sans w-full flex justify-center p-10 md:p-0">
+    <div className="overflow-hidden m-0 my-10 font-sans w-full flex flex-col items-center p-10 md:p-0">
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-10">
         
         {/* LEWA STRONA: Główne info */}
@@ -81,6 +81,26 @@ const FinancingPartner = () => {
           </div>
         </div>
 
+      </div>
+
+      <div className="mt-2 flex w-full justify-center">
+        <a
+          href="/docs/mLeasingKlaudiaJaworska.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-lg border border-gray-200/70 bg-white/10 px-5 py-3 text-sm font-semibold text-gray-100 transition-all duration-300 hover:bg-white/20 hover:text-white"
+        >
+          <span>Dowiedz się więcej</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="h-4 w-4"
+          >
+            <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v6.44L6.3 8.72a.75.75 0 1 0-1.06 1.06l4.25 4.25a.75.75 0 0 0 1.06 0l4.25-4.25a.75.75 0 1 0-1.06-1.06l-3.44 3.44V4.75Z" />
+            <path d="M4.5 14.25a.75.75 0 0 0 0 1.5h11a.75.75 0 0 0 0-1.5h-11Z" />
+          </svg>
+        </a>
       </div>
     </div>
   );
