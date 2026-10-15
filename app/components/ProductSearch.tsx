@@ -106,7 +106,6 @@ const searchProducts = async (): Promise<void> => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed"
-            disabled={loading}
           />
           {searchTerm && (
             <button

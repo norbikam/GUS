@@ -115,7 +115,6 @@ function KatalogContent() {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="block w-full pl-12 pr-12 py-4 bg-black/40 border border-white/10 rounded-xl text-gray-200 placeholder-gray-600 focus:outline-none focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/50 transition-all duration-300"
-                  disabled={loading}
                 />
                 {searchTerm && (
                   <button
