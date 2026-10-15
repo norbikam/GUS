@@ -25,22 +25,22 @@ const expertsData = [
   //   ),
   //   extraImage: "/cooperations/michal-ekkert-qr.webp", // Opcjonalny QR kod
   // },
-  {
-    name: "Edyta Babula-Frątczak",
-    image: "/cooperations/edyta-babula-fratczak.jpeg",
-    role: (
-      <>
-        Ekspert, dydaktyk, założycielka Warszawskiej Szkoły Medycyny Estetycznej i Kosmetologii<br />Ekspert, Szkolenia
-      </>
-    ),
-    description: (
-      <>
-        Edyta Babula-Frątczak to ceniony autorytet w branży kosmetologicznej i medycyny estetycznej. Posiada unikalne, interdyscyplinarne wykształcenie, łączące specjalizację w marketingu z zaawansowaną kosmetologią.
-        <br /><br />
-        Jako właściciel i główny dydaktyk Warszawskiej Szkoły Medycyny Estetycznej i Kosmetologii, Edyta jest pionierem w kreowaniu innowacyjnych programów edukacyjnych. Jej misją jest nie tylko przekazywanie wiedzy, ale i wdrażanie najwyższych standardów zawodowych.
-      </>
-    ),
-  },
+  // {
+  //   name: "Edyta Babula-Frątczak",
+  //   image: "/cooperations/edyta-babula-fratczak.jpeg",
+  //   role: (
+  //     <>
+  //       Ekspert, dydaktyk, założycielka Warszawskiej Szkoły Medycyny Estetycznej i Kosmetologii<br />Ekspert, Szkolenia
+  //     </>
+  //   ),
+  //   description: (
+  //     <>
+  //       Edyta Babula-Frątczak to ceniony autorytet w branży kosmetologicznej i medycyny estetycznej. Posiada unikalne, interdyscyplinarne wykształcenie, łączące specjalizację w marketingu z zaawansowaną kosmetologią.
+  //       <br /><br />
+  //       Jako właściciel i główny dydaktyk Warszawskiej Szkoły Medycyny Estetycznej i Kosmetologii, Edyta jest pionierem w kreowaniu innowacyjnych programów edukacyjnych. Jej misją jest nie tylko przekazywanie wiedzy, ale i wdrażanie najwyższych standardów zawodowych.
+  //     </>
+  //   ),
+  // },
   // {
   //   name: "Anna Goc",
   //   image: "/cooperations/anna-goc.jpg",

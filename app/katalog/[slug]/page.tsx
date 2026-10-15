@@ -137,12 +137,12 @@ export default async function ProductPage({ params }: Props) {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <a href="tel:+48510255279" className={ctaBtnClass}>
+              <a href="tel:+48512667434" className={ctaBtnClass}>
                 <Icons.Phone />
                 Zadzwoń i zamów
               </a>
               <a
-                href={`https://wa.me/48510255279?text=Dzień%20dobry%2C%20jestem%20zainteresowany%20produktem%3A%20${encodeURIComponent(product.title)}`}
+                href={`https://wa.me/48512667434?text=Dzień%20dobry%2C%20jestem%20zainteresowany%20produktem%3A%20${encodeURIComponent(product.title)}`}
                 className="flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 bg-white/10 border border-white/10 text-white font-bold rounded-lg hover:bg-white/20 hover:border-[#25D366] hover:text-[#25D366] transition-all duration-300 text-lg"
               >
                 <Icons.WhatsApp />

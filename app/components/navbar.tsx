@@ -25,6 +25,23 @@ export default function Navbar() {
     { href: "/kontakt", label: "KONTAKT" },
   ];
 
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [menuOpen]);
+
   // Rozdzielamy linki na lewą i prawą stronę
   const leftLinks = navLinks.filter(link => ["/", "/katalog"].includes(link.href));
   const rightLinks = navLinks.filter(link => ["/onas", "/kontakt"].includes(link.href));
@@ -93,33 +110,39 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu (pozostaje bez zmian, wyświetla wszystko) */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className="lg:hidden fixed inset-0 z-[45] bg-black/90 flex flex-col items-center justify-center"
+            className="lg:hidden fixed inset-0 z-[45] bg-black/95 overflow-y-auto overscroll-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="flex flex-col items-center space-y-4 px-6 text-xl">
-              <div className="flex justify-center gap-10 mb-4 pb-4">
+            {/* Ten div odpowiada za bezpieczne odstępy na górze i na dole, aby nic nie było ucięte */}
+            <div className="min-h-full flex flex-col items-center justify-start py-24 px-6">
+              <div className="flex justify-center gap-10 mb-8 pb-4 border-b border-white/10 w-full max-w-xs">
                 <FacebookColor />
                 <InstagramColor />
                 <WhatsAppColor />
               </div>
-              {navLinks.map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  onClick={() => setMenuOpen(false)}
-                  className="transition-colors duration-300 py-2"
-                >
-                  {label}
-                </Link>
-              ))}
-              <CategoryMenu isMobile={true} onLinkClick={() => setMenuOpen(false)} />
+              
+              <div className="flex flex-col items-center w-full space-y-4 text-xl">
+                {navLinks.map(({ href, label }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={() => setMenuOpen(false)}
+                    className="transition-colors duration-300 py-2"
+                  >
+                    {label}
+                  </Link>
+                ))}
+                <div className="w-full max-w-xs mt-4">
+                  <CategoryMenu isMobile={true} onLinkClick={() => setMenuOpen(false)} />
+                </div>
+              </div>
             </div>
           </motion.div>
         )}

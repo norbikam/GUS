@@ -1,7 +1,7 @@
 const FinancingPartner = () => {
   return (
 
-    <div className="overflow-hidden m-0 my-10 font-sans w-full flex justify-center p-10 md:p-0">
+    <div className="overflow-hidden m-0 my-10 font-sans w-full flex flex-col items-center p-10 md:p-0">
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-10">
         
         {/* LEWA STRONA: Główne info */}
@@ -29,8 +29,7 @@ const FinancingPartner = () => {
               <p className="text-sm  font-medium uppercase tracking-wider mb-1">Dla Lekarzy</p>
               <p className="text-2xl font-bold  mb-1">do 1,5 mln PLN</p>
               <p className="text-sm leading-snug">
-                Procedura na dyplom. <br/>
-                <span className="text-emerald-600 font-medium">Bez weryfikacji BIK i KRD.</span>
+                Procedura na dyplom.
               </p>
             </div>
 
@@ -69,19 +68,39 @@ const FinancingPartner = () => {
 
           <div className="text-center lg:text-right">
             <p className="text-sm font-medium uppercase tracking-wider mb-1">Twój opiekun</p>
-            <p className="text-lg font-bold">Anna Zalewska</p>
+            <p className="text-lg font-bold">Klaudia Jaworska</p>
             
             <div className="mt-3 flex flex-col gap-1 items-center lg:items-end">
-              <a href="tel:+48697902113" className="text-lg font-medium text-blue-600 hover:text-blue-800 transition-colors">
-                +48 697 902 113
+              <a href="tel:+48501057968" className="text-lg font-medium text-blue-600 hover:text-blue-800 transition-colors">
+                +48 501 057 968
               </a>
-              <a href="mailto:anna.zalewska@mleasing.pl" className="text-sm text-gray-100 hover:text-gray-300 transition-colors border-b border-transparent hover:border-gray-300">
-                anna.zalewska@mleasing.pl
+              <a href="mailto:klaudia.jaworska@mleasing.pl" className="text-sm text-gray-100 hover:text-gray-300 transition-colors border-b border-transparent hover:border-gray-300">
+                Klaudia.Jaworska3@mleasing.pl
               </a>
             </div>
           </div>
         </div>
 
+      </div>
+
+      <div className="mt-2 flex w-full justify-center">
+        <a
+          href="/docs/mLeasingKlaudiaJaworska.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-lg border border-gray-200/70 bg-white/10 px-5 py-3 text-sm font-semibold text-gray-100 transition-all duration-300 hover:bg-white/20 hover:text-white"
+        >
+          <span>Dowiedz się więcej</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="h-4 w-4"
+          >
+            <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v6.44L6.3 8.72a.75.75 0 1 0-1.06 1.06l4.25 4.25a.75.75 0 0 0 1.06 0l4.25-4.25a.75.75 0 1 0-1.06-1.06l-3.44 3.44V4.75Z" />
+            <path d="M4.5 14.25a.75.75 0 0 0 0 1.5h11a.75.75 0 0 0 0-1.5h-11Z" />
+          </svg>
+        </a>
       </div>
     </div>
   );
