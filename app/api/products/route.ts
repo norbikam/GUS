@@ -214,7 +214,10 @@ export async function GET(request: Request) {
     // ✅ KROK 2: Pobierz produkty z bazy
     let products = await prisma.product.findMany({
       where,
-      orderBy: { createdAt: 'desc' }
+      orderBy: [
+        { featured: 'desc' },
+        { createdAt: 'desc' }
+      ]
     });
 
     console.log(`📦 Pobrano z bazy: ${products.length} produktów`);

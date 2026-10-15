@@ -295,7 +295,7 @@ export default function KatalogPage(): React.ReactElement {
         
         {/* Nagłówek Sekcji */}
         <div className="text-center mb-8 space-y-4">
-            <h1 className="text-4xl md:text-6xl font-light tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-gray-400">
+            <h1 className="text-4xl md:text-6xl font-light tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-gray-400 pb-1">
                 Profesjonalne Urządzenia
             </h1>
             <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light">
