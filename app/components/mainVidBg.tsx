@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Manrope } from "next/font/google";
+import Link from "next/link";
 
 const heroFont = Manrope({ subsets: ["latin"], weight: ["200","300","400"], variable: "--font-hero" });
 
@@ -39,6 +40,9 @@ export default function HeroSection() {
       {/* Centered Text */}
       
       <div className={`relative z-10 flex flex-col justify-center items-center h-full px-6 text-center ${heroFont.className}`}>
+        <p className="mb-5 text-sm font-semibold uppercase tracking-[0.3em] text-[#f7e199] md:text-base">
+          GUS-Medic.pl by GlowUpSkin
+        </p>
         <h1
           className="text-4xl md:text-6xl font-extralight text-white tracking-wide"
           style={{ textShadow: "0 1px 6px rgba(0,0,0,0.25)" }}
@@ -51,6 +55,14 @@ export default function HeroSection() {
         >
           Sprawdź nasze urządzenia i rozwiązania
         </p>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Link href="/katalog" className="rounded bg-gradient-to-r from-[#d4af37] to-[#f7e199] px-7 py-3 font-semibold text-gray-900 transition hover:scale-105">
+            Zobacz urządzenia
+          </Link>
+          <Link href="/kontakt" className="rounded border border-white/40 bg-black/20 px-7 py-3 font-semibold text-white transition hover:border-[#f7e199] hover:text-[#f7e199]">
+            Porozmawiaj z doradcą
+          </Link>
+        </div>
       </div>
 
       {/* Animated Scroll Button */}

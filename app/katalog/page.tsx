@@ -50,7 +50,9 @@ function KatalogContent() {
   // Synchronizacja URL -> Stan
   useEffect(() => {
     const categoryFromUrl = searchParams.get('category');
+    const searchFromUrl = searchParams.get('search') ?? '';
     if (categoryFromUrl) setSelectedCategory(categoryFromUrl);
+    setSearchTerm(searchFromUrl);
   }, [searchParams]);
 
   // Pobieranie produktów
@@ -91,6 +93,7 @@ function KatalogContent() {
     setSearchTerm('');
     const url = new URL(window.location.href);
     url.searchParams.delete('category');
+    url.searchParams.delete('search');
     window.history.pushState({}, '', url);
   };
 

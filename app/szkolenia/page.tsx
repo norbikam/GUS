@@ -23,7 +23,13 @@ export default function SzkoleniaPage() {
 
       {/* Treść strony */}
       <main className="relative z-10 max-w-6xl mx-auto px-8 md:px-10 py-12 md:py-16 flex flex-col gap-10">
-        <h1 className="text-4xl md:text-6xl text-white text-center">Szkolenia</h1>
+        <section className="text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#d4af37]">GUS-Medic.pl by GlowUpSkin</p>
+          <h1 className="mt-3 text-4xl md:text-6xl text-white">Szkolenia</h1>
+          <p className="mx-auto mt-4 max-w-3xl text-lg text-gray-300 md:text-xl">
+            Wiedza, praktyka i pewność obsługi urządzenia od pierwszego zabiegu.
+          </p>
+        </section>
 
         {/* Wstęp */}
         <section className="text-center">
@@ -252,15 +258,15 @@ export default function SzkoleniaPage() {
         <section className="text-center mt-8">
           <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent inline-block">
             <div className="rounded-xl bg-black/30 backdrop-blur-sm px-10 py-6">
-              <h3 className="text-2xl md:text-3xl mb-4">Chcesz dowiedzieć się więcej o naszych szkoleniach?</h3>
+              <h3 className="text-2xl md:text-3xl mb-4">Rozwiń ofertę swojego salonu z GlowUpSkin</h3>
               <p className="text-lg font-light mb-6">
-                Skontaktuj się z nami, aby poznać pełną ofertę i terminy najbliższych szkoleń!
+                Zapytaj o szkolenie dopasowane do urządzenia, zespołu i planu rozwoju Twojego gabinetu.
               </p>
               <Link
                 href="/kontakt"
                 className="inline-block px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f7e199] text-black font-semibold rounded-lg hover:opacity-90 transition-opacity"
               >
-                Kontakt
+                Zapytaj o termin
               </Link>
             </div>
           </div>

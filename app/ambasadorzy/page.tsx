@@ -23,7 +23,13 @@ export default function AmbasadorzyPage() {
 
       {/* Treść strony */}
       <main className="relative z-10 max-w-6xl mx-auto px-8 md:px-10 py-12 md:py-16 flex flex-col gap-10">
-        <h1 className="text-4xl md:text-6xl text-white text-center">Ambasadorzy</h1>
+        <section className="text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#d4af37]">GUS-Medic.pl by GlowUpSkin</p>
+          <h1 className="mt-3 text-4xl md:text-6xl text-white">Współpraca i ambasadorzy</h1>
+          <p className="mx-auto mt-4 max-w-3xl text-lg text-gray-300 md:text-xl">
+            Łączymy profesjonalne technologie, doświadczenie ekspertów i ludzi, którzy wyznaczają standardy branży beauty.
+          </p>
+        </section>
 
         {/* Wstęp */}
         <section className="text-center">
@@ -177,13 +183,13 @@ export default function AmbasadorzyPage() {
             <div className="rounded-xl bg-black/30 backdrop-blur-sm px-10 py-6">
               <h3 className="text-2xl md:text-3xl mb-4">Zainteresowany współpracą?</h3>
               <p className="text-lg font-light mb-6">
-                Skontaktuj się z nami i dołącz do grona ekspertów GlowUpSkin!
+                Chcesz rozwijać markę, dzielić się wiedzą lub testować nowe technologie? Poznaj możliwości współpracy z GlowUpSkin.
               </p>
               <Link
                 href="/kontakt"
                 className="inline-block px-8 py-3 bg-gradient-to-r from-[#d4af37] to-[#f7e199] text-black font-semibold rounded-lg hover:opacity-90 transition-opacity"
               >
-                Kontakt
+                Porozmawiajmy o współpracy
               </Link>
             </div>
           </div>

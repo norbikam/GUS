@@ -126,11 +126,23 @@ export default function OnasPage() {
           <h1 className="text-4xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-b from-[#ffedb3] to-[#d4af37] font-light">
             O nas
           </h1>
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#d4af37]">GUS-Medic.pl by GlowUpSkin</p>
           <div className="h-[1px] w-24 mx-auto bg-[#d4af37]" />
           <p className="text-lg md:text-xl font-light text-gray-300 leading-relaxed">
-            Jesteśmy firmą zajmującą się sprzedażą najwyższej klasy urządzeń dla salonów medycyny estetycznej. 
-            Nasza oferta obejmuje szeroki zakres asortymentu sprzętu, który pomoże Ci zapewnić najwyższy poziom usług dla Twoich klientów.
+            Jesteśmy partnerem salonów kosmetologii i medycyny estetycznej — od wyboru urządzenia,
+            przez finansowanie i szkolenie, po serwis oraz opiekę po zakupie.
           </p>
+        </section>
+
+        <section className="rounded-2xl border border-[#d4af37]/25 bg-gradient-to-r from-[#17130a] to-[#0b0b0b] p-6 text-center md:p-10">
+          <h2 className="text-3xl font-light text-white md:text-4xl">GlowUpSkin to więcej niż sprzedaż aparatury</h2>
+          <p className="mx-auto mt-4 max-w-3xl text-gray-300">
+            Pomagamy przełożyć technologię na realną ofertę zabiegową i rozwój biznesu.
+            Poznaj urządzenia GUS-Medic i porozmawiaj z doradcą o rozwiązaniu dla Twojego salonu.
+          </p>
+          <a href="/kontakt" className="mt-6 inline-block rounded-lg bg-gradient-to-r from-[#d4af37] to-[#f7e199] px-8 py-3 font-semibold text-gray-900 transition hover:scale-105">
+            Poznaj naszą ofertę
+          </a>
         </section>
 
         {/* FILOZOFIA I OFERTA (GLASS CARDS) */}

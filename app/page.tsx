@@ -101,6 +101,49 @@ export default function Home(): React.ReactElement {
 
         <main className="flex flex-col gap-[48px] md:gap-[64px] relative z-10 items-center w-full">
         
+        {/* WIZYTÓWKA MARKI I NAJWAŻNIEJSZE PRZEWAGI */}
+        <section id="next-section" className="w-full max-w-7xl px-4 pt-10 md:px-8">
+          <div className="rounded-2xl border border-[#d4af37]/25 bg-gradient-to-br from-[#17130a] via-[#0d0d0d] to-[#111] p-6 shadow-2xl md:p-10">
+            <div className="grid gap-8 lg:grid-cols-[1.25fr_1fr] lg:items-center">
+              <div>
+                <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#d4af37]">
+                  GlowUpSkin Medic
+                </p>
+                <h2 className="text-3xl font-light text-white md:text-5xl">
+                  Technologie, które pracują na rozwój Twojego salonu
+                </h2>
+                <p className="mt-5 max-w-2xl text-base leading-relaxed text-gray-300 md:text-lg">
+                  GUS-Medic.pl by GlowUpSkin to profesjonalne wyposażenie dla kosmetologii,
+                  medycyny estetycznej i beauty. Pomagamy wybrać urządzenie, wdrożyć je
+                  do gabinetu i bezpiecznie rozwijać ofertę zabiegową.
+                </p>
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                  <Link href="/kontakt" className={`${buttonBaseClass} px-6 py-3`}>
+                    Zapytaj o ofertę
+                  </Link>
+                  <Link href="/onas" className="inline-flex items-center justify-center rounded border border-white/20 px-6 py-3 font-semibold text-white transition hover:border-[#d4af37] hover:text-[#f7e199]">
+                    Poznaj GlowUpSkin
+                  </Link>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  ["✦", "Hit roku", "Wybrane urządzenia, które warto mieć w gabinecie"],
+                  ["✓", "3 lata gwarancji", "Wsparcie serwisowe i opieka po zakupie"],
+                  ["↗", "Najlepsza cena", "Rozwiązania dopasowane do budżetu salonu"],
+                  ["∞", "Bezpieczna inwestycja", "Szkolenie, finansowanie i pomoc doradcy"],
+                ].map(([icon, title, description]) => (
+                  <div key={title} className="rounded-xl border border-white/10 bg-black/20 p-4">
+                    <span className="text-2xl text-[#f7e199]">{icon}</span>
+                    <h3 className="mt-2 font-semibold text-white">{title}</h3>
+                    <p className="mt-1 text-xs leading-relaxed text-gray-400">{description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* SEPARATOR */}
         <div className="mt-10 w-full max-w-7xl mx-auto px-4">
           <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent" />
@@ -147,20 +190,34 @@ export default function Home(): React.ReactElement {
           )}
         </div>
 
-        {/* SEKCJA NAWIGACYJNA - KAFELKI */}
+        {/* SEKCJA OFERTOWA - KAFELKI */}
         <div className="w-full max-w-7xl mx-auto px-4 md:px-6 py-10">
-           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+           <div className="mb-8 text-center">
+             <p className="text-sm uppercase tracking-[0.25em] text-[#d4af37]">Kompleksowa oferta GlowUpSkin</p>
+             <h2 className="mt-2 text-3xl font-light text-white md:text-4xl">Nie tylko urządzenie. Całe wsparcie dla Twojego biznesu.</h2>
+           </div>
+           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-6">
               
               {/* Karta 1: Leasing */}
               <div className={cardClass}>
                  <div className="flex flex-col items-center">
-                    <h2 className="text-xl md:text-2xl font-semibold text-[#d4af37] mb-2">LEASING</h2>
-                    <p className="text-gray-300 text-xs md:text-sm mb-4">Wygodne raty dla Twojego biznesu</p>
+                    <h2 className="text-xl md:text-2xl font-semibold text-[#d4af37] mb-2">Najlepsza cena</h2>
+                    <p className="text-gray-300 text-xs md:text-sm mb-4">Dobieramy rozwiązanie do budżetu i oferujemy wygodne finansowanie</p>
                  </div>
                  <button onClick={scrollToFinancing} className={buttonBaseClass + " text-xs md:text-sm px-4 md:px-6 py-2 w-full mt-auto"}>
-                    Kalkulator
+                    Sprawdź finansowanie
                  </button>
               </div>
+
+              {/* Karta: Hit roku */}
+              <Link href="/katalog" className={cardClass}>
+                 <div className="flex flex-col items-center">
+                    <p className="mb-2 text-3xl text-[#f7e199]">✦</p>
+                    <h2 className="text-xl md:text-2xl font-semibold text-[#d4af37] mb-2">Hit roku</h2>
+                    <p className="text-gray-300 text-xs md:text-sm mb-4">Sprawdź polecane urządzenia dla nowoczesnych gabinetów</p>
+                 </div>
+                 <div className={buttonBaseClass + " text-xs md:text-sm px-4 md:px-6 py-2 w-full mt-auto"}>Zobacz hity</div>
+              </Link>
 
               {/* Karta 2: Szkolenia */}
               <Link href="/szkolenia" className={cardClass}>
@@ -180,13 +237,23 @@ export default function Home(): React.ReactElement {
                  <div className={buttonBaseClass + " text-xs md:text-sm px-4 md:px-6 py-2 w-full mt-auto"}>Dołącz</div>
               </Link>
 
-              {/* Karta 4: Serwis */}
+              {/* Karta: Serwis */}
               <Link href="/serwis" className={cardClass}>
                  <div className="flex flex-col items-center">
                     <h2 className="text-xl md:text-2xl font-light mb-2 group-hover:text-[#d4af37] transition-colors">Serwis</h2>
                     <p className="text-gray-400 text-xs md:text-sm mb-4">Szybka pomoc i wsparcie techniczne</p>
                  </div>
                  <div className={buttonBaseClass + " text-xs md:text-sm px-4 md:px-6 py-2 w-full mt-auto"}>Wsparcie</div>
+              </Link>
+
+              {/* Karta: Gwarancja i ubezpieczenie */}
+              <Link href="/kontakt" className={cardClass}>
+                 <div className="flex flex-col items-center">
+                    <p className="mb-2 text-3xl text-[#f7e199]">✓</p>
+                    <h2 className="text-xl md:text-2xl font-light mb-2 group-hover:text-[#d4af37] transition-colors">Gwarancja i ubezpieczenie</h2>
+                    <p className="text-gray-400 text-xs md:text-sm mb-4">Zapytaj o ochronę urządzenia i spokojną pracę salonu</p>
+                 </div>
+                 <div className={buttonBaseClass + " text-xs md:text-sm px-4 md:px-6 py-2 w-full mt-auto"}>Porozmawiaj z doradcą</div>
               </Link>
            </div>
         </div>

@@ -87,7 +87,8 @@ export default function ContactPage() {
             Skontaktuj się z nami
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Jesteśmy tu, aby odpowiedzieć na Twoje pytania i pomóc w doborze najlepszych rozwiązań dla Twojego salonu.
+            GUS-Medic.pl by GlowUpSkin — pomożemy dobrać urządzenie, finansowanie, szkolenie,
+            serwis i rozwiązania zwiększające bezpieczeństwo Twojej inwestycji.
           </p>
         </div>
 
@@ -100,6 +101,7 @@ export default function ContactPage() {
                 
                 <div>
                   <h2 className="text-2xl md:text-3xl font-light text-[#d4af37] mb-6">Hurtownia GlowUpSkin Medic</h2>
+                  <p className="mb-4 text-sm uppercase tracking-[0.2em] text-gray-500">GUS-Medic.pl by GlowUpSkin</p>
                   <p className="text-gray-300 font-light leading-relaxed mb-8">
                     Nasi profesjonalni konsultanci przygotują najlepszą ofertę produktów oraz najkorzystniejsze rozwiązania związane z finansowaniem sprzętu.
                   </p>
@@ -172,7 +174,8 @@ export default function ContactPage() {
             <div className="p-[1px] rounded-2xl bg-gradient-to-br from-white/10 via-white/5 to-transparent">
               <div className="rounded-2xl bg-[#0a0a0a]/80 backdrop-blur-md p-8 md:p-10 border border-white/5">
                 <form className="w-full space-y-4" onSubmit={onSubmit}>
-                  <h2 className="text-2xl font-light mb-6">Napisz wiadomość</h2>
+                  <h2 className="text-2xl font-light mb-2">Porozmawiajmy o Twoim salonie</h2>
+                  <p className="mb-6 text-sm text-gray-400">Zapytaj o hit roku, najlepszą cenę, leasing, gwarancję, serwis lub ubezpieczenie.</p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input name="first_name" type="text" placeholder="Imię" className={inputClass} required />
