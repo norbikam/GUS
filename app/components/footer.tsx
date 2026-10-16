@@ -4,10 +4,11 @@ export default function Footer() {
     return (
     <footer className="grid grid-cols-1 md:grid-cols-3 items-center justify-center py-10 bg-gray-800/20 px-10 text-left md:text-center z-50">
         <ul className="md:text-left md:pl-10">
-            <li>GlowUpSkin Medic</li>
+            <li>GlowUpSkin sp. z o. o.</li>
             <li>Telefon: +48 510 255 279</li>
-            <li>NIP: 8392556623</li>
-            <li>REGON: 529440726</li>
+            <li>NIP: 8393264845</li>
+            <li>KRS: 0001234179</li>
+            <li>ul. Wileńska 39/99 <br/> 76-200 Słupsk</li>
         </ul>
         <ul className="pt-10 md:pt-0">
             <li className="pb-4 text-xl">Menu</li>
@@ -34,7 +35,7 @@ export default function Footer() {
             </li>
         </ul>
         <div className="col-span-1 md:col-span-3 text-center mt-10 text-gray-400">
-            &copy; {new Date().getFullYear()} GlowUpSkin Medic. Wszelkie prawa zastrzeżone. <br />
+            &copy; {new Date().getFullYear()} GlowUpSkin sp. z o. o. Wszelkie prawa zastrzeżone. <br />
             Projekt i realizacja: <a href="https://nokdesign.pl" className="text-gray-400 underline" target="_blank" rel="noopener noreferrer">NOK Design</a>
         </div>
     </footer>
