@@ -54,15 +54,12 @@ export default function Navbar() {
     const query = searchTerm.trim();
 
     if (!query) {
-      setSearchResults([]);
-      setRecommendedProducts([]);
-      setSearching(false);
       return;
     }
 
-    setSearching(true);
     const controller = new AbortController();
     const searchTimer = setTimeout(async () => {
+      setSearching(true);
       try {
         const [response, recommendationsResponse] = await Promise.all([
           fetch(`/api/products?search=${encodeURIComponent(query)}`, {
